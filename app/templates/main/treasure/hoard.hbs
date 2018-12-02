@@ -1,3 +1,34 @@
-<p>
-  Here you can generate the treasure for an entire hoard.
-</p>
+<section class="section">
+  <p>
+    Here you can generate the treasure for an entire hoard.
+  </p>
+</section>
+<section class="row">
+  <div class="col-6">
+    <div class="form-group">
+      <label for="cr-input">Challenge Rating</label>
+      {{input type="number" id="cr-input" value=(mut cr)}}
+    </div>
+    <button {{action "calculateReward"}}>Roll Dice</button>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Roll Results</h4>
+        <ul class="card-text left-lg-padding no-bullets">
+          {{#each rewards as |reward|}}
+            <li>
+              {{#if reward.total}}
+                {{roll-format reward.rolls}} = {{text-reward-format reward.total reward.name}}
+              {{else}}
+                Rolled too low for a reward
+              {{/if}}
+            </li>
+          {{else}}
+            No rolls yet
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

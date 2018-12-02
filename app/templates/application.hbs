@@ -2,18 +2,21 @@
   <div class="nav-brand">
     <h3>
       {{#link-to "main"}}
-        D&D Randomizer
+        D&amp;D Randomizer
       {{/link-to}}
     </h3>
   </div>
   <div class="collapsible">
-    <input id="collapsible1" type="checkbox" name="collapsible1">
-    <button>
-      <label for="collapsible1">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-      </label>
+    {{input
+      checked=collapsibleOpen
+      id="collapsible1"
+      name="collapsible1"
+      type="checkbox"
+    }}
+    <button {{action "toggleCollapsible"}}>
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
     </button>
     <div class="collapsible-body">
       <ul class="inline">

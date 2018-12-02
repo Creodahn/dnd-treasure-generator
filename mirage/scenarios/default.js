@@ -7,6 +7,7 @@ export default function(server) {
 
   server.create('art-object', { name: 'Silver ewer', value: 25 });
   server.create('art-object', { name: 'Carved bone statuette', value: 25 });
+  
   server.create('art-object', { name: 'Gold ring set with bloodstones', value: 250 });
   server.create('art-object', { name: 'Carved ivory statuette', value: 250 });
   server.create('art-object', { name: 'Silver chalice set with moonstones', value: 750 });
@@ -252,6 +253,7 @@ export default function(server) {
 
   server.create('treasure-rule', {
     'min-cr': 17,
+    'treasure-type': 'individual',
     rules: [
       {
         max: 15,
@@ -309,4 +311,57 @@ export default function(server) {
       }
     ]
   });
+
+  server.create('treasure-rule', {
+    'max-cr': 4,
+    'min-cr': 0,
+    'treasure-type': 'hoard',
+    rules: [
+      {
+        max: 6,
+        min: 1,
+        calculations: [
+          {
+            diceCount: 0,
+            dieType: 'd6',
+            items: {
+              type: 'gemstone',
+              value: 10
+            },
+            multiplier: 0
+          }
+        ]
+      },
+      {
+        max: 16,
+        min: 7,
+        calculations: [
+          {
+            diceCount: 2,
+            dieType: 'd6',
+            items: {
+              type: 'gemstone',
+              value: 10
+            },
+            multiplier: 1
+          }
+        ]
+      },
+      {
+        max: 100,
+        min: 17,
+        calculations: [
+          {
+            diceCount: 2,
+            dieType: 'd4',
+            items: {
+              type: 'art-object',
+              value: 25
+            },
+            multiplier: 1
+          }
+        ]
+      }
+    ]
+  })
 }

@@ -13,20 +13,20 @@
     <button {{action "calculateReward"}}>Roll Dice</button>
   </div>
   <div class="col-4">
-    {{#if rewards}}
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Roll Results</h4>
-          <ul class="card-text left-lg-padding no-bullets">
-            {{#each rewards as |reward|}}
-              <li>
-                {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
-              </li>
-            {{/each}}
-          </ul>
-          <button class="horizontal-auto-spacer flex-display" {{action "reset"}}>Reset</button>
-        </div>
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Roll Results</h4>
+        <ul class="card-text left-lg-padding no-bullets">
+          {{#each rewards as |reward|}}
+            <li>
+              {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
+            </li>
+          {{else}}
+            <li>No rolls yet</li>
+          {{/each}}
+        </ul>
+        <button class="horizontal-auto-spacer flex-display" {{action "reset"}}>Reset</button>
       </div>
-    {{/if}}
+    </div>
   </div>
 </section>

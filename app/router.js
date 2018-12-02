@@ -12,6 +12,7 @@ Router.map(function() {
       this.route('individual');
       this.route('hoard');
     });
+    this.route('home');
   });
 });
 

@@ -1,11 +1,11 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
+import Ember from 'ember';
 
 export default Controller.extend({
   // attributes
   cr: null,
   diceBag: service(),
-  rewards: null,
   // methods
   getRuleForPercentileRoll(diceRoll, ruleSet) {
     return ruleSet.rules.map((rule) => {
@@ -37,19 +37,16 @@ export default Controller.extend({
 
       this.set('rewards', calculations.map(
         (calculation) => {
-          const { coinType, diceCount, dieType, multiplier } = calculation,
-            result = this.diceBag.rollMultipleDice({ dieType, count: diceCount });
+          const { diceCount, dieType, items, multiplier } = calculation,
+            { rolls, total } = this.diceBag.rollMultipleDice({ count: diceCount, dieType }),
+            itemsToPickTotal = total * (multiplier || 1),
+            inflectedType = Ember.Inflector.inflector.pluralize(items.type).camelize(),
+            itemsToChooseFrom = this[inflectedType].filterBy('value', items.value),
+            selectedItem = itemsToChooseFrom[ Math.floor(Math.random() * (itemsToChooseFrom.length - 0))];
 
-          result.coinType = coinType;
-          result.d100Result = d100Result;
-          result.total = result.total * (multiplier || 1);
-
-          return result;
+          return { name: selectedItem.name, rolls, total: itemsToPickTotal };
         })
       );
-    },
-    reset() {
-      this.set('reward', null);
     }
   }
 });

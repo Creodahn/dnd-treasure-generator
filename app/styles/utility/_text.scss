@@ -46,11 +46,11 @@ $font-weights: (normal, bold, bolder, lighter);
 @each $shade, $color-group in $font-colors {
   @each $color-txt, $color in $color-group {
     @if($shade == '') {
-      .text-#{$color-txt} {
+      .text-#{"" + $color-txt} {
         color: $color !important;
       }
     } @else {
-      .text-#{$shade}-#{$color-txt} {
+      .text-#{$shade}-#{"" + $color-txt} {
         color: $color !important;
       }
     }

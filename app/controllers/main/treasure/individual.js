@@ -24,8 +24,6 @@ export default Controller.extend({
         // the CR is above 17
         skipMaxComparison = !maxCr;
 
-      console.log(cr, maxCr, skipMaxComparison);
-
       return cr >= minCr && ((!skipMaxComparison && cr <= maxCr) || skipMaxComparison) ? rule : null;
     }).filter((item) => {
       return item !== null;
@@ -38,17 +36,14 @@ export default Controller.extend({
         crRule = this.getRuleForCr(),
         { calculations } = this.getRuleForPercentileRoll(d100Result, crRule);
 
-      console.log(crRule);
-
-      this.set('rewards', calculations.map((calculation) => {
+      this.set('rewards', calculations.map(
+        (calculation) => {
           const { coinType, diceCount, dieType, multiplier } = calculation,
             result = this.diceBag.rollMultipleDice({ dieType, count: diceCount });
 
-            console.log(calculation);
-
-            result.coinType = coinType;
-            result.d100Result = d100Result;
-            result.total = result.total * (multiplier || 1);
+          result.coinType = coinType;
+          result.d100Result = d100Result;
+          result.total = result.total * (multiplier || 1);
 
           return result;
         })

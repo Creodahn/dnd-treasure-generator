@@ -6,14 +6,9 @@ export default Controller.extend({
   // attributes
   cr: null,
   diceBag: service(),
-  reward: null,
-  rolls: null,
-  // computed properties
-  printableRolls: computed('rolls', function() {
-    return this.rolls ? this.rolls.join(' + ') : '';
-  }),
+  rewards: null,
   // methods
-  getCalculation(diceRoll, ruleSet) {
+  getRuleForPercentileRoll(diceRoll, ruleSet) {
     return ruleSet.rules.map((rule) => {
       return diceRoll >= rule.min && diceRoll <= rule.max ? rule : null;
     }).filter((item) => {
@@ -24,7 +19,14 @@ export default Controller.extend({
     const cr = this.cr;
 
     return this.model.map((rule) => {
-      return cr >= rule.minCr && cr <= rule.maxCr ? rule : null;
+      const { maxCr, minCr } = rule,
+        // it is possible for a CR ruleset range not to have a maximum if
+        // the CR is above 17
+        skipMaxComparison = !maxCr;
+
+      console.log(cr, maxCr, skipMaxComparison);
+
+      return cr >= minCr && ((!skipMaxComparison && cr <= maxCr) || skipMaxComparison) ? rule : null;
     }).filter((item) => {
       return item !== null;
     })[0];
@@ -33,15 +35,27 @@ export default Controller.extend({
   actions: {
     calculateReward() {
       const d100Result = this.diceBag.rollDie('d100'),
-        { coinType, diceCount, dieType } = this.getCalculation(d100Result, this.getRuleForCr()),
-        result = this.diceBag.rollMultipleDice({ dieType, count: diceCount });
+        crRule = this.getRuleForCr(),
+        { calculations } = this.getRuleForPercentileRoll(d100Result, crRule);
 
-      this.set('reward', `${result.total} ${coinType}`);
-      this.set('rolls', result.rolls);
+      console.log(crRule);
+
+      this.set('rewards', calculations.map((calculation) => {
+          const { coinType, diceCount, dieType, multiplier } = calculation,
+            result = this.diceBag.rollMultipleDice({ dieType, count: diceCount });
+
+            console.log(calculation);
+
+            result.coinType = coinType;
+            result.d100Result = d100Result;
+            result.total = result.total * (multiplier || 1);
+
+          return result;
+        })
+      );
     },
     reset() {
       this.set('reward', null);
-      this.set('rolls', null);
     }
   }
 });

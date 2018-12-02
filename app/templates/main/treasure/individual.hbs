@@ -5,19 +5,26 @@
   </p> 
 </section>
 <section class="row">
-  <div class="col-9">
+  <div class="col-6">
     <div class="form-group">
       <label for="cr-input">Challenge Rating</label>
-      <input type="text" id="cr-input" value={{cr}}>
+      {{input type="number" id="cr-input" value=(mut cr)}}
     </div>
-    <button {{action "calculateReward"}}>Calculate</button>
+    <button {{action "calculateReward"}}>Roll Dice</button>
   </div>
-  <div class="col-3">
-    {{#if reward}}
+  <div class="col-4">
+    {{#if rewards}}
       <div class="card">
         <div class="card-body">
-          <p class="card-text">{{printableRolls}} = {{reward}}</p>
-          <button {{action "reset"}}>Reset</button>
+          <h4 class="card-title">Roll Results</h4>
+          <ul class="card-text left-lg-padding no-bullets">
+            {{#each rewards as |reward|}}
+              <li>
+                {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
+              </li>
+            {{/each}}
+          </ul>
+          <button class="horizontal-auto-spacer flex-display" {{action "reset"}}>Reset</button>
         </div>
       </div>
     {{/if}}

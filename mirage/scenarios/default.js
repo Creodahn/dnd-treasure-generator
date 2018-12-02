@@ -45,37 +45,267 @@ export default function(server) {
       {
         max: 30,
         min: 1,
-        diceCount: 5,
-        dieType: 'd6',
-        coinType: 'CP'
+        calculations: [{
+          diceCount: 5,
+          dieType: 'd6',
+          coinType: 'CP'
+        }]
       },
       {
         max: 60,
         min: 31,
-        diceCount: 4,
-        dieType: 'd6',
-        coinType: 'SP'
+        calculations: [{
+          diceCount: 4,
+          dieType: 'd6',
+          coinType: 'SP'
+        }]
       },
       {
         max: 70,
         min: 61,
-        diceCount: 3,
-        dieType: 'd6',
-        coinType: 'EP'
+        calculations: [{
+          diceCount: 3,
+          dieType: 'd6',
+          coinType: 'EP'
+        }]
       },
       {
         max: 95,
         min: 71,
-        diceCount: 3,
-        dieType: 'd6',
-        coinType: 'GP'
+        calculations: [{
+          diceCount: 3,
+          dieType: 'd6',
+          coinType: 'GP'
+        }]
       },
       {
         max: 100,
         min: 96,
-        diceCount: 1,
-        dieType: 'd6',
-        coinType: 'PP'
+        calculations: [{
+          diceCount: 1,
+          dieType: 'd6',
+          coinType: 'PP'
+        }]
+      }
+    ]
+  });
+  server.create('treasure-rule', {
+    'max-cr': 10,
+    'min-cr': 5,
+    'treasure-type': 'individual',
+    rules: [
+      {
+        max: 30,
+        min: 1,
+        calculations: [{
+          diceCount: 4,
+          dieType: 'd6',
+          coinType: 'CP',
+          multiplier: 100
+        },
+        {
+          diceCount: 1,
+          dieType: 'd6',
+          coinType: 'EP',
+          multiplier: 10
+        }]
+      },
+      {
+        max: 60,
+        min: 31,
+        calculations: [{
+          diceCount: 6,
+          dieType: 'd6',
+          coinType: 'SP',
+          multiplier: 10
+        },
+        {
+          diceCount: 2,
+          dieType: 'd6',
+          coinType: 'GP',
+          multiplier: 10
+        }]
+      },
+      {
+        max: 70,
+        min: 61,
+        calculations: [{
+          diceCount: 3,
+          dieType: 'd6',
+          coinType: 'EP',
+          multiplier: 10
+        },
+        {
+          diceCount: 2,
+          dieType: 'd6',
+          coinType: 'GP',
+          multiplier: 10
+        }]
+      },
+      {
+        max: 95,
+        min: 71,
+        calculations: [{
+          diceCount: 4,
+          dieType: 'd6',
+          coinType: 'GP',
+          multiplier: 10
+        }]
+      },
+      {
+        max: 100,
+        min: 96,
+        calculations: [{
+          diceCount: 3,
+          dieType: 'd6',
+          coinType: 'PP',
+          multiplier: 1
+        },
+        {
+          diceCount: 2,
+          dieType: 'd6',
+          coinType: 'GP',
+          multiplier: 10
+        }]
+      }
+    ]
+  });
+  server.create('treasure-rule', {
+    'max-cr': 16,
+    'min-cr': 11,
+    'treasure-type': 'individual',
+    rules: [
+      {
+        max: 20,
+        min: 1,
+        calculations: [
+          {
+            diceCount: 4,
+            dieType: 'd6',
+            coinType: 'SP',
+            multiplier: 100
+          },
+          {
+            diceCount: 1,
+            dieType: 'd6',
+            coinType: 'GP',
+            multiplier: 100
+          }
+        ]
+      },
+      {
+        max: 35,
+        min: 21,
+        calculations: [
+          {
+            diceCount: 1,
+            dieType: 'd6',
+            coinType: 'EP',
+            multiplier: 100
+          },
+          {
+            diceCount: 1,
+            dieType: 'd6',
+            coinType: 'GP',
+            multiplier: 100
+          }
+        ]
+      },
+      {
+        max: 75,
+        min: 36,
+        calculations: [
+          {
+            diceCount: 2,
+            dieType: 'd6',
+            coinType: 'GP',
+            multiplier: 100
+          },
+          {
+            diceCount: 1,
+            dieType: 'd6',
+            coinType: 'PP',
+            multiplier: 10
+          }
+        ]
+      },
+      {
+        max: 100,
+        min: 76,
+        calculations: [
+          {
+            diceCount: 2,
+            dieType: 'd6',
+            coinType: 'GP',
+            multiplier: 100
+          },
+          {
+            diceCount: 2,
+            dieType: 'd6',
+            coinType: 'PP',
+            multiplier: 10
+          }
+        ]
+      }
+    ]
+  });
+
+  server.create('treasure-rule', {
+    'min-cr': 17,
+    rules: [
+      {
+        max: 15,
+        min: 1,
+        calculations: [
+          {
+            diceCount: 2,
+            dieType: 'd6',
+            coinType: 'EP',
+            multiplier: 1000
+          },
+          {
+            diceCount: 8,
+            dieType: 'd6',
+            coinType: 'GP',
+            multiplier: 100
+          }
+        ]
+      },
+      {
+        max: 55,
+        min: 16,
+        calculations: [
+          {
+            diceCount: 1,
+            dieType: 'd6',
+            coinType: 'GP',
+            multiplier: 1000
+          },
+          {
+            diceCount: 1,
+            dieType: 'd6',
+            coinType: 'PP',
+            multiplier: 100
+          }
+        ]
+      },
+      {
+        max: 100,
+        min: 56,
+        calculations: [
+          {
+            diceCount: 1,
+            dieType: 'd6',
+            coinType: 'GP',
+            multiplier: 1000
+          },
+          {
+            diceCount: 2,
+            dieType: 'd6',
+            coinType: 'PP',
+            multiplier: 100
+          }
+        ]
       }
     ]
   });

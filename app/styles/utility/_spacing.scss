@@ -1,0 +1,80 @@
+$alignments: center, left, right;
+$floats: left, right;
+$properties: margin, padding;
+
+$sides: 'bottom', 'horizontal', 'left', 'right', 'top', 'vertical';
+$spacings: ('x-lg', 30px), ('lg', 20px), ('sm', 5px), ('tiny', 1px), ('reg', 10px), ('auto', auto);
+
+@each $align in $alignments {
+  .align-#{$align} {
+    text-align: $align;
+  }
+}
+
+@each $float in $floats {
+  .float-#{$float} {
+    float: $float;
+  }
+}
+
+@each $property in $properties {
+  .no-#{$property} {
+    #{$property}: 0;
+  }
+}
+
+@each $side in $sides {
+  .#{$side} {
+    @each $size, $px in $spacings {
+      $interp: if($size == '', '', '-#{$size}');
+
+      &#{$interp}-spacer {
+        @if $side == 'horizontal' {
+          margin: 0 $px;
+        } @else if $side == 'vertical' {
+          margin: $px 0;
+        } @else {
+          margin-#{$side}: $px;
+        }
+      }
+
+      &#{$interp}-padding {
+        @if $side == 'horizontal' {
+          padding: 0 $px;
+        } @else if $side == 'vertical' {
+          padding: $px 0;
+        } @else {
+          padding-#{$side}: $px;
+        }
+      }
+    }
+  }
+
+  .#{$side} {
+    &-border {
+      @if $side == 'horizontal' {
+        border-bottom: 1px solid $black;
+        border-top: 1px solid $black;
+      } @else if $side == 'vertical' {
+        border-left: 1px solid $black;
+        border-right: 1px solid $black;
+      } @else {
+        border-#{$side}: 1px solid $black;
+      }
+    }
+  }
+}
+
+@each $size, $px in $spacings {
+  $interp: if($size == '', '', '#{$size}-');
+
+  .#{$interp} {
+    &padding {
+      padding: $px;
+    }
+
+    &spacer {
+      margin: $px;
+    }
+  }
+}

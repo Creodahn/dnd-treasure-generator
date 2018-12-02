@@ -4,12 +4,22 @@
     Here you can generate the treasure carried by an individual creature
   </p> 
 </section>
-<section>
-  <div class="form-group">
-    <label for="cr-input">Challenge Rating</label>
-    <input type="text" id="cr-input" value={{cr}}>
+<section class="row">
+  <div class="col-9">
+    <div class="form-group">
+      <label for="cr-input">Challenge Rating</label>
+      <input type="text" id="cr-input" value={{cr}}>
+    </div>
+    <button {{action "calculateReward"}}>Calculate</button>
   </div>
-  <button {{action "calculateReward"}}>Calculate</button>
-
-  <div>{{reward}}</div>
+  <div class="col-3">
+    {{#if reward}}
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">{{printableRolls}} = {{reward}}</p>
+          <button {{action "reset"}}>Reset</button>
+        </div>
+      </div>
+    {{/if}}
+  </div>
 </section>

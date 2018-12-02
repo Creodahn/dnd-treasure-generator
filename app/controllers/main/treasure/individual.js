@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { computed }  from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default Controller.extend({
@@ -6,6 +7,11 @@ export default Controller.extend({
   cr: null,
   diceBag: service(),
   reward: null,
+  rolls: null,
+  // computed properties
+  printableRolls: computed('rolls', function() {
+    return this.rolls ? this.rolls.join(' + ') : '';
+  }),
   // methods
   getCalculation(diceRoll, ruleSet) {
     return ruleSet.rules.map((rule) => {
@@ -31,6 +37,11 @@ export default Controller.extend({
         result = this.diceBag.rollMultipleDice({ dieType, count: diceCount });
 
       this.set('reward', `${result.total} ${coinType}`);
+      this.set('rolls', result.rolls);
+    },
+    reset() {
+      this.set('reward', null);
+      this.set('rolls', null);
     }
   }
 });

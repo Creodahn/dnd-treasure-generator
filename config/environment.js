@@ -4,6 +4,9 @@ module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'dnd-treasure-generator',
     environment,
+    'ember-cli-mirage': {
+      enabled: true
+    },
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {

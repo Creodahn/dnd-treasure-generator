@@ -1,0 +1,168 @@
+$alignments: center, left, right;
+$floats: left, right;
+$properties: margin, padding;
+
+$sides: 'bottom', 'horizontal', 'left', 'right', 'top', 'vertical';
+$spacings: ('x-lg', 30px), ('lg', 20px), ('sm', 5px), ('tiny', 1px), ('reg', 10px);
+
+@each $align in $alignments {
+  .align-#{$align} {
+    text-align: $align;
+  }
+}
+
+@each $float in $floats {
+  .float-#{$float} {
+    float: $float;
+  }
+}
+
+@each $property in $properties {
+  .no-#{$property} {
+    #{$property}: 0;
+  }
+}
+
+@each $side in $sides {
+  .#{$side} {
+    @each $size, $px in $spacings {
+      $interp: if($size == '', '', '-#{$size}');
+
+      &#{$interp}-spacer {
+        @if $side == 'horizontal' {
+          margin: 0 $px !important;
+        } @else if $side == 'vertical' {
+          margin: $px 0 !important;
+        } @else {
+          margin-#{$side}: $px !important;
+        }
+      }
+
+      &#{$interp}-padding {
+        @if $side == 'horizontal' {
+          padding: 0 $px;
+        } @else if $side == 'vertical' {
+          padding: $px 0;
+        } @else {
+          padding-#{$side}: $px;
+        }
+      }
+    }
+  }
+
+  .#{$side} {
+    &-border {
+      @if $side == 'horizontal' {
+        border-bottom: 1px solid $black;
+        border-top: 1px solid $black;
+      } @else if $side == 'vertical' {
+        border-left: 1px solid $black;
+        border-right: 1px solid $black;
+      } @else {
+        border-#{$side}: 1px solid $black;
+      }
+    }
+  }
+}
+
+@each $size, $px in $spacings {
+  $interp: if($size == '', '', '#{$size}-');
+
+  .#{$interp} {
+    &padding {
+      padding: $px;
+    }
+
+    &spacer {
+      margin: $px;
+    }
+  }
+}
+
+//  Create classes to easily setup flex grids
+$alignments: center, end, start;
+$directions: column, column-reverse, row, row-reverse;
+$spacer-sizes: ('', 1), ('-double', 2), ('-half', .5), ('triple', 3);
+
+.flex {
+  @each $direction in $directions {
+    &-#{$direction} {
+      @include flex-direction($direction);
+    }
+  }
+
+  @each $size-txt, $size in $spacer-sizes {
+    &#{$size-txt}-spacer {
+      @include flex($size);
+    }
+  }
+
+  &-align {
+    @each $alignment in $alignments {
+      &-#{$alignment} {
+        align-items: if($alignment == 'center', $alignment, flex-#{$alignment});
+      }
+    }
+
+    &-self {
+      @each $alignment in $alignments {
+        &-#{$alignment} {
+          align-self: if($alignment == 'center', $alignment, flex-#{$alignment});
+        }
+      }
+    }
+  }
+
+  &-center-content {
+    align-items: center;
+    justify-content: center;
+
+    & > * {
+      align-self: center;
+    }
+  }
+
+  &-display {
+    @include display-flex;
+  }
+
+  &-inline {
+    @include display-inline-flex;
+  }
+
+  &-justify {
+    @each $alignment in $alignments {
+      &-#{$alignment} {
+        justify-content: if($alignment == 'center', $alignment, flex-#{$alignment});
+      }
+    }
+  }
+
+  &-layout,
+  &-layout-row {
+    @extend .flex-display;
+  }
+
+  &-layout {
+    @extend .flex-column;
+  }
+
+  &-layout-row {
+    @extend .flex-row;
+
+    height: 100%;
+  }
+
+  &-space-between {
+    justify-content: space-between;
+  }
+
+  &-wrap {
+    flex-wrap: wrap;
+  }
+}
+
+.full-width {
+  max-width: 100%;
+  width: 100%;
+}

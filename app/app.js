@@ -1,3 +1,5 @@
+// sets up Ember.Inflector
+import './models/custom-inflector-rules';
 import Application from '@ember/application';
 import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';

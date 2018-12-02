@@ -1,0 +1,15 @@
+<section class="section">
+  <h1>Calculate Individual Treasure</h1>
+  <p>
+    Here you can generate the treasure carried by an individual creature
+  </p> 
+</section>
+<section>
+  <div class="form-group">
+    <label for="cr-input">Challenge Rating</label>
+    <input type="text" id="cr-input" value={{cr}}>
+  </div>
+  <button {{action "calculateReward"}}>Calculate</button>
+
+  <div>{{reward}}</div>
+</section>

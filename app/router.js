@@ -7,6 +7,12 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('main', { path: '/' }, function() {
+    this.route('treasure', function() {
+      this.route('individual');
+      this.route('hoard');
+    });
+  });
 });
 
 export default Router;

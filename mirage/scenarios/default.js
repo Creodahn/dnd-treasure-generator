@@ -7,7 +7,7 @@ export default function(server) {
 
   server.create('art-object', { name: 'Silver ewer', value: 25 });
   server.create('art-object', { name: 'Carved bone statuette', value: 25 });
-  
+
   server.create('art-object', { name: 'Gold ring set with bloodstones', value: 250 });
   server.create('art-object', { name: 'Carved ivory statuette', value: 250 });
   server.create('art-object', { name: 'Silver chalice set with moonstones', value: 750 });
@@ -348,7 +348,7 @@ export default function(server) {
         ]
       },
       {
-        max: 100,
+        max: 26,
         min: 17,
         calculations: [
           {
@@ -359,6 +359,35 @@ export default function(server) {
               value: 25
             },
             multiplier: 1
+          }
+        ]
+      },
+      {
+        max: 36,
+        min: 27,
+        calculations: [
+          {
+            diceCount: 2,
+            dieType: 'd6',
+            items: {
+              type: 'gemstones',
+              value: 50
+            }
+          }
+        ],
+        multiplier: 1
+      },
+      {
+        max: 44,
+        min: 37,
+        calculations: [
+          {
+            diceCount: 2,
+            dieType: 'd6',
+            items: {
+              type: 'gemstones',
+              value: 10
+            }
           }
         ]
       }

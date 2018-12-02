@@ -30,6 +30,7 @@ export default function() {
   this.resource('coins');
   this.resource('dice');
   this.resource('gemstones');
+  this.resource('magic-items');
   this.get('/treasure-rules', function({ treasureRules }, request) {
     const results = this.serialize(treasureRules.all().models.findBy('treasure-type', request.queryParams.treasureType)),
       returnValue = Array.isArray(results.data) ? results : { data: [results.data] };

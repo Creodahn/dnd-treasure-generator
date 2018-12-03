@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import Ember from 'ember';
+import Object from '@ember/object';
 
 export default Controller.extend({
   // attributes
@@ -8,7 +9,8 @@ export default Controller.extend({
   diceBag: service(),
   // methods
   getRuleForPercentileRoll(diceRoll, ruleSet) {
-    return ruleSet.rules.map((rule) => {
+    console.log(ruleSet.rules);
+    return ruleSet.rules.data.map((rule) => {
       return diceRoll >= rule.min && diceRoll <= rule.max ? rule : null;
     }).filter((item) => {
       return item !== null;
@@ -41,10 +43,29 @@ export default Controller.extend({
             { rolls, total } = this.diceBag.rollMultipleDice({ count: diceCount, dieType }),
             itemsToPickTotal = total * (multiplier || 1),
             inflectedType = Ember.Inflector.inflector.pluralize(items.type).camelize(),
-            itemsToChooseFrom = this[inflectedType].filterBy('value', items.value),
-            selectedItem = itemsToChooseFrom[ Math.floor(Math.random() * (itemsToChooseFrom.length - 0))];
+            itemsToChooseFrom =items.table ? this[inflectedType].filterBy('table', items.table) : this[inflectedType].filterBy('value', items.value),
+            selectedItems = [];
+          let uniqueItems = [],
+            countedResults = [];
 
-          return { name: selectedItem.name, rolls, total: itemsToPickTotal };
+          for(let i = 0; i < itemsToPickTotal; i++) {
+            selectedItems.push(itemsToChooseFrom[ Math.floor(Math.random() * (itemsToChooseFrom.length - 0))].name);
+          }
+
+          selectedItems.sort();
+
+          uniqueItems = [...new Set(selectedItems)].sort();
+
+          countedResults = uniqueItems.map((name) => {
+            return Object.create({
+              name,
+              count: selectedItems.filter((item) => {
+                return item === name;
+              }).length
+            });
+          });
+
+          return { items: countedResults, rolls, total: itemsToPickTotal };
         })
       );
     }

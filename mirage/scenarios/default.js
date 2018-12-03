@@ -38,6 +38,16 @@ export default function(server) {
   server.create('gemstone', { description: 'transparent dark green', name: 'Alexandrite', value: 500 });
   server.create('gemstone', { description: 'translucent dark green with black mottling and golden flecks', name: 'Black opal', value: 1000 });
   server.create('gemstone', { description: 'translucent lustrous black with glowing highlights', name: 'Black sapphire', value: 5000 });
+
+  server.create('magic-item', { max: 50, min: 1, name: 'potion of healing', table: 'A' });
+  server.create('magic-item', { max: 60, min: 51, name: 'spell scroll (cantrip)', table: 'A' });
+  server.create('magic-item', { max: 70, min: 61, name: 'potion of climbing', table: 'A' });
+  server.create('magic-item', { max: 90, min: 71, name: 'spell scroll (1st level)', table: 'A' });
+  server.create('magic-item', { max: 94, min: 91, name: 'spell scroll (2nd level)', table: 'A' });
+  server.create('magic-item', { max: 98, min: 95, name: 'potion of greater healing', table: 'A' });
+  server.create('magic-item', { max: 99, min: 99, name: 'bag of holding', table: 'A' });
+  server.create('magic-item', { max: 100, min: 100, name: 'driftglobe', table: 'A' });
+
   server.create('treasure-rule', {
     'max-cr': 4,
     'min-cr': 0,
@@ -378,7 +388,7 @@ export default function(server) {
         multiplier: 1
       },
       {
-        max: 44,
+        max: 100,
         min: 37,
         calculations: [
           {
@@ -388,9 +398,17 @@ export default function(server) {
               type: 'gemstones',
               value: 10
             }
+          },
+          {
+            diceCount: 1,
+            dieType: 'd6',
+            items: {
+              table: 'A',
+              type: 'magic-item',
+            }
           }
         ]
       }
     ]
-  })
+  });
 }

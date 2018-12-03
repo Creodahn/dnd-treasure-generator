@@ -8,7 +8,7 @@ export default Controller.extend({
   rewards: null,
   // methods
   getRuleForPercentileRoll(diceRoll, ruleSet) {
-    return ruleSet.rules.map((rule) => {
+    return ruleSet.rules.data.map((rule) => {
       return diceRoll >= rule.min && diceRoll <= rule.max ? rule : null;
     }).filter((item) => {
       return item !== null;

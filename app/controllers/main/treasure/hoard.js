@@ -9,7 +9,6 @@ export default Controller.extend({
   diceBag: service(),
   // methods
   getRuleForPercentileRoll(diceRoll, ruleSet) {
-    console.log(ruleSet.rules);
     return ruleSet.rules.data.map((rule) => {
       return diceRoll >= rule.min && diceRoll <= rule.max ? rule : null;
     }).filter((item) => {

@@ -1,0 +1,33 @@
+.dice-list {
+  @include flex(1);
+
+  align-items: flex-start;
+  padding: 0 5%;
+
+  &,
+  & > li {
+    @include display-flex;
+    @include flex-direction(row);
+  }
+
+  &.selected-dice {
+    & > li {
+      @include flex-direction(column);
+
+      & > .result {
+        margin-top: 20px;
+        text-align: center;
+      }
+    }
+  }
+
+  & > li {
+    justify-content: center;
+    margin: 0 2%;
+    min-width: 55px;
+
+    &::before {
+      content: '';
+    }
+  }
+}

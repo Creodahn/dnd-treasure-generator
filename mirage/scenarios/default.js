@@ -48,7 +48,7 @@ export default function(server) {
   server.create('magic-item', { max: 99, min: 99, name: 'bag of holding', table: 'A' });
   server.create('magic-item', { max: 100, min: 100, name: 'driftglobe', table: 'A' });
 
-  server.create('treasure-rule', {
+  server.create('treasure-rule-set', {
     'max-cr': 4,
     'min-cr': 0,
     'treasure-type': 'individual',
@@ -100,7 +100,7 @@ export default function(server) {
       }
     ]
   });
-  server.create('treasure-rule', {
+  server.create('treasure-rule-set', {
     'max-cr': 10,
     'min-cr': 5,
     'treasure-type': 'individual',
@@ -181,7 +181,7 @@ export default function(server) {
       }
     ]
   });
-  server.create('treasure-rule', {
+  server.create('treasure-rule-set', {
     'max-cr': 16,
     'min-cr': 11,
     'treasure-type': 'individual',
@@ -261,7 +261,7 @@ export default function(server) {
     ]
   });
 
-  server.create('treasure-rule', {
+  server.create('treasure-rule-set', {
     'min-cr': 17,
     'treasure-type': 'individual',
     rules: [
@@ -322,7 +322,7 @@ export default function(server) {
     ]
   });
 
-  server.create('treasure-rule', {
+  server.create('treasure-rule-set', {
     'max-cr': 4,
     'min-cr': 0,
     'treasure-type': 'hoard',

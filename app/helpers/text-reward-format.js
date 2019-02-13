@@ -1,5 +1,5 @@
 import { helper } from '@ember/component/helper';
-import Ember from 'ember';
+import Inflector from 'ember-inflector';
 
 export function textRewardFormat(params/*, hash*/) {
   const count = params[0],
@@ -9,7 +9,7 @@ export function textRewardFormat(params/*, hash*/) {
   if(count === 1) {
     output = text;
   } else {
-    output = Ember.Inflector.inflector.pluralize(text);
+    output = Inflector.inflector.pluralize(text);
   }
 
   return output;

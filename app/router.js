@@ -13,6 +13,7 @@ Router.map(function() {
       this.route('hoard');
     });
     this.route('home');
+    this.route('dice-roll');
   });
 });
 

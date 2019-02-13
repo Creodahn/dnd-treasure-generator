@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import Ember from 'ember';
+import Inflector from 'ember-inflector';
 import Object from '@ember/object';
 
 export default Controller.extend({
@@ -9,7 +9,6 @@ export default Controller.extend({
   diceBag: service(),
   // methods
   getRuleForPercentileRoll(diceRoll, ruleSet) {
-    console.log(ruleSet.rules);
     return ruleSet.rules.data.map((rule) => {
       return diceRoll >= rule.min && diceRoll <= rule.max ? rule : null;
     }).filter((item) => {
@@ -42,7 +41,7 @@ export default Controller.extend({
           const { diceCount, dieType, items, multiplier } = calculation,
             { rolls, total } = this.diceBag.rollMultipleDice({ count: diceCount, dieType }),
             itemsToPickTotal = total * (multiplier || 1),
-            inflectedType = Ember.Inflector.inflector.pluralize(items.type).camelize(),
+            inflectedType = Inflector.inflector.pluralize(items.type).camelize(),
             itemsToChooseFrom =items.table ? this[inflectedType].filterBy('table', items.table) : this[inflectedType].filterBy('value', items.value),
             selectedItems = [];
           let uniqueItems = [],

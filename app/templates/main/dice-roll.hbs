@@ -1,7 +1,7 @@
 <h1>Roll Dice</h1>
 <p>Click one or more dice from the list below to roll them</p>
 <ul class="dice-list">
-  {{#each diceBag.dice as |die|}}
+  {{#each diceBag.rollableDice as |die|}}
     <li>
       <button {{action "addDie" die}}>{{die.name}}</button>
     </li>

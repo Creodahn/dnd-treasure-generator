@@ -1,0 +1,16 @@
+{{#each rewards as |reward|}}
+  <li>
+    {{#if reward.total}}
+      {{roll-format reward.rolls}} = {{reward.total}}
+      {{#each reward.items as |rewardItem|}}
+        <div>
+          {{rewardItem.count}} {{text-reward-format rewardItem.count rewardItem.name}}
+        </div>
+      {{/each}}
+    {{else}}
+      Rolled too low for a reward
+    {{/if}}
+  </li>
+{{else}}
+  No rolls yet
+{{/each}}

@@ -3,11 +3,17 @@ import Service from '@ember/service';
 export default Service.extend({
   load(dice) {
     this.dice = dice;
+    this.rollableDice = dice.filter(die => die.showToUser !== false);
   },
   rollDie(dieType) {
     const die = this.dice.findBy('name', dieType);
+    let result = null;
 
-    return Math.floor(Math.random() * (die.ceil - die.floor + 1)) + die.floor;
+    if(die) {
+      result = Math.floor(Math.random() * (die.ceil - die.floor + 1)) + die.floor;
+    }
+
+    return result;
   },
   rollMultipleDice({ dice, dieType, count }) {
     const diceToRoll = dice ? dice : [],

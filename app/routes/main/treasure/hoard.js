@@ -7,7 +7,7 @@ export default Route.extend({
       artObjects: this.store.findAll('art-object'),
       gemstones: this.store.findAll('gemstone'),
       magicItems: this.store.findAll('magic-item'),
-      treasureRuleSets: this.store.query('treasure-rule-set', { filter: {treasureType: 'hoard' } })
+      treasureRuleSets: this.store.query('treasure-rule-set', { filter: { treasure_type: 'hoard' } })
     });
   },
   setupController(controller, model) {

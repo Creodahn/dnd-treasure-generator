@@ -9,29 +9,17 @@
       <label for="cr-input">Challenge Rating</label>
       {{input type="number" id="cr-input" value=(mut cr)}}
     </div>
-    <button {{action "calculateReward"}}>Roll Dice</button>
+    {{!-- <button {{action "calculateReward"}}>Roll Dice</button> --}}
+    {{#link-to "main.treasure.hoard.cr" cr tagName="button"}}
+      Roll Dice
+    {{/link-to}}
   </div>
   <div class="col-4">
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Roll Results</h4>
         <ul class="card-text left-lg-padding no-bullets">
-          {{#each rewards as |reward|}}
-            <li>
-              {{#if reward.total}}
-                {{roll-format reward.rolls}} = {{reward.total}}
-                {{#each reward.items as |rewardItem|}}
-                  <div>
-                    {{rewardItem.count}} {{text-reward-format rewardItem.count rewardItem.name}}
-                  </div>
-                {{/each}}
-              {{else}}
-                Rolled too low for a reward
-              {{/if}}
-            </li>
-          {{else}}
-            No rolls yet
-          {{/each}}
+          {{outlet}}
         </ul>
       </div>
     </div>

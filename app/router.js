@@ -10,7 +10,9 @@ Router.map(function() {
   this.route('main', { path: '/' }, function() {
     this.route('treasure', function() {
       this.route('individual');
-      this.route('hoard');
+      this.route('hoard', function() {
+        this.route('cr', { path: '/:cr' });
+      });
     });
     this.route('home');
     this.route('dice-roll');

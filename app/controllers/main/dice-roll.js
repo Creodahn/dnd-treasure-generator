@@ -10,8 +10,10 @@ export default Controller.extend({
   // computed properties
   displayDice: computed('selectedDice.[]', 'results.[]', function() {
     return this.selectedDice.map((item, index) => {
-      if(this.results.length > 0) {
-        item.set('result', this.results[index].rolls);
+      const rolls = this.results;
+
+      if(rolls && rolls[index]) {
+        item.set('result', rolls[index]);
       }
 
       return item;
@@ -42,11 +44,15 @@ export default Controller.extend({
     },
     rollDice() {
       const dice = this.selectedDice.map((item) => {
-        return item.die;
-      });
-        
-      
-      this.results.pushObject(this.diceBag.rollMultipleDice({ dice }));
+          return item.die;
+        }),
+        results = this.diceBag.rollMultipleDice( { dice });
+
+      // reset results to force displayDice to update when inserting new results
+      this.set('results', []);
+      this.set('results', results.rolls);
+      // this is the second thing returned in the results object, but we don't display it currently
+      this.set('total', results.total);
     }
   }
 });

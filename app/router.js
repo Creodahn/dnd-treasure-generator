@@ -9,7 +9,9 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('main', { path: '/' }, function() {
     this.route('treasure', function() {
-      this.route('individual');
+      this.route('individual', function() {
+        this.route('cr', { path: '/:cr' });
+      });
       this.route('hoard', function() {
         this.route('cr', { path: '/:cr' });
       });

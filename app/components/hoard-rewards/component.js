@@ -60,5 +60,5 @@ export default Component.extend({
     }).filter((item) => {
       return item !== null;
     })[0];
-  },
+  }
 });

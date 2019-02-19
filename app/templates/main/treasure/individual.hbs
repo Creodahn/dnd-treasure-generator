@@ -10,22 +10,16 @@
       <label for="cr-input">Challenge Rating</label>
       {{input type="number" id="cr-input" value=(mut cr)}}
     </div>
-    <button {{action "calculateReward"}}>Roll Dice</button>
+    {{!-- <button {{action "calculateReward"}}>Roll Dice</button> --}}
+    {{#link-to "main.treasure.individual.cr" cr tagName="button"}}
+      Roll Dice
+    {{/link-to}}
   </div>
   <div class="col-4">
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Roll Results</h4>
-        <ul class="card-text left-lg-padding no-bullets">
-          {{#each rewards as |reward|}}
-            <li>
-              {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
-            </li>
-          {{else}}
-            <li>No rolls yet</li>
-          {{/each}}
-        </ul>
-        <button class="horizontal-auto-spacer flex-display" {{action "reset"}}>Reset</button>
+        {{outlet}}
       </div>
     </div>
   </div>

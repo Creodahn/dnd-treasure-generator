@@ -2,8 +2,9 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
   // attributes
+  coinType: DS.attr('string', { readOnly: true }),
   diceCount: DS.attr('number'),
-  dieType: DS.attr('string'),
+  dieType: DS.attr('string', { readOnly: true }),
   itemTable: DS.attr('string'),
   itemType: DS.attr('string'),
   itemValue: DS.attr('number'),

@@ -1,3 +1,8 @@
+{{#each coinRewards as |reward|}}
+  <li>
+    {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
+  </li>
+{{/each}}
 {{#each rewards as |reward|}}
   <li>
     {{#if reward.total}}

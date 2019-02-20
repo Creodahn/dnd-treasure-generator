@@ -9,12 +9,28 @@ export default Component.extend({
   // attributes
   diceBag: service(),
   // computed properties
+  coinRewards: computed('calculations.[]', function() {
+    if(this.calculations) {
+      return this.calculateCoinReward();
+    }
+  }),
   rewards: computed('model.[]', function() {
     if(this.model) {
       return this.calculateReward(this.model);
     }
   }),
   // methods
+  calculateCoinReward() {
+    return this.calculations.map((calculation) => {
+      const { coinType, diceCount, dieType, multiplier } = calculation,
+        result = this.diceBag.rollMultipleDice({ dieType, count: diceCount });
+
+      result.coinType = coinType;
+      result.total = result.total * (multiplier || 1);
+
+      return result;
+    });
+  },
   calculateReward(rules) {
     const { diceCalculations } = this.getRuleForPercentileRoll(rules),
       rewardSource = getOwner(this).lookup('controller:main.treasure.hoard');

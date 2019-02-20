@@ -1,5 +1,6 @@
 import GetCrRule from 'dnd-treasure-generator/mixins/get-cr-rule';
 import { getOwner }  from '@ember/application';
+import { hash }  from 'rsvp';
 import Route from '@ember/routing/route';
 
 export default Route.extend(GetCrRule, {
@@ -19,6 +20,14 @@ export default Route.extend(GetCrRule, {
       ctrl.set('cr', params.cr);
     }
 
-    return this.store.query('treasure-rule', { filter: { treasure_rule_set_id: ruleSet.id }, include: 'dice-calculations' });
+    return hash({
+      setCalculations: ruleSet.diceCalculations,
+      rules: this.store.query('treasure-rule', { filter: { treasure_rule_set_id: ruleSet.id }, include: 'dice-calculations' })
+    });
+  },
+  setupController(controller, model) {
+    this._super(controller, model.rules);
+
+    controller.set('calculations', model.setCalculations);
   }
 });

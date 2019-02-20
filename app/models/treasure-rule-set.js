@@ -6,5 +6,5 @@ export default DS.Model.extend({
   minCr: DS.attr('number'),
   treasureType: DS.attr('string'),
   // relationships
-  treasureRules: DS.hasMany('treasure-rule', { async: false })
+  treasureRules: DS.hasMany('treasure-rule')
 });

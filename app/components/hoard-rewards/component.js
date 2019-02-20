@@ -15,8 +15,6 @@ export default Component.extend({
     }
   }),
   // methods
-  // TODO: Needs a way to calculate rolling on magic item tables properly, plus
-  // needs handling for table rows that require another roll
   calculateReward(rules) {
     const { diceCalculations } = this.getRuleForPercentileRoll(rules),
       rewardSource = getOwner(this).lookup('controller:main.treasure.hoard');

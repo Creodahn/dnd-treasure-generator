@@ -10,10 +10,7 @@
       <label for="cr-input">Challenge Rating</label>
       {{input type="number" id="cr-input" value=(mut cr)}}
     </div>
-    {{!-- <button {{action "calculateReward"}}>Roll Dice</button> --}}
-    {{#link-to "main.treasure.individual.cr" cr tagName="button"}}
-      Roll Dice
-    {{/link-to}}
+    <button {{action "selectCR"}}>Roll Dice</button>
   </div>
   <div class="col-4">
     <div class="card">

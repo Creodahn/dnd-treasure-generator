@@ -3,6 +3,12 @@ import { getOwner }  from '@ember/application';
 import Route from '@ember/routing/route';
 
 export default Route.extend(GetCrRule, {
+  // attributes
+  queryParams: {
+    rand: {
+      refreshModel: true
+    }
+  },
   // hooks
   model(params) {
     const ctrl = getOwner(this).lookup('controller:main/treasure/hoard'),

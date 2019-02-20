@@ -28,22 +28,42 @@ export default Component.extend({
           itemsToPickTotal = total * (multiplier || 1),
           inflectedType = Inflector.inflector.pluralize(itemType).camelize(),
           itemsToChooseFrom = itemTable ? rewardSource[inflectedType].filterBy('table', itemTable) : rewardSource[inflectedType].filterBy('value', itemValue),
-          selectedItems = [];
+          selectedItems = [],
+          selectedItemNames = [];
         let countedResults = [],
           uniqueItems = [];
 
+        // this loop basically acts as rolling a d100 on whichever table is being used
+        // by selecting a random item from whichever set of items should be selected
         for(let i = 0; i < itemsToPickTotal; i++) {
-          selectedItems.push(itemsToChooseFrom[ Math.floor(Math.random() * (itemsToChooseFrom.length - 0))].name);
+          selectedItems.push(itemsToChooseFrom[ Math.floor(Math.random() * itemsToChooseFrom.length)]);
         }
 
-        selectedItems.sort();
+        if(inflectedType === 'magicItems') {
+          // check each selected item to see if it has children which should be rolled for
+          selectedItems.map((item, index) => {
+            const dieRoll = item.dieType ? this.diceBag.rollDie(item.dieType) : null;
 
-        uniqueItems = [...new Set(selectedItems)].sort();
+            item.children.map((child) => {
+              if(dieRoll >= child.min && dieRoll <= child.max) {
+                selectedItems[index] = child;
+              }
+            });
+          });
+        }
+
+        selectedItems.map((item) => {
+          selectedItemNames.push(item.name);
+        });
+
+        selectedItemNames.sort();
+
+        uniqueItems = [...new Set(selectedItemNames)].sort();
 
         countedResults = uniqueItems.map((name) => {
           return Object.create({
             name,
-            count: selectedItems.filter((item) => {
+            count: selectedItemNames.filter((item) => {
               return item === name;
             }).length
           });

@@ -6,7 +6,7 @@ export default Route.extend({
     return hash({
       artObjects: this.store.findAll('art-object'),
       gemstones: this.store.findAll('gemstone'),
-      magicItems: this.store.findAll('magic-item'),
+      magicItems: this.store.findAll('magic-item', { include: 'children,die,parent' }),
       treasureRuleSets: this.store.query('treasure-rule-set', { filter: { treasure_type: 'hoard' } })
     });
   },

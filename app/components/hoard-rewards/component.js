@@ -40,8 +40,8 @@ export default Component.extend({
         const { diceCount, dieType, itemTable, itemType, itemValue, multiplier } = calculation,
           { rolls, total } = this.diceBag.rollMultipleDice({ count: diceCount, dieType }),
           itemsToPickTotal = total * (multiplier || 1),
-          inflectedType = itemType ? Inflector.inflector.pluralize(itemType).camelize() : '',
-          itemsToChooseFrom = itemTable ? rewardSource['magicItems'].filterBy('table', itemTable) : rewardSource[inflectedType].filterBy('value', itemValue),
+          inflectedType = itemTable ? Inflector.inflector.pluralize(itemType).camelize() : 'magicItems',
+          itemsToChooseFrom = itemTable ? rewardSource[inflectedType].filterBy('table', itemTable) : rewardSource[inflectedType].filterBy('value', itemValue),
           selectedItems = [],
           selectedItemNames = [];
         let countedResults = [],

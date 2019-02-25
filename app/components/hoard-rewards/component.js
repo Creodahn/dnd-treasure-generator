@@ -40,7 +40,7 @@ export default Component.extend({
         const { diceCount, dieType, itemTable, itemType, itemValue, multiplier } = calculation,
           { rolls, total } = this.diceBag.rollMultipleDice({ count: diceCount, dieType }),
           itemsToPickTotal = total * (multiplier || 1),
-          inflectedType = itemTable ? Inflector.inflector.pluralize(itemType).camelize() : 'magicItems',
+          inflectedType = itemType && !itemTable ? Inflector.inflector.pluralize(itemType).camelize() : 'magicItems',
           itemsToChooseFrom = itemTable ? rewardSource[inflectedType].filterBy('table', itemTable) : rewardSource[inflectedType].filterBy('value', itemValue),
           selectedItems = [],
           selectedItemNames = [];
@@ -50,7 +50,7 @@ export default Component.extend({
         // this loop basically acts as rolling a d100 on whichever table is being used
         // by selecting a random item from whichever set of items should be selected
         for(let i = 0; i < itemsToPickTotal; i++) {
-          selectedItems.push(itemsToChooseFrom[ Math.floor(Math.random() * itemsToChooseFrom.length)]);
+          selectedItems.push(itemsToChooseFrom[Math.floor(Math.random() * itemsToChooseFrom.length)]);
         }
 
         if(inflectedType === 'magicItems') {

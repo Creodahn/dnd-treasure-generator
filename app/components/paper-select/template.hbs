@@ -1,0 +1,15 @@
+<label for={{select-id}}>
+  {{label}}
+</label>
+<div class="custom-caret select-wrapper">
+  <select
+    id={{select-id}}
+    onchange={{action selectOption value="target.value"}}
+  >
+    {{#each listItems as |item|}}
+      <option value={{item.id}}>
+        {{text-format item.name optionTextFormatting}}
+      </option>
+    {{/each}}
+  </select>
+</div>

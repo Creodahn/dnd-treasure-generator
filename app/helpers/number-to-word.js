@@ -118,9 +118,9 @@ export function numberToWord(params/*, hash*/) {
 
   toConvert.map((char, index) => {
     const multiplier = index === 1 ? 10 : 1, 
-      num =  parseInt(char) * multiplier;
-      console.log(num);
-    let resultPart = `${conversions.findBy('number', num).word} ${modifiers[index]}`;
+      num =  parseInt(char) * multiplier,
+      numberItem = conversions.findBy('number', num);
+    let resultPart = numberItem ? `${numberItem.word} ${modifiers[index]}` : '';
 
     result.push(resultPart);
   });

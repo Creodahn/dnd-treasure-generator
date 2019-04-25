@@ -18,6 +18,9 @@ Router.map(function() {
     });
     this.route('home');
     this.route('dice-roll');
+    this.route('reference', function() {
+      this.route('coin-conversions');
+    });
   });
 });
 

@@ -1,0 +1,24 @@
+<section class="section">
+  <h1>Reference</h1>
+  <p>
+    Here you can lookup useful information
+  </p>
+  <section class="row">
+    <div class="col-6">
+      <nav class="card">
+        <ul class="card-body">
+          <li>
+            {{#link-to "main.reference.coin-conversions"}}
+              Coin Conversion Rates
+            {{/link-to}}
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        {{outlet}}
+      </div>
+    </div>
+  </section>
+</section>

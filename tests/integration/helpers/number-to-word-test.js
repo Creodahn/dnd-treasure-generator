@@ -12,6 +12,6 @@ module('Integration | Helper | number-to-word', function(hooks) {
 
     await render(hbs`{{number-to-word inputValue}}`);
 
-    assert.equal(this.element.textContent.trim(), '1234');
+    assert.equal(this.element.textContent.trim(), 'one thousand two hundred thirty four');
   });
 });

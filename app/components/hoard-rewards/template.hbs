@@ -1,21 +1,23 @@
-{{#each coinRewards as |reward|}}
-  <li>
-    {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
-  </li>
-{{/each}}
-{{#each rewards as |reward|}}
-  <li>
-    {{#if reward.total}}
-      {{roll-format reward.rolls}} = {{reward.total}}
-      {{#each reward.items as |rewardItem|}}
-        <div>
-          {{rewardItem.count}} {{text-reward-format rewardItem.count rewardItem.name}}
-        </div>
-      {{/each}}
-    {{else}}
-      Rolled too low for a reward
-    {{/if}}
-  </li>
+{{#if showRewardList}}
+  {{#each coinRewards as |reward|}}
+    <li>
+      {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
+    </li>
+  {{/each}}
+  {{#each rewards as |reward|}}
+    <li>
+      {{#if reward.total}}
+        {{roll-format reward.rolls}} = {{reward.total}}
+        {{#each reward.items as |rewardItem|}}
+          <div>
+            {{rewardItem.count}} {{text-reward-format rewardItem.count rewardItem.name}}
+          </div>
+        {{/each}}
+      {{else}}
+        Rolled too low for a reward
+      {{/if}}
+    </li>
+  {{/each}}
 {{else}}
   No rolls yet
-{{/each}}
+{{/if}}

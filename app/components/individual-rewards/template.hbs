@@ -1,9 +1,11 @@
 <ul class="card-text left-lg-padding no-bullets">
-  {{#each rewards as |reward|}}
-    <li>
-      {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
-    </li>
+  {{#if rewards}}
+    {{#each rewards as |reward|}}
+      <li>
+        {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
+      </li>
+    {{/each}}
   {{else}}
     <li>No rolls yet</li>
-  {{/each}}
+  {{/if}}
 </ul>

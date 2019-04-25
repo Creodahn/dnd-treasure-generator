@@ -16,8 +16,6 @@ export default Controller.extend({
       }).filter((item) => item.rate > 1);
     });
 
-    console.log(coins);
-
     return values;
   })
 });

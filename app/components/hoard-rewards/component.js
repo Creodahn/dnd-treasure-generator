@@ -10,14 +10,13 @@ export default Component.extend({
   diceBag: service(),
   // computed properties
   coinRewards: computed('calculations.[]', function() {
-    if(this.calculations) {
-      return this.calculateCoinReward();
-    }
+    return this.calculations ? this.calculateCoinReward() : null;
   }),
   rewards: computed('model.[]', function() {
-    if(this.model) {
-      return this.calculateReward(this.model);
-    }
+    return this.model ? this.calculateReward(this.model) : null;
+  }),
+  showRewardList: computed('coinRewards', 'rewards', function() {
+    return !!this.coinRewards && !!this.rewards;
   }),
   // methods
   calculateCoinReward() {

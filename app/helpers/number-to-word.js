@@ -142,8 +142,6 @@ function parseThreeDigits(originalNumber) {
     }
   }
 
-  // debugger
-
   return results.join(' ');
 }
 
@@ -156,8 +154,6 @@ export function numberToWord(params/*, hash*/) {
         start = 0 + increment,
         slicedNumber = originalNumber.slice(start, end),
         result = parseThreeDigits(slicedNumber.reverse());
-
-        // debugger;
 
       return `${result}${result.length > 0 ? ` ${modifier}` : ''}`;
     });

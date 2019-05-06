@@ -7,7 +7,7 @@ export default Component.extend({
   diceBag: service(),
   // computed properties
   rewards: computed('model.[]', function() {
-    return this.calculateReward(this.model);
+    return this.model ? this.calculateReward(this.model) : null;
   }),
   // methods
   calculateReward(rules) {

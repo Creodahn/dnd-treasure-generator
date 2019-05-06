@@ -2,6 +2,7 @@ import Application from '@ember/application';
 
 import { initialize } from 'dnd-treasure-generator/instance-initializers/dice-bag';
 import { module, test } from 'qunit';
+import Object from '@ember/object';
 import { run } from '@ember/runloop';
 
 module('Unit | Instance Initializer | dice-bag', function(hooks) {
@@ -13,6 +14,8 @@ module('Unit | Instance Initializer | dice-bag', function(hooks) {
     });
     this.application = this.TestApplication.create({ autoboot: false });
     this.instance = this.application.buildInstance();
+    this.instance.register('service:dice-bag', Object.extend({ load() { return true; } }));
+    this.instance.register('service:store', Object.extend({ findAll() { return []; } }));
   });
   hooks.afterEach(function() {
     run(this.application, 'destroy');

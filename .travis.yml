@@ -21,7 +21,8 @@ env:
 before_install:
   - npm config set spin false
 
+install:
+  - npm install
+
 script:
-  - npm run lint:hbs
-  - npm run lint:js
-  - npm test
+  - ember test

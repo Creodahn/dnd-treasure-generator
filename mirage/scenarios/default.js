@@ -4,6 +4,21 @@ export default function(server) {
     Seed your development database using your factories.
     This data will not be loaded in your tests.
   */
+ const cp = server.create('coin', { name: 'CP', value: 0.01 }),
+  sp = server.create('coin', { name: 'SP', value: 0.1 }),
+  ep = server.create('coin', { name: 'EP', value: 0.5 }),
+  gp = server.create('coin', { name: 'GP', value: 1 }),
+  pp = server.create('coin', { name: 'PP', value: 10 }),
+  d2 = server.create('die', { ceil: 2, floor: 1, name: 'd2' }),
+  d3 = server.create('die', { ceil: 3, floor: 1, name: 'd3' }),
+  d4 = server.create('die', { ceil: 4, floor: 1, name: 'd4' }),
+  d6 = server.create('die', { ceil: 6, floor: 1, name: 'd6' }),
+  d8 = server.create('die', { ceil: 8, floor: 1, name: 'd8' }),
+  d10 = server.create('die', { ceil: 10, floor: 1, name: 'd10' }),
+  d20 = server.create('die', { ceil: 20, floor: 1, name: 'd20' }),
+  d100 = server.create('die', { ceil: 100, floor: 1, name: 'd100' });
+let tr = null, 
+  trs = null;
 
   server.create('art-object', { name: 'Silver ewer', value: 25 });
   server.create('art-object', { name: 'Carved bone statuette', value: 25 });
@@ -17,20 +32,9 @@ export default function(server) {
   server.create('art-object', { name: 'Jeweled gold crown', value: 7500 });
   server.create('art-object', { name: 'Jeweled platinum ring', value: 7500 });
 
-  server.create('coin', { name: 'CP', value: 0.01 });
-  server.create('coin', { name: 'SP', value: 0.1 });
-  server.create('coin', { name: 'EP', value: 0.5 });
-  server.create('coin', { name: 'GP', value: 1 });
-  server.create('coin', { name: 'PP', value: 10 });
+  
 
-  server.create('die', { ceil: 2, floor: 1, name: 'd2' });
-  server.create('die', { ceil: 3, floor: 1, name: 'd3' });
-  server.create('die', { ceil: 4, floor: 1, name: 'd4' });
-  server.create('die', { ceil: 6, floor: 1, name: 'd6' });
-  server.create('die', { ceil: 8, floor: 1, name: 'd8' });
-  server.create('die', { ceil: 10, floor: 1, name: 'd10' });
-  server.create('die', { ceil: 20, floor: 1, name: 'd20' });
-  server.create('die', { ceil: 100, floor: 1, name: 'd100' });
+  
 
   server.create('gemstone', { description: 'opaque mottled deep blue', name: 'Azurite', value: 10 });
   server.create('gemstone', { description: 'opaque dark gray with red flecks', name: 'Bloodstone', value: 50 });
@@ -48,367 +52,26 @@ export default function(server) {
   server.create('magic-item', { max: 99, min: 99, name: 'bag of holding', table: 'A' });
   server.create('magic-item', { max: 100, min: 100, name: 'driftglobe', table: 'A' });
 
-  server.create('treasure-rule-set', {
-    'max-cr': 4,
-    'min-cr': 0,
-    'treasure-type': 'individual',
-    rules: [
-      {
-        max: 30,
-        min: 1,
-        calculations: [{
-          diceCount: 5,
-          dieType: 'd6',
-          coinType: 'CP'
-        }]
-      },
-      {
-        max: 60,
-        min: 31,
-        calculations: [{
-          diceCount: 4,
-          dieType: 'd6',
-          coinType: 'SP'
-        }]
-      },
-      {
-        max: 70,
-        min: 61,
-        calculations: [{
-          diceCount: 3,
-          dieType: 'd6',
-          coinType: 'EP'
-        }]
-      },
-      {
-        max: 95,
-        min: 71,
-        calculations: [{
-          diceCount: 3,
-          dieType: 'd6',
-          coinType: 'GP'
-        }]
-      },
-      {
-        max: 100,
-        min: 96,
-        calculations: [{
-          diceCount: 1,
-          dieType: 'd6',
-          coinType: 'PP'
-        }]
-      }
-    ]
-  });
-  server.create('treasure-rule-set', {
-    'max-cr': 10,
-    'min-cr': 5,
-    'treasure-type': 'individual',
-    rules: [
-      {
-        max: 30,
-        min: 1,
-        calculations: [{
-          diceCount: 4,
-          dieType: 'd6',
-          coinType: 'CP',
-          multiplier: 100
-        },
-        {
-          diceCount: 1,
-          dieType: 'd6',
-          coinType: 'EP',
-          multiplier: 10
-        }]
-      },
-      {
-        max: 60,
-        min: 31,
-        calculations: [{
-          diceCount: 6,
-          dieType: 'd6',
-          coinType: 'SP',
-          multiplier: 10
-        },
-        {
-          diceCount: 2,
-          dieType: 'd6',
-          coinType: 'GP',
-          multiplier: 10
-        }]
-      },
-      {
-        max: 70,
-        min: 61,
-        calculations: [{
-          diceCount: 3,
-          dieType: 'd6',
-          coinType: 'EP',
-          multiplier: 10
-        },
-        {
-          diceCount: 2,
-          dieType: 'd6',
-          coinType: 'GP',
-          multiplier: 10
-        }]
-      },
-      {
-        max: 95,
-        min: 71,
-        calculations: [{
-          diceCount: 4,
-          dieType: 'd6',
-          coinType: 'GP',
-          multiplier: 10
-        }]
-      },
-      {
-        max: 100,
-        min: 96,
-        calculations: [{
-          diceCount: 3,
-          dieType: 'd6',
-          coinType: 'PP',
-          multiplier: 1
-        },
-        {
-          diceCount: 2,
-          dieType: 'd6',
-          coinType: 'GP',
-          multiplier: 10
-        }]
-      }
-    ]
-  });
-  server.create('treasure-rule-set', {
-    'max-cr': 16,
-    'min-cr': 11,
-    'treasure-type': 'individual',
-    rules: [
-      {
-        max: 20,
-        min: 1,
-        calculations: [
-          {
-            diceCount: 4,
-            dieType: 'd6',
-            coinType: 'SP',
-            multiplier: 100
-          },
-          {
-            diceCount: 1,
-            dieType: 'd6',
-            coinType: 'GP',
-            multiplier: 100
-          }
-        ]
-      },
-      {
-        max: 35,
-        min: 21,
-        calculations: [
-          {
-            diceCount: 1,
-            dieType: 'd6',
-            coinType: 'EP',
-            multiplier: 100
-          },
-          {
-            diceCount: 1,
-            dieType: 'd6',
-            coinType: 'GP',
-            multiplier: 100
-          }
-        ]
-      },
-      {
-        max: 75,
-        min: 36,
-        calculations: [
-          {
-            diceCount: 2,
-            dieType: 'd6',
-            coinType: 'GP',
-            multiplier: 100
-          },
-          {
-            diceCount: 1,
-            dieType: 'd6',
-            coinType: 'PP',
-            multiplier: 10
-          }
-        ]
-      },
-      {
-        max: 100,
-        min: 76,
-        calculations: [
-          {
-            diceCount: 2,
-            dieType: 'd6',
-            coinType: 'GP',
-            multiplier: 100
-          },
-          {
-            diceCount: 2,
-            dieType: 'd6',
-            coinType: 'PP',
-            multiplier: 10
-          }
-        ]
-      }
-    ]
-  });
+  // hoard rules
+  trs = server.create('treasure-rule-set', { max_cr: 4, min_cr: 0, treasure_type: 'hoard' });
+  server.create('dice-calculation', { dice_count: 6, multiplier: 100, coin: cp, die: d6, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, multiplier: 100, coin: sp, die: d6, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, multiplier: 10, coin: gp, die: d6, treasure_rule_set: trs });
 
-  server.create('treasure-rule-set', {
-    'min-cr': 17,
-    'treasure-type': 'individual',
-    rules: [
-      {
-        max: 15,
-        min: 1,
-        calculations: [
-          {
-            diceCount: 2,
-            dieType: 'd6',
-            coinType: 'EP',
-            multiplier: 1000
-          },
-          {
-            diceCount: 8,
-            dieType: 'd6',
-            coinType: 'GP',
-            multiplier: 100
-          }
-        ]
-      },
-      {
-        max: 55,
-        min: 16,
-        calculations: [
-          {
-            diceCount: 1,
-            dieType: 'd6',
-            coinType: 'GP',
-            multiplier: 1000
-          },
-          {
-            diceCount: 1,
-            dieType: 'd6',
-            coinType: 'PP',
-            multiplier: 100
-          }
-        ]
-      },
-      {
-        max: 100,
-        min: 56,
-        calculations: [
-          {
-            diceCount: 1,
-            dieType: 'd6',
-            coinType: 'GP',
-            multiplier: 1000
-          },
-          {
-            diceCount: 2,
-            dieType: 'd6',
-            coinType: 'PP',
-            multiplier: 100
-          }
-        ]
-      }
-    ]
-  });
+  tr = server.create('treasure-rule', { max: 6, min: 1, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 0, die: d6, item_type: 'gemstone', item_value: 10, multiplier: 0, treasure_rule: tr });
 
-  server.create('treasure-rule-set', {
-    'max-cr': 4,
-    'min-cr': 0,
-    'treasure-type': 'hoard',
-    rules: [
-      {
-        max: 6,
-        min: 1,
-        calculations: [
-          {
-            diceCount: 0,
-            dieType: 'd6',
-            items: {
-              type: 'gemstone',
-              value: 10
-            },
-            multiplier: 0
-          }
-        ]
-      },
-      {
-        max: 16,
-        min: 7,
-        calculations: [
-          {
-            diceCount: 2,
-            dieType: 'd6',
-            items: {
-              type: 'gemstone',
-              value: 10
-            },
-            multiplier: 1
-          }
-        ]
-      },
-      {
-        max: 26,
-        min: 17,
-        calculations: [
-          {
-            diceCount: 2,
-            dieType: 'd4',
-            items: {
-              type: 'art-object',
-              value: 25
-            },
-            multiplier: 1
-          }
-        ]
-      },
-      {
-        max: 36,
-        min: 27,
-        calculations: [
-          {
-            diceCount: 2,
-            dieType: 'd6',
-            items: {
-              type: 'gemstones',
-              value: 50
-            }
-          }
-        ],
-        multiplier: 1
-      },
-      {
-        max: 100,
-        min: 37,
-        calculations: [
-          {
-            diceCount: 2,
-            dieType: 'd6',
-            items: {
-              type: 'gemstones',
-              value: 10
-            }
-          },
-          {
-            diceCount: 1,
-            dieType: 'd6',
-            items: {
-              table: 'A',
-              type: 'magic-item',
-            }
-          }
-        ]
-      }
-    ]
-  });
+  tr = server.create('treasure-rule', { max: 16, min: 7, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'gemstone', item_value: 10, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 26, min: 17, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'art-object', item_value: 25, die: d6, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 36, min: 27, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'gemstone', item_value: 50, die: d6, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 44, min: 37, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'gemstone', item_value: 10, treasure_rule: tr });
+  server,create('dice-calculation', { item_table: 'A', item_type: 'magic-item', die: d6, treasure_rule: tr });
+
 }

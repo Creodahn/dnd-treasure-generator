@@ -74,4 +74,51 @@ let tr = null,
   server.create('dice-calculation', { dice_count: 2, item_type: 'gemstone', item_value: 10, treasure_rule: tr });
   server,create('dice-calculation', { item_table: 'A', item_type: 'magic-item', die: d6, treasure_rule: tr });
 
+  tr = server.create('treasure-rule', { max: 52, min: 45, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'art-object', item_value: 25, die: d4, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'A', item_type: 'magic-item', die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 60, min: 53, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_Count: 2, item_type: 'gemstone', item_value: 50, die: d6, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'A', item_type: 'magic-item', die: d6, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 65, min: 61, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'gemstone', item_value: 10, die:d6, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'B', item_type: 'magic-item', die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 70, min: 66, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'art-object', item_value: 25, die: d4, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'B', item_type: 'magic-item', die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 75, min: 71, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'gemstone', item_value: 50, die: d6, treasure_rule: tr });
+  server.create('dice-calculation', { item_Table: 'B', item_type: 'magic-item', die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 78, min: 76, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'gemstone', item_value: 10, die: d6, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'C', item_type: 'magic-item', die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 80, min: 79, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_Type: 'art-object', item_value: 25, die: d4, treasure_rule: tr});
+  server.create('dice-calculation', { item_table: 'C', item_type: 'magic-item', die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 85, min: 81, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'gemstone', item_value: 50, die: d6, treasure_rule: tr });
+  server.create('dice-caluclation', { item_table: 'C', item_type: 'magic-item', die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 92, min: 86, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'art-object', item_value: 25, die: d4, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'F', item_type: 'magic-item', die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 97, min: 93, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'gemstone', item_value: 50, die: d6, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'F', item_type: 'magic-item', die: d10, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 99, min: 98, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'art-object', item_value: 25, die: d4, treasure_rule: tr });
+  server.create('dice-calculation', { item_Table: 'G', item_type: 'magic-item', die: d1, treasure_rule: tr });
+  
+  tr = server.create('treasure-rule', { max: 100, min: 100, treasure_rule_set: trs});
+  server.create('dice-caculation', { dice_count: 2, item_type: 'gemstone', item_value: 50, die: d6, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'G', item_type: 'magic-item', die: d1, treasure_rule: tr });
 }

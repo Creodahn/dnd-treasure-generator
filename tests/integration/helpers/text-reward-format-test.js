@@ -9,7 +9,7 @@ module('Integration | Helper | text-reward-format', function(hooks) {
   // Replace this with your real tests.
   test('it renders', async function(assert) {
     this.set('inputValue', 1234);
-    this.set('text', 'thing')
+    this.set('text', 'thing');
 
     await render(hbs`{{text-reward-format inputValue text}}`);
 

@@ -5,7 +5,8 @@ module('Unit | Route | main/reference/coin-conversions', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let route = this.owner.lookup('route:main/reference/coin-conversions');
+    const route = this.owner.lookup('route:main/reference/coin-conversions');
+
     assert.ok(route);
   });
 });

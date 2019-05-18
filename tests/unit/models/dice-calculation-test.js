@@ -6,8 +6,9 @@ module('Unit | Model | dice calculation', function(hooks) {
 
   // Replace this with your real tests.
   test('it exists', function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('dice-calculation', {});
+    const store = this.owner.lookup('service:store'),
+      model = store.createRecord('dice-calculation', {});
+
     assert.ok(model);
   });
 });

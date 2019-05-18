@@ -18,8 +18,8 @@ export default function(server) {
 
   server.create('die', { ceil: 2, floor: 1, name: 'd2' });
   server.create('die', { ceil: 3, floor: 1, name: 'd3' });
-  d20 = server.create('die', { ceil: 20, floor: 1, name: 'd20' });
-  d100 = server.create('die', { ceil: 100, floor: 1, name: 'd100' });
+  server.create('die', { ceil: 20, floor: 1, name: 'd20' });
+  server.create('die', { ceil: 100, floor: 1, name: 'd100' });
 
   server.create('art-object', { name: 'Silver ewer', value: 25 });
   server.create('art-object', { name: 'Carved bone statuette', value: 25 });

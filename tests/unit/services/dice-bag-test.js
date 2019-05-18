@@ -6,7 +6,8 @@ module('Unit | Service | dice-bag', function(hooks) {
 
   // Replace this with your real tests.
   test('it exists', function(assert) {
-    let service = this.owner.lookup('service:dice-bag');
+    const service = this.owner.lookup('service:dice-bag');
+
     assert.ok(service);
   });
 });

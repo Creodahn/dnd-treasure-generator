@@ -1,9 +1,8 @@
 import Component from '@ember/component';
-import { computed }  from '@ember/object';
+import Object, { computed }  from '@ember/object';
 import { getOwner }  from '@ember/application';
 import Inflector from 'ember-inflector';
 import { inject as service } from '@ember/service';
-import Object from '@ember/object';
 
 export default Component.extend({
   // attributes

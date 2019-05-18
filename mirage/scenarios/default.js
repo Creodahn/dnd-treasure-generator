@@ -120,10 +120,10 @@ export default function(server) {
 
   // hoard treasure rule set CR 5 to CR 10
   trs = server.create('treasure-rule-set', { max_cr: 10, min_cr: 5, treasure_type: 'hoard' });
-  server.create('dice-calculation', { dice_count: 2, multiplier: 100, coint: cp, die: d6, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, multiplier: 100, coin: cp, die: d6, treasure_rule_set: trs });
   server.create('dice-calculation', { dice_count: 2, multiplier: 1000, coin: sp, die: d6, treasure_rule_set: trs });
   server.create('dice-calculation', { dice_count: 6, multiplier: 100, coin: gp, die: d6, treasure_rule_set: trs });
-  server.create('dice-calculation', { dice_count: 3, multiplier: 10, coint: pp, die: d6, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, multiplier: 10, coin: pp, die: d6, treasure_rule_set: trs });
 
   tr = server.create('treasure-rule', { max: 4, min: 1, treasure_rule_set: trs });
   server.create('dice-calculation', { dice_count: 0, item_type: 'gemstone', item_value: 10, multiplier: 0, die: d6, treasure_rule: tr });

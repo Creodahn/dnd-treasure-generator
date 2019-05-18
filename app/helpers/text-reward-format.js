@@ -1,7 +1,7 @@
 import { helper } from '@ember/component/helper';
 import Inflector from 'ember-inflector';
 
-export function textRewardFormat(params/*, hash*/) {
+export function textRewardFormat(params) {
   const count = params[0],
     text = params[1];
   let output = '';

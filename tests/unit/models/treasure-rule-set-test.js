@@ -6,8 +6,9 @@ module('Unit | Model | treasure rule set', function(hooks) {
 
   // Replace this with your real tests.
   test('it exists', function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('treasure-rule-set', {});
+    const store = this.owner.lookup('service:store'),
+      model = store.createRecord('treasure-rule-set', {});
+
     assert.ok(model);
   });
 });

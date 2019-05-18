@@ -24,17 +24,16 @@ export default function() {
     http://www.ember-cli-mirage.com/docs/v0.4.x/shorthands/
   */
 
-  this.namespace = 'api';
+  this.urlPrefix = 'http://localhost:3000';
+
+  this.namespace = '/api';
 
   this.resource('art-objects');
   this.resource('coins');
   this.resource('dice');
+  this.resource('dice-calculations');
   this.resource('gemstones');
   this.resource('magic-items');
-  this.get('/treasure-rule-sets', function({ treasureRules }, request) {
-    const results = this.serialize(treasureRules.all().models.findBy('treasure-type', request.queryParams.treasureType)),
-      returnValue = Array.isArray(results.data) ? results : { data: [results.data] };
-
-    return returnValue;
-  });
+  this.resource('treasure-rule-sets');
+  this.resource('treasure-rules');
 }

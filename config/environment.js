@@ -1,11 +1,11 @@
 'use strict';
 
 module.exports = function(environment) {
-  let ENV = {
+  const ENV = {
     modulePrefix: 'dnd-treasure-generator',
     environment,
     'ember-cli-mirage': {
-      enabled: true
+      enabled: false
     },
     rootURL: '/',
     locationType: 'auto',
@@ -27,17 +27,15 @@ module.exports = function(environment) {
     }
   };
 
-  if (environment === 'development') {
+  if(environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-
-    ENV['ember-cli-mirage'].enabled = false;
   }
 
-  if (environment === 'test') {
+  if(environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
 
@@ -47,9 +45,10 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+    ENV['ember-cli-mirage'].enabled = true;
   }
 
-  if (environment === 'production') {
+  if(environment === 'production') {
     // here you can enable a production-specific feature
   }
 

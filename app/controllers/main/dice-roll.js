@@ -1,7 +1,6 @@
 import Controller from '@ember/controller';
-import { computed }  from '@ember/object';
+import Object, { computed }  from '@ember/object';
 import { inject as service } from '@ember/service';
-import Object from '@ember/object';
 
 export default Controller.extend({
   // attributes
@@ -17,7 +16,7 @@ export default Controller.extend({
       }
 
       return item;
-    })
+    });
   }),
   // lifecycle
   init() {
@@ -46,7 +45,7 @@ export default Controller.extend({
       const dice = this.selectedDice.map((item) => {
           return item.die;
         }),
-        results = this.diceBag.rollMultipleDice( { dice });
+        results = this.diceBag.rollMultipleDice({ dice });
 
       // reset results to force displayDice to update when inserting new results
       this.set('results', []);

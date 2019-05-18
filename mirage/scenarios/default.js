@@ -52,7 +52,7 @@ let tr = null,
   server.create('magic-item', { max: 99, min: 99, name: 'bag of holding', table: 'A' });
   server.create('magic-item', { max: 100, min: 100, name: 'driftglobe', table: 'A' });
 
-  // hoard rules
+  // hoard rules CR 0 to CR 4
   trs = server.create('treasure-rule-set', { max_cr: 4, min_cr: 0, treasure_type: 'hoard' });
   server.create('dice-calculation', { dice_count: 6, multiplier: 100, coin: cp, die: d6, treasure_rule_set: trs });
   server.create('dice-calculation', { dice_count: 3, multiplier: 100, coin: sp, die: d6, treasure_rule_set: trs });
@@ -121,4 +121,122 @@ let tr = null,
   tr = server.create('treasure-rule', { max: 100, min: 100, treasure_rule_set: trs});
   server.create('dice-caculation', { dice_count: 2, item_type: 'gemstone', item_value: 50, die: d6, treasure_rule: tr });
   server.create('dice-calculation', { item_table: 'G', item_type: 'magic-item', die: d1, treasure_rule: tr });
+
+  // hoard treasure rule set CR 5 ro CR 10
+  trs = server.create('treasure-rule-set', { max_cr: 10, min_cr: 5, treasure_type: 'hoard' });
+  server.create('dice-calculation', { dice_count: 2, multiplier: 100, coint: cp, die: d6, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, multiplier: 1000, coin: sp, die: d6, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 6, multiplier: 100, coin: gp, die: d6, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, multiplier: 10, coint: pp, die: d6, treasure_rule_set: trs });
+
+  tr = server.create('treasure-rule', { max: 4, min: 1, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 0, item_type: 'gemstone', item_value: 10, multiplier: 0, die: d6, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 10, min: 5, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'art-object', item_value: 25, die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 16, min: 11, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, item_type: 'gemstone', item_value: 50, die: d6, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 22, min: 17, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, item_type: 'gemstone', item_value: 100, die: d6, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 28, min: 23, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'art-object', item_value: 25, die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 32, min: 29, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'art-object', item_value: 25, die: d4, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'A', item_type: 'magic-item', die: d6, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 36, min: 33, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'gemstone', item_value: 50, die: d6, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'A', item_type: 'magic-item', die: d6, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 40, min: 37, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, item_type: 'gemstone', item_value: 100, die: d6, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'A', item_type: 'magic-item', die: d6, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 44, min: 41, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'art-object', item_value: 250, die: d4, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'A', item_type: 'magic-item', die: d6, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 49, min: 45, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, item_type: 'art-object', item_value: 25, die: d4, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'B', item_type: 'magic-item', die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 54, min: 50, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, item_type: 'gemstone', item_value: 50, die: d6, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'B', item_type: 'magic-item', die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 59, min: 55, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, item_type: 'gemstone', item_value: 100, die: d6, treasure_rule: tr });
+  server.create('dice-calculation', { item_table: 'B', item_type: 'magic-item', die: d4, treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 63, min: 60, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, die: d4, item_type: 'art-object', item_value: 250, treasure_rule: tr });
+  server.create('dice-calculation', { die: d4, item_table: 'B', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 66, min: 64, treasure_rule_set: trs })
+  server.create('dice-calculation', { dice_count: 2, die: d4, item_type: 'art-object', item_value: 25, treasure_rule: tr });
+  server.create('dice-calculation', { die: d4, item_table: 'C', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 69, min: 67, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, die: d6, item_type: 'gemstone', item_value: 50, treasure_rule: tr });
+  server.create('dice-calculation', { die: d4, item_table: 'C', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 72, min: 70, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, die: d6, item_type: 'gemstone', item_value: 100, treasure_rule: tr });
+  server.create('dice-calculation', { die: d4, item_table: 'C', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 74, min: 73, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, die: d4, item_type: 'art-object', item_value: 250, treasure_rule: tr });
+  server.create('dice-calculation', { die: d4, item_table: 'C', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 76, min: 75, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, die: d4, item_type: 'art-object', item_value: 25, treasure_rule: tr });
+  server.create('dice-calculation', { die: d1, item_table: 'D', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 78, min: 77, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, die: d6, item_type: 'gemstone', item_value: 50, treasure_rule: tr });
+  server.create('dice-calculation', { die: d1, item_table: 'D', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 79, min: 79, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, die: d6, item_type: 'gemstone', item_value: 100, treasure_rule: tr });
+  server.create('dice-calculation', { die: d1, item_table: 'D', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 80, min: 80, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, die: d4, item_type: 'art-object', item_value: 250, treasure_rule: tr });
+  server.create('dice-calculation', { die: d1, item_table: 'D', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 84, min: 81, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, die: d4, item_type: 'art-object', item_value: 25, treasure_rule: tr });
+  server.create('dice-calculation', { die: d4, item_table: 'F', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 88, min: 85, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, die: d6, item_type: 'gemstone', item_value: 50, treasure_rule: tr });
+  server.create('dice-calculation', { die: d4, item_table: 'F', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 91, min: 89, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, die: d6, item_type: 'art-object', item_value: 100, treasure_rule: tr });
+  server.create('dice-calculation', { die: d4, item_table: 'F', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 94, min: 92, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, die: d4, item_type: 'art-object', item_value: 250, treasure_rule: tr });
+  server.create('dice-calculation', { die: d4, item_table: 'F', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 96, min: 95, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, die: d6, item_type: 'gemstone', item_value: 100, treasure_rule: tr });
+  server.create('dice-calculation', { die: d4, item_table: 'G', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 98, min: 97, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, die: d4, item_type: 'art-object', item_value: 250, treasure_rule: tr });
+  server.create('dice-calculation', { die: d4, item_table: 'G', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 99, min: 99, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 3, die: d6, item_type: 'gemstone', item_value: 100, treasure_rule: tr });
+  server.create('dice-calculation', { die: d1, item_table: 'H', treasure_rule: tr });
+
+  tr = server.create('treasure-rule', { max: 100, min: 100, treasure_rule_set: trs });
+  server.create('dice-calculation', { dice_count: 2, die: d4, item_type: 'art-object', item_value: 250, treasure_rule: tr });
+  server.create('dice-calculation', { die: d1, item_table: 'H', treasure_rule: tr });
 }

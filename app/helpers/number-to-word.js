@@ -145,7 +145,7 @@ function parseThreeDigits(originalNumber) {
   return results.join(' ');
 }
 
-export function numberToWord(params/*, hash*/) {
+export function numberToWord(params) {
   const modifiers = ['', 'thousand', 'million', 'billion'],
     originalNumber = params[0].toString().split('').reverse(),
     result = modifiers.map((modifier, index) => {

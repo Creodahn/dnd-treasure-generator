@@ -1,6 +1,6 @@
 import { helper } from '@ember/component/helper';
 
-export function rollFormat(params/*, hash*/) {
+export function rollFormat(params) {
   return params[0].join(' + ');
 }
 

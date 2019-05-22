@@ -8,11 +8,10 @@ module('Acceptance | main', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function() {
-    defaultScenario(server);
-  });
-
   test('visiting main route', async function(assert) {
+    server.logging = true;
+    await defaultScenario(server);
+
     await visit('/');
 
     assert.equal(currentURL(), '/');

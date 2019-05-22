@@ -3,10 +3,11 @@
 module.exports = function(environment) {
   const ENV = {
     modulePrefix: 'dnd-treasure-generator',
-    environment,
     'ember-cli-mirage': {
-      enabled: false
+      enabled: true,
+      // autostart: true
     },
+    environment,
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {
@@ -45,7 +46,6 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
-    ENV['ember-cli-mirage'].enabled = true;
   }
 
   if(environment === 'production') {

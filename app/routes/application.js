@@ -2,9 +2,9 @@ import Route from '@ember/routing/route';
 
 export default Route.extend({
   afterModel(resolvedModel, transition) {
-    const retransitionTargers = ['application', 'index'];
+    const retransitionTargets = ['application', 'index'];
 
-    if(retransitionTargers.indexOf(transition.targetName) > -1) {
+    if(retransitionTargets.indexOf(transition.targetName) > -1) {
       this.transitionTo('main');
     }
   }

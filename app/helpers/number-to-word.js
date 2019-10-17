@@ -68,7 +68,7 @@ const conversions = [
   }),
   Object.create({
     number: 17,
-    word: '17'
+    word: 'seventeen'
   }),
   Object.create({
     number: 18,

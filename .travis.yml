@@ -20,5 +20,12 @@ before_install:
 - export PATH=$HOME/.yarn/bin:$PATH
 install:
  - yarn install --non-interactive
+    # See https://git.io/vdao3 for details.
+    - JOBS=1
+
+branches:
+  only:
+    - master
+
 script:
  - ember test

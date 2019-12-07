@@ -8,7 +8,7 @@ module('Acceptance | main/treasure/individual/cr', function(hooks) {
 
   test('visiting /treasure/individual/cr', async function(assert) {
     assert.expect(4);
-    server.logging = true;
+
     defaultScenario(server);
 
     await visit('/');

@@ -8,7 +8,7 @@ module('Acceptance | main/treasure/hoard/cr', function(hooks) {
 
   test('visiting /treasure/hoard/cr', async function(assert) {
     assert.expect(4);
-    server.logging = true;
+
     defaultScenario(server);
 
     await visit('/');

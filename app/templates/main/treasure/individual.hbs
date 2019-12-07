@@ -14,10 +14,12 @@
 
       update=(action (mut cr))
     }}
-    <button data-test-calculate-reward-trigger type="button" {{action "selectCR"}}>Roll Dice</button>
+    <button data-test-calculate-reward-trigger type="button" {{action "selectCR"}}>
+      Roll Dice
+    </button>
   </div>
   <div class="col-4">
-    <div class="card">
+    <div class="card" data-test-individual-result-card>
       <div class="card-body">
         <h4 class="card-title">Roll Results</h4>
         {{outlet}}

@@ -2,11 +2,11 @@ import { module, test } from 'qunit';
 import { click, currentURL, visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 
-module('Acceptance | main/treasure/individual', function(hooks) {
+module('Acceptance | main/treasure/hoard', function(hooks) {
   setupApplicationTest(hooks);
 
-  test('visiting /treasure/individual', async function(assert) {
-    assert.expect(4);
+  test('visiting /treasure/hoard', async function(assert) {
+    assert.expect(3);
 
     await visit('/');
 
@@ -15,7 +15,9 @@ module('Acceptance | main/treasure/individual', function(hooks) {
     await click('[data-test-app-nav-link="treasure"]');
 
     assert.equal(currentURL(), '/treasure/individual');
-    assert.dom('h1').hasText('Calculate Individual Treasure');
-    assert.dom('[data-test-individual-cr-input]').exists();
+
+    await click('[data-test-app-subnav-link="hoard-treasure"]');
+
+    assert.equal(currentURL(), '/treasure/hoard');
   });
 });

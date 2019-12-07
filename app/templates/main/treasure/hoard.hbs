@@ -5,11 +5,15 @@
 </section>
 <section class="row">
   <div class="col-6">
-    <div class="form-group">
-      <label for="cr-input">Challenge Rating</label>
-      {{input type="number" id="cr-input" value=(mut cr)}}
-    </div>
-    <button {{action "selectCR"}}>
+    {{ui/labeled-input
+      data-test-hoard-cr-input="true"
+      input-id="cr-input"
+      label="Challenge Rating"
+      type="number"
+
+      update=(action (mut cr))
+    }}
+    <button data-test-calculate-reward-trigger type="button" {{action "selectCR"}}>
       Roll Dice
     </button>
 

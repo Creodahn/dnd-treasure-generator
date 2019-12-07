@@ -1,5 +1,4 @@
 import { click, visit, currentURL } from '@ember/test-helpers';
-import defaultScenario from 'dnd-treasure-generator/mirage/scenarios/default';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
@@ -7,8 +6,7 @@ module('Acceptance | main/treasure', function(hooks) {
   setupApplicationTest(hooks);
 
   test('visiting /treasure', async function(assert) {
-    this.server.logging = true;
-    await defaultScenario(this.server);
+    server.logging = true;
 
     assert.expect(2);
 
@@ -18,6 +16,8 @@ module('Acceptance | main/treasure', function(hooks) {
 
     await click('[data-test-nav-treasure-link]');
 
-    assert.equal(currentURL(), '/treasure');
+    // the main treasure route automatically redirects to the
+    // individual subroute when targeting it or the index route
+    assert.equal(currentURL(), '/treasure/individual');
   });
 });

@@ -1,37 +1,37 @@
-<nav class="border split-nav">
-  <div class="nav-brand">
+<nav class="border split-nav" data-test-app-nav>
+  <div class="nav-brand" data-test-app-nav-branding>
     <h3>
       {{#link-to "main.home"}}
         D&amp;D Randomizer
       {{/link-to}}
     </h3>
   </div>
-  <div class="collapsible">
+  <div class="collapsible" data-test-app-nav-collapsible-section>
     {{input
       checked=collapsibleOpen
       id="collapsible1"
       name="collapsible1"
       type="checkbox"
     }}
-    <button {{action "toggleCollapsible"}}>
+    <button data-test-app-nav-collapsible-toggle type="button" {{action "toggleCollapsible"}}>
       <div class="bar1"></div>
       <div class="bar2"></div>
       <div class="bar3"></div>
     </button>
     <div class="collapsible-body">
-      <ul class="inline">
+      <ul class="inline" data-test-app-nav-link-list>
         <li>
-          {{#link-to "main.treasure"}}
+          {{#link-to "main.treasure" data-test-app-nav-link="treasure"}}
             Generate Treasure
           {{/link-to}}
         </li>
         <li>
-          {{#link-to "main.dice-roll"}}
+          {{#link-to "main.dice-roll" data-test-app-nav-link="dice-roll"}}
             Roll Dice
           {{/link-to}}
         </li>
         <li>
-          {{#link-to "main.reference"}}
+          {{#link-to "main.reference" data-test-app-nav-link="reference"}}
             Reference
           {{/link-to}}
         </li>

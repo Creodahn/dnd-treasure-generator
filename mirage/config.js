@@ -25,7 +25,6 @@ export default function() {
   */
 
   this.urlPrefix = 'http://localhost:3000';
-
   this.namespace = '/api';
 
   this.resource('art-objects');

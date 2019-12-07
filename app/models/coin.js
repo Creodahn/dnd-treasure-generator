@@ -4,5 +4,7 @@ export default DS.Model.extend({
   // attributes
   name: DS.attr('string'),
   value: DS.attr('number'),
-  weight: DS.attr('number', { default: 0.02, readOnly: true })
+  weight: DS.attr('number', { default: 0.02, readOnly: true }),
+  // relationships
+  diceCalculations: DS.hasMany('dice-calculation')
 });

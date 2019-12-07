@@ -10,6 +10,8 @@ export default DS.Model.extend({
   itemValue: DS.attr('number'),
   multiplier: DS.attr('number'),
   // relationships
+  coin: DS.belongsTo('coin'),
   die: DS.belongsTo('die'),
-  treasureRule: DS.belongsTo('treasure-rule')
+  treasureRule: DS.belongsTo('treasure-rule'),
+  treasureRuleSet: DS.belongsTo('treasure-rule-set')
 });

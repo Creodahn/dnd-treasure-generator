@@ -1,6 +1,6 @@
 # unconventional js
 /blueprints/*/files/
-# /mirage/**
+/mirage/**
 /vendor/
 
 # compiled output

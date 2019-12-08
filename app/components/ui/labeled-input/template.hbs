@@ -3,11 +3,11 @@
     {{label}}
   </label>
 {{/if}}
-{{input
-  data-test-labeled-input-field=input-id
-  id=input-id
-  type=type
-  value=this.value
-
-  key-up=(action update this.value)
-}}
+<Input
+  @data-test-labeled-input-field={{input-id}}
+  @id={{input-id}}
+  @type={{type}}
+  @value={{mut this.value}}
+  
+  @key-up={{action update this.value}}
+/>

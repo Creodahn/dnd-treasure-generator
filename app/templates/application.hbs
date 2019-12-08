@@ -1,18 +1,13 @@
 <nav class="border split-nav" data-test-app-nav>
   <div class="nav-brand" data-test-app-nav-branding>
     <h3>
-      {{#link-to "main.home"}}
+      <LinkTo @route="main.home">
         D&amp;D Randomizer
-      {{/link-to}}
+      </LinkTo>
     </h3>
   </div>
   <div class="collapsible" data-test-app-nav-collapsible-section>
-    {{input
-      checked=collapsibleOpen
-      id="collapsible1"
-      name="collapsible1"
-      type="checkbox"
-    }}
+    <Input @checked={{collapsibleOpen}} @id="collapsible1" @name="collapsible1" @type="checkbox" />
     <button data-test-app-nav-collapsible-toggle type="button" {{action "toggleCollapsible"}}>
       <div class="bar1"></div>
       <div class="bar2"></div>
@@ -21,19 +16,19 @@
     <div class="collapsible-body">
       <ul class="inline" data-test-app-nav-link-list>
         <li>
-          {{#link-to "main.treasure" data-test-app-nav-link="treasure"}}
+          <LinkTo @route="main.treasure" data-test-app-nav-link="treasure">
             Generate Treasure
-          {{/link-to}}
+          </LinkTo>
         </li>
         <li>
-          {{#link-to "main.dice-roll" data-test-app-nav-link="dice-roll"}}
+          <LinkTo @route="main.dice-roll" data-test-app-nav-link="dice-roll">
             Roll Dice
-          {{/link-to}}
+          </LinkTo>
         </li>
         <li>
-          {{#link-to "main.reference" data-test-app-nav-link="reference"}}
+          <LinkTo @route="main.reference" data-test-app-nav-link="reference">
             Reference
-          {{/link-to}}
+          </LinkTo>
         </li>
       </ul>
     </div>

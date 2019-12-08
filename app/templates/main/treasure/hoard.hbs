@@ -5,14 +5,13 @@
 </section>
 <section class="row">
   <div class="col-6">
-    {{ui/labeled-input
-      data-test-hoard-cr-input="true"
-      input-id="cr-input"
-      label="Challenge Rating"
-      type="number"
+    <Ui::LabeledInput
+      @data-test-individual-cr-input="true"
+      @input-id="cr-input"
+      @label="Challenge Rating"
 
-      update=(action (mut cr))
-    }}
+      @update={{action (mut cr)}}
+    />
     <button data-test-calculate-reward-trigger type="button" {{action "selectCR"}}>
       Roll Dice
     </button>

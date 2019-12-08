@@ -7,7 +7,7 @@ module('Integration | Component | hoard-rewards', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{hoard-rewards}}`);
+    await render(hbs`<HoardRewards />`);
 
     assert.equal(this.element.textContent.trim(), 'No rolls yet');
   });

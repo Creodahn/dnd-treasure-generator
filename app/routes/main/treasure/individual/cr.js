@@ -1,8 +1,9 @@
-import GetCrRule from 'dnd-treasure-generator/mixins/get-cr-rule';
+import getRuleForCr from 'dnd-treasure-generator/utils/get-cr-rule';
 import { getOwner }  from '@ember/application';
 import Route from '@ember/routing/route';
 
-export default Route.extend(GetCrRule, {
+export default Route.extend({
+  getRuleForCr,
   // hooks
   model(params) {
     const ctrl = getOwner(this).lookup('controller:main/treasure/individual'),

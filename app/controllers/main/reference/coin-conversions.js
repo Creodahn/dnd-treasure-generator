@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import Object,{ computed }  from '@ember/object';
+import Object, { computed }  from '@ember/object';
 
 export default Controller.extend({
   coinTableValues: computed('model.[]', function() {

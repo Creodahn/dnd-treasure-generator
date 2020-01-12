@@ -4,6 +4,11 @@ import Route from '@ember/routing/route';
 
 export default Route.extend({
   getRuleForCr,
+  queryParams: {
+    rand: {
+      refreshModel: true
+    }
+  },
   // hooks
   model(params) {
     const ctrl = getOwner(this).lookup('controller:main/treasure/individual'),

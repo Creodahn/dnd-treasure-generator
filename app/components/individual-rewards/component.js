@@ -6,7 +6,7 @@ export default Component.extend({
   // attributes
   diceBag: service(),
   // computed properties
-  rewards: computed('model.[]', function() {
+  rewards: computed('model.{[],@each.id}', 'randomizer', function() {
     return this.model ? this.calculateReward(this.model) : null;
   }),
   // methods

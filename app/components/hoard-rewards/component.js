@@ -8,7 +8,7 @@ export default Component.extend({
   // attributes
   diceBag: service(),
   // computed properties
-  coinRewards: computed('calculations.[]', function() {
+  coinRewards: computed('calculations.{[],.@each.coinType}', 'rand', function() {
     return this.calculations ? this.calculateCoinReward() : null;
   }),
   rewards: computed('model.[]', function() {

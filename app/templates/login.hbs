@@ -1,0 +1,29 @@
+<Ui::Card>
+  <form class="card-body" onSubmit={{action "login"}}>
+    <h1 class="card-title">Log in</h1>
+    <h2 class="card-subtitle">
+      Logging in allows you to view your history of rolls and recall
+      any treasure generated
+    </h2>
+    <Ui::LabeledInput
+      @data-test-login-username-input="true"
+      @input-id="username-input"
+      @label="Username"
+
+      @update={{action (mut username)}}
+    />
+
+    <Ui::LabeledInput
+      @data-test-login-password-input="true"
+      @input-id="password-input"
+      @label="Password"
+      @type="password"
+
+      @update={{action (mut password)}}
+    />
+
+    <button data-test-login-submit type="submit">
+      Login
+    </button>
+  </form>
+</Ui::Card>

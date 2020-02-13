@@ -30,6 +30,24 @@
             Reference
           </LinkTo>
         </li>
+        {{#unless session.isAuthenticated}}
+          <li>
+            <LinkTo @route="login" data-test-app-nav-link="login">
+              Login
+            </LinkTo>
+          </li>
+          <li>
+            <LinkTo @route="signup" data-test-app-nav-link="signup">
+              Sign up
+            </LinkTo>
+          </li>
+        {{else}}
+          <li>
+            <LinkTo @route="profile" data-test-app-nav-link="profile">
+              Profile
+            </LinkTo>
+          </li>
+        {{/unless}}
       </ul>
     </div>
   </div>

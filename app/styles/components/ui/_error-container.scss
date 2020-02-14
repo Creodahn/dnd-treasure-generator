@@ -1,0 +1,23 @@
+.error-container {
+  min-height: 5rem;
+  white-space: pre-wrap;
+
+  & > .expandable {
+    background-color: rgba($bright-red, .25);
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: auto;
+    max-height: 5rem;
+    overflow: hidden;
+    padding: 0 .5rem;
+    transition: .3s all;
+
+    &.collapsed {
+      max-height: 0;
+    }
+
+    &:not(.collapsed) {
+      padding: .5rem;
+    }
+  }
+}

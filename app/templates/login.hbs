@@ -1,29 +1,33 @@
-<Ui::Card>
-  <form class="card-body" onSubmit={{action "login"}}>
-    <h1 class="card-title">Log in</h1>
-    <h2 class="card-subtitle">
-      Logging in allows you to view your history of rolls and recall
-      any treasure generated
-    </h2>
-    <Ui::LabeledInput
-      @data-test-login-username-input="true"
-      @input-id="username-input"
-      @label="Username"
+<main class="guttered login">
+  <Ui::Card>
+    <header class="card-header">
+      Log in
+    </header>
+    <form class="card-body centered" onSubmit={{action "login"}}>
+      <Ui::LabeledInput
+        @data-test-login-username-input="true"
+        @input-id="username-input"
+        @label="Username"
+        @required={{true}}
 
-      @update={{action (mut username)}}
-    />
+        @update={{action (mut username)}}
+      />
 
-    <Ui::LabeledInput
-      @data-test-login-password-input="true"
-      @input-id="password-input"
-      @label="Password"
-      @type="password"
+      <Ui::LabeledInput
+        @data-test-login-password-input="true"
+        @input-id="password-input"
+        @label="Password"
+        @required={{true}}
+        @type="password"
 
-      @update={{action (mut password)}}
-    />
+        @update={{action (mut password)}}
+      />
 
-    <button data-test-login-submit type="submit">
-      Login
-    </button>
-  </form>
-</Ui::Card>
+      <Ui::ErrorContainer @content={{this.errorText}} />
+
+      <button data-test-login-submit type="submit">
+        Login
+      </button>
+    </form>
+  </Ui::Card>
+</main>

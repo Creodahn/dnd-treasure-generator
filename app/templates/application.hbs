@@ -33,7 +33,7 @@
         {{#unless session.isAuthenticated}}
           <li>
             <LinkTo @route="login" data-test-app-nav-link="login">
-              Login
+              Log in
             </LinkTo>
           </li>
           <li>
@@ -46,6 +46,9 @@
             <LinkTo @route="profile" data-test-app-nav-link="profile">
               Profile
             </LinkTo>
+            <a data-test-app-nav-link="logout" href="#" {{action "logOut"}}>
+              Log out
+            </a>
           </li>
         {{/unless}}
       </ul>

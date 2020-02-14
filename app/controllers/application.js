@@ -6,6 +6,9 @@ export default Controller.extend({
   session: service(),
 
   actions: {
+    logOut() {
+      this.session.invalidate();
+    },
     toggleCollapsible() {
       const isOpen = this.collapsibleOpen;
 

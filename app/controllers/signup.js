@@ -1,6 +1,9 @@
 import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
+  session: service(),
+
   actions: {
     signUp(e) {
       const password = this.password;
@@ -21,7 +24,10 @@ export default Controller.extend({
           this.model.set('user', user);
 
           this.model.save().then((profile) => {
-            const email = profile.email;
+            const email = profile.email,
+              password = this.password;
+
+            this.session.authenticate('authenticator:oauth2', email, password);
           }).catch((reason) => {
             console.log(reason);
           }).catch((reason) => {

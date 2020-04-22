@@ -32,8 +32,7 @@ export default Controller.extend({
             this.session.authenticate('authenticator:oauth2', email, password);
           }).catch((reason) => {
             log(reason);
-          }).catch((reason) => {
-            log(reason);
+            this.set('errorText', errors);
           });
         });
       } else {

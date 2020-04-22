@@ -16,6 +16,7 @@ export default Controller.extend({
 
       session.authenticate('authenticator:oauth2', username, password).catch((reason) => {
         error(reason);
+        this.set('errorText', 'Could not validate provided username and password');
       });
     }
   },

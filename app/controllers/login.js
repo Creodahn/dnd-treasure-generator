@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 const { error } = console;
 
 export default Controller.extend({
+  currentUser: service(),
   errorText: null,
   session: service(),
 
@@ -14,7 +15,9 @@ export default Controller.extend({
     if(session) {
       session.set('data.login', username);
 
-      session.authenticate('authenticator:oauth2', username, password).catch((reason) => {
+      session.authenticate('authenticator:oauth2', username, password).then(() => {
+        this.currentUser.load();
+      }).catch((reason) => {
         error(reason);
         this.set('errorText', 'Could not validate provided username and password');
       });

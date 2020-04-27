@@ -4,10 +4,11 @@
   </label>
 {{/if}}
 <Input
-  @data-test-labeled-input-field={{input-id}}
-  @id={{input-id}}
-  @type={{type}}
-  @value={{mut this.value}}
-  
+  @data-test-labeled-input-field={{this.input-id}}
+  @disabled={{this.disabled}}
+  @id={{this.input-id}}
+  @type={{this.type}}
+  @value={{this.value}}
+
   @key-up={{action update this.value}}
 />

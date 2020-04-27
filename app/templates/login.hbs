@@ -1,0 +1,28 @@
+<main class="guttered login">
+  <Ui::Card @headerText="Log in" @submitAction={{action "login"}}>
+    <Ui::LabeledInput
+      @data-test-login-username-input="true"
+      @input-id="username-input"
+      @label="Username"
+      @required={{true}}
+
+      @update={{action (mut username)}}
+    />
+
+    <Ui::LabeledInput
+      @data-test-login-password-input="true"
+      @input-id="password-input"
+      @label="Password"
+      @required={{true}}
+      @type="password"
+
+      @update={{action (mut password)}}
+    />
+
+    <Ui::ErrorContainer @content={{this.errorText}} />
+
+    <button data-test-login-submit type="submit">
+      Login
+    </button>
+  </Ui::Card>
+</main>

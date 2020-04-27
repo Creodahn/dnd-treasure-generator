@@ -1,0 +1,31 @@
+.card {
+  &:not(.touchable) {
+    &:hover {
+      box-shadow: 15px 28px 25px -18px rgba(0, 0, 0, .2);
+      transform: none;
+    }
+  }
+
+  &-body {
+    margin-top: .75rem;
+
+    &.centered {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      & > * {
+        width: 60%;
+      }
+    }
+  }
+
+  &-subtitle {
+    font-size: 1rem;
+  }
+
+  &-title {
+    font-size: 2rem;
+  }
+}

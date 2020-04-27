@@ -22,4 +22,7 @@ Router.map(function() {
       this.route('coin-conversions');
     });
   });
+  this.route('login');
+  this.route('signup');
+  this.route('profile');
 });

@@ -16,6 +16,6 @@ module('Acceptance | main', function(hooks) {
     assert.dom('[data-test-app-nav-collapsible-section]').exists();
     assert.dom('[data-test-app-nav-collapsible-toggle]').exists();
     assert.dom('[data-test-app-nav-link-list]').exists();
-    assert.equal(findAll('[data-test-app-nav-link]').length, 3);
+    assert.equal(findAll('[data-test-app-nav-link]').length, 5);
   });
 });

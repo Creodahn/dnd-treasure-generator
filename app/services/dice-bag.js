@@ -1,11 +1,13 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
+  currentUser: service(),
+
   load(dice) {
     this.dice = dice;
     this.rollableDice = dice.filter(die => die.showToUser !== false);
   },
-  rollDie(dieType) {
+  rollDie(dieType, order = 0) {
     const die = this.dice.findBy('name', dieType);
     let result = null;
 
@@ -13,7 +15,9 @@ export default Service.extend({
       result = Math.floor(Math.random() * (die.ceil - die.floor + 1)) + die.floor;
     }
 
-    return result;
+    return this.store.createRecord('die-roll', { order, result, profile: this.currentUser.profile }).save().then((dieRoll) => {
+      return dieRoll;
+    });
   },
   rollMultipleDice({ dice, dieType, count }) {
     const diceToRoll = dice ? dice : [],
@@ -26,8 +30,8 @@ export default Service.extend({
       }
     }
   
-    diceToRoll.map((dieType) => {
-      const roll = this.rollDie(dieType);
+    diceToRoll.map((dieType, index) => {
+      const roll = this.rollDie(dieType, index);
   
       rolls.push(roll);
       total += roll;

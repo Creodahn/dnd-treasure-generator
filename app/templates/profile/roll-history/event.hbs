@@ -1,0 +1,8 @@
+<<ul class="dice-list selected-dice">
+  {{#each this.model.dieRolls as |item|}}
+    <li>
+      <button>{{item.die.name}}</button>
+      <div class="result">{{item.result}}</div>
+    </li>
+  {{/each}}
+</ul>

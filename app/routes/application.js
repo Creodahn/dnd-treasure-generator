@@ -15,8 +15,12 @@ export default Route.extend(ApplicationRouteMixin, {
       this.transitionTo('main');
     }
 
-    if(this.session.isAuthenticated && isEmpty(this.currentUser.profile)) {
+    if(this.session.isAuthenticated) {
       this.currentUser.load();
     }
-  }
+  },
+
+  // init() {
+  //   this._super(...arguments);
+  // }
 });

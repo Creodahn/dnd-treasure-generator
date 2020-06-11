@@ -24,5 +24,9 @@ Router.map(function() {
   });
   this.route('login');
   this.route('signup');
-  this.route('profile');
+  this.route('profile', function() {
+    this.route('roll-history', function() {
+      this.route('event', { path: '/:id' });
+    });
+  });
 });

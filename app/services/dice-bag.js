@@ -20,6 +20,13 @@ export default Service.extend({
 
     if(diceRollEvent) {
       this.store.createRecord('die-roll', attrs).save();
+      // TODO: having to have this feels bad. find a better solution
+    } else if(this.currentUser.profile) {
+      this.store.createRecord('dice-roll-event', { profile: this.currentUser.profile }).save().then((event) => {
+        attrs.diceRollEvent = event;
+
+        this.store.createRecord('die-roll', attrs).save();
+      });
     }
 
     return attrs;

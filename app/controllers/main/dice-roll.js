@@ -12,7 +12,7 @@ export default Controller.extend({
       const rolls = this.results;
 
       if(rolls && rolls[index]) {
-        item.set('result', rolls[index]);
+        item.set('result', rolls[index].result);
       }
 
       return item;

@@ -2,24 +2,33 @@ import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
   currentUser: service(),
+  store: service(),
 
   load(dice) {
-    this.dice = dice;
-    this.rollableDice = dice.filter(die => die.showToUser !== false);
+    this.set('dice', dice);
+    this.set('rollableDice', dice.filter(die => die.showToUser !== false));
   },
-  rollDie(dieType, order = 0) {
-    const die = this.dice.findBy('name', dieType);
-    let result = null;
+
+  async rollDie(dieType, order = 0, diceRollEvent) {
+    const attrs = { order, result: null, diceRollEvent },
+      die = this.dice.findBy('name', dieType);
+    let result;
 
     if(die) {
-      result = Math.floor(Math.random() * (die.ceil - die.floor + 1)) + die.floor;
+      attrs.result = Math.floor(Math.random() * (die.ceil - die.floor + 1)) + die.floor;
     }
 
-    return this.store.createRecord('die-roll', { order, result, profile: this.currentUser.profile }).save().then((dieRoll) => {
-      return dieRoll;
-    });
+    if(diceRollEvent) {
+      attrs.die = die;
+      result = await this.store.createRecord('die-roll', attrs).save();
+    } else {
+      result = attrs;
+    }
+
+    return result;
   },
-  rollMultipleDice({ dice, dieType, count }) {
+
+  _rollMultipleDice({ dice, dieType, count }, rollEvent) {
     const diceToRoll = dice ? dice : [],
       rolls = [];
     let total = 0;
@@ -31,12 +40,26 @@ export default Service.extend({
     }
   
     diceToRoll.map((dieType, index) => {
-      const roll = this.rollDie(dieType, index);
+      const roll = this.rollDie(dieType, index, rollEvent);
   
       rolls.push(roll);
       total += roll;
     });
 
     return { rolls, total };
+  },
+  rollMultipleDice(params) {
+    const profile = this.currentUser.profile;
+    let result = null;
+
+    if(profile) {
+      result = this.store.createRecord('dice-roll-event', { profile }).save().then((rollEvent) => {
+        return this._rollMultipleDice(params, rollEvent);
+      });
+    } else {
+      result = this._rollMultipleDice(params);
+    }
+
+    return result;
   }
 });

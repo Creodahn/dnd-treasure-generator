@@ -1,14 +1,14 @@
-import DS from 'ember-data';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 
-export default DS.Model.extend({
+export default Model.extend({
   // attributes
-  dieType: DS.attr('string'),
-  max: DS.attr('number'),
-  min: DS.attr('number'),
-  name: DS.attr('string'),
-  table: DS.attr('string'),
+  dieType: attr('string'),
+  max: attr('number'),
+  min: attr('number'),
+  name: attr('string'),
+  table: attr('string'),
   // relationships
-  children: DS.hasMany('magic-item', { async: false, inverse: 'parent' }),
-  die: DS.belongsTo('die'),
-  parent: DS.belongsTo('magic-item', { inverse: 'children' })
+  children: hasMany('magic-item', { async: false, inverse: 'parent' }),
+  die: belongsTo('die'),
+  parent: belongsTo('magic-item', { inverse: 'children' })
 });

@@ -1,11 +1,11 @@
-import DS from 'ember-data';
+import Model, { attr, hasMany } from '@ember-data/model';
 
-export default DS.Model.extend({
+export default Model.extend({
   // attributes
-  ceil: DS.attr('number'),
-  floor: DS.attr('number'),
-  name: DS.attr('string'),
-  showToUser: DS.attr('boolean'),
+  ceil: attr('number'),
+  floor: attr('number'),
+  name: attr('string'),
+  showToUser: attr('boolean'),
   // relationships
-  diceCalculations: DS.hasMany('dice-calculation')
+  diceCalculations: hasMany('dice-calculation')
 });

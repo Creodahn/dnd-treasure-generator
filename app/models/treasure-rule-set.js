@@ -1,11 +1,11 @@
-import DS from 'ember-data';
+import Model, { attr, hasMany } from '@ember-data/model';
 
-export default DS.Model.extend({
+export default Model.extend({
   // attributes
-  maxCr: DS.attr('number'),
-  minCr: DS.attr('number'),
-  treasureType: DS.attr('string'),
+  maxCr: attr('number'),
+  minCr: attr('number'),
+  treasureType: attr('string'),
   // relationships
-  diceCalculations: DS.hasMany('dice-calculation'),
-  treasureRules: DS.hasMany('treasure-rule')
+  diceCalculations: hasMany('dice-calculation'),
+  treasureRules: hasMany('treasure-rule')
 });

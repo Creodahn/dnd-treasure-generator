@@ -22,10 +22,14 @@ export default Controller.extend({
   init() {
     this._super(...arguments);
 
+    this.reset();
+  },
+  // methods
+  reset() {
     this.set('results', []);
     this.set('selectedDice', []);
   },
-  // actions 
+  // actions
   actions: {
     addDie(die) {
       this.selectedDice.pushObject(Object.create({ die: die.name }));
@@ -37,21 +41,18 @@ export default Controller.extend({
 
       this.set('selectedDice', result);
     },
-    reset() {
-      this.set('results', []);
-      this.set('selectedDice', []);
-    },
     rollDice() {
       const dice = this.selectedDice.map((item) => {
           return item.die;
-        }),
-        results = this.diceBag.rollMultipleDice({ dice });
+        });
 
-      // reset results to force displayDice to update when inserting new results
-      this.set('results', []);
-      this.set('results', results.rolls);
-      // this is the second thing returned in the results object, but we don't display it currently
-      this.set('total', results.total);
+      this.diceBag.rollMultipleDice({ dice }).then((results) => {
+        // reset results to force displayDice to update when inserting new results
+        this.set('results', []);
+        this.set('results', results.rolls);
+        // this is the second thing returned in the results object, but we don't display it currently
+        this.set('total', results.total);
+      });
     }
   }
 });

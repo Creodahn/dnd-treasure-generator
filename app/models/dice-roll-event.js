@@ -6,5 +6,6 @@ export default Model.extend({
   updatedAt: attr('date'),
   // relationships
   dieRolls: hasMany('die-roll'),
-  profile: belongsTo('profile')
+  profile: belongsTo('profile'),
+  treasureRuleSet: belongsTo('treasure-rule-set')
 });

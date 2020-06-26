@@ -37,9 +37,9 @@ export default Component.extend({
       (calculation) => {
         const { diceCount, dieType, itemTable, itemType, itemValue, multiplier } = calculation,
           { rolls, total } = this.diceBag.rollMultipleDice({ count: diceCount, dieType }),
-          itemsToPickTotal = total * (multiplier || 1),
-          inflectedType = itemType && !itemTable ? Inflector.inflector.pluralize(itemType).camelize() : 'magicItems',
-          itemsToChooseFrom = itemTable ? rewardSource[inflectedType].filterBy('table', itemTable) : rewardSource[inflectedType].filterBy('value', itemValue),
+          itemsToPickTotal = this.getItemsToPickTotal(multiplier, total),
+          inflectedType = this.getInflectedType(itemTable, itemType),
+          itemsToChooseFrom = this.getItemsToChooseFrom(inflectedType, itemTable, itemValue, rewardSource),
           selectedItems = [],
           selectedItemNames = [];
         let countedResults = [],
@@ -81,18 +81,30 @@ export default Component.extend({
           });
         });
 
-        return { items: countedResults, rolls, total: itemsToPickTotal };
+        return { items: countedResults, rolls: rolls.map((roll) => roll.result), total: itemsToPickTotal };
       });
+  },
+  getInflectedType(itemTable, itemType) {
+    return itemType && !itemTable ? Inflector.inflector.pluralize(itemType).camelize() : 'magicItems';
+  },
+  getItemsToChooseFrom(inflectedType, itemTable, itemValue, rewardSource) {
+    return itemTable ? rewardSource[inflectedType].filterBy('table', itemTable) : rewardSource[inflectedType].filterBy('value', itemValue);
+  },
+  getItemsToPickTotal(multiplier, total) {
+    return total * (typeof multiplier === 'number' ? multiplier : 1);
   },
   getRuleForPercentileRoll(rules) {
     const diceRoll = this.diceBag.rollDie('d100').result;
+    let result = null;
 
     // each rule has a min/max range that corresponds to the range on the table in the Dungeon Master's handbook
     // TODO: nulls shouldn't be possible, but it would be best to add handling for that
-    return rules.map((rule) => {
+    result = rules.map((rule) => {
       return diceRoll >= rule.min && diceRoll <= rule.max ? rule : null;
     }).filter((item) => {
       return item !== null;
     })[0];
+
+    return result;
   }
 });

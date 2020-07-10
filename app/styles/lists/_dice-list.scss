@@ -13,6 +13,7 @@
   &.selected-dice {
     & > li {
       @include flex-direction(column);
+      width: 55px;
 
       & > .result {
         margin-top: 20px;

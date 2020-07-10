@@ -1,14 +1,17 @@
 <h1>Profile</h1>
 
 <div class="flex-layout-row">
-  <ul>
-    <li>
-      <LinkTo @route="profile.index">Info</LinkTo>
-    </li>
-    <li>
-      <LinkTo @route="profile.roll-history">Roll History</LinkTo>
-    </li>
-  </ul>
+  <div>
+    {{!-- TODO: build out a side nav component --}}
+    <ul class="side-nav">
+      <li>
+        <LinkTo @route="profile.index">Info</LinkTo>
+      </li>
+      <li>
+        <LinkTo @route="profile.roll-history">Roll History</LinkTo>
+      </li>
+    </ul>
+  </div>
   <div>
     {{outlet}}
   </div>

@@ -1,14 +1,30 @@
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
+  // services
   currentUser: service(),
   store: service(),
+
+  // computed properties
+  canCreateRollEvent: computed('currentUser.profile', function() {
+    return !isEmpty(this.currentUser.profile);
+  }),
+
   // methods
-  async _createRollEvent() {
+  _createRollEvent(rolls) {
     const profile = this.currentUser.profile;
 
-    return await this.store.createRecord('dice-roll-event', { profile }).save();
+    this.store.createRecord('dice-roll-event', { profile }).save().then((event) => {
+      rolls.map((roll) => {
+        roll.diceRollEvent = event;
+
+        this.store.createRecord('die-roll', roll).save();
+      });
+    });
   },
+
   // the `dice` input to this function is mutually exclusive from the `dieType` and `count` inputs
   // `dice` is an explicit list of dice to be rolled, whereas `dieType` and `count` need to be used together
   // to compose a list of dice to roll
@@ -32,12 +48,14 @@ export default Service.extend({
 
     return { rolls, total };
   },
+
   load(dice) {
     this.set('dice', dice);
     this.set('rollableDice', dice.filter(die => die.showToUser !== false));
   },
-  rollDie(dieType, order = 0, diceRollEvent) {
-    const attrs = { order, result: null, diceRollEvent },
+
+  rollDie(dieType, order = 0, createMultiRollEvent) {
+    const attrs = { order, result: null },
       die = this.dice.findBy('name', dieType);
 
     if(die) {
@@ -45,27 +63,34 @@ export default Service.extend({
       attrs.result = Math.floor(Math.random() * (die.ceil - die.floor + 1)) + die.floor;
     }
 
-    if(diceRollEvent) {
-      this.store.createRecord('die-roll', attrs).save();
-      // TODO: having to have this feels bad. find a better solution
-    } else if(this.currentUser.profile) {
-      this._createRollEvent().then((event) => {
-        attrs.diceRollEvent = event;
-
-        this.store.createRecord('die-roll', attrs).save();
-      });
+    // handle creating an event for a singular roll
+    if(!createMultiRollEvent && this.canCreateRollEvent) {
+      this._createRollEvent([attrs]);
     }
 
     return attrs;
   },
-  rollMultipleDice(params) {
-    const profile = this.currentUser.profile;
-    let rollEvent = null;
 
-    if(profile) {
-      rollEvent = this._createRollEvent();
+  // roll a fake die to get a random number from 1 to the number of sides - 1
+  // TODO: these can't currently be recorded as a roll event
+  rollFakeDie(numberOfSides) {
+    const ceil = numberOfSides - 1,
+      floor = 1;
+
+    return Math.floor(Math.random() * (ceil - floor + 1)) + floor;
+  },
+
+  rollMultipleDice(params) {
+    let results = null;
+
+    if(this.canCreateRollEvent) {
+      results = this._rollMultipleDice(params, true);
+
+      this._createRollEvent(results.rolls);
+    } else {
+      results = this._rollMultipleDice(params);
     }
 
-    return this._rollMultipleDice(params, rollEvent);
+    return results;
   }
 });

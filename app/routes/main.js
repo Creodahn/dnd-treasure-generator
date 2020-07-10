@@ -3,9 +3,12 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
   diceBag: service(),
+  treasureChest: service(),
+
   model() {
     return this.store.findAll('die').then((dice) => {
       this.diceBag.load(dice);
+      this.treasureChest.load();
     });
   }
 });

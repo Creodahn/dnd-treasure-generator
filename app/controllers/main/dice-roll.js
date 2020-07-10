@@ -44,15 +44,14 @@ export default Controller.extend({
     rollDice() {
       const dice = this.selectedDice.map((item) => {
           return item.die;
-        });
+        }),
+        results = this.diceBag.rollMultipleDice({ dice });
 
-      this.diceBag.rollMultipleDice({ dice }).then((results) => {
-        // reset results to force displayDice to update when inserting new results
-        this.set('results', []);
-        this.set('results', results.rolls);
-        // this is the second thing returned in the results object, but we don't display it currently
-        this.set('total', results.total);
-      });
+      // reset results to force displayDice to update when inserting new results
+      this.set('results', []);
+      this.set('results', results.rolls);
+      // this is the second thing returned in the results object, but we don't display it currently
+      this.set('total', results.total);
     }
   }
 });

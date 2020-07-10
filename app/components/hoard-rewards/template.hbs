@@ -1,10 +1,10 @@
-{{#if false}}
-  {{#each coinRewards as |reward|}}
+{{#if this.showRewardList}}
+  {{#each this.coinRewards as |reward|}}
     <li>
       {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
     </li>
   {{/each}}
-  {{#each rewards as |reward|}}
+  {{#each this.rewards as |reward|}}
     <li>
       {{#if reward.total}}
         {{roll-format reward.rolls}} = {{reward.total}}

@@ -14,7 +14,7 @@ export default Route.extend({
   // hooks
   model(params) {
     const ctrl = getOwner(this).lookup('controller:main/treasure/hoard'),
-      ruleSet = this.getRuleForCr(this.modelFor('main.treasure.hoard').treasureRuleSets, params.cr);
+      ruleSet = this.getRuleForCr(this.modelFor('main.treasure.hoard'), params.cr);
 
     // this ensures that even on reload the CR input has a value
     if(!ctrl.cr) {

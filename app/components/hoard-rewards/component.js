@@ -1,22 +1,30 @@
 import Component from '@ember/component';
 import Object, { computed }  from '@ember/object';
-import { getOwner }  from '@ember/application';
 import Inflector from 'ember-inflector';
 import { inject as service } from '@ember/service';
+import { isPresent } from '@ember/utils';
 
 export default Component.extend({
-  // attributes
+  // services
   diceBag: service(),
+  treasureChest: service(),
+
   // computed properties
   coinRewards: computed('calculations.{[],.@each.coinType}', 'rand', function() {
     return this.calculations ? this.calculateCoinReward() : null;
   }),
-  rewards: computed('model.[]', function() {
-    return this.model ? this.calculateReward(this.model) : null;
-  }),
   showRewardList: computed('coinRewards', 'rewards', function() {
-    return !!this.coinRewards && !!this.rewards;
+    return isPresent(this.coinRewards) && isPresent(this.rewards);
   }),
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+    if(this.model) {
+      this.set('rewards', this.calculateReward(this.model));
+    }
+  },
+
   // methods
   calculateCoinReward() {
     return this.calculations.map((calculation) => {
@@ -30,8 +38,7 @@ export default Component.extend({
     });
   },
   calculateReward(rules) {
-    const { diceCalculations } = this.getRuleForPercentileRoll(rules),
-      rewardSource = getOwner(this).lookup('controller:main.treasure.hoard');
+    const { diceCalculations } = this.getRuleForPercentileRoll(rules);
 
     return diceCalculations.map(
       (calculation) => {
@@ -39,7 +46,7 @@ export default Component.extend({
           { rolls, total } = this.diceBag.rollMultipleDice({ count: diceCount, dieType }),
           itemsToPickTotal = this.getItemsToPickTotal(multiplier, total),
           inflectedType = this.getInflectedType(itemTable, itemType),
-          itemsToChooseFrom = this.getItemsToChooseFrom(inflectedType, itemTable, itemValue, rewardSource),
+          itemsToChooseFrom = this.getItemsToChooseFrom(inflectedType, itemTable, itemValue),
           selectedItems = [],
           selectedItemNames = [];
         let countedResults = [],
@@ -48,24 +55,31 @@ export default Component.extend({
         // this loop basically acts as rolling a d100 on whichever table is being used
         // by selecting a random item from whichever set of items should be selected
         for(let i = 0; i < itemsToPickTotal; i++) {
-          selectedItems.push(itemsToChooseFrom[Math.floor(Math.random() * itemsToChooseFrom.length)]);
+          const roll = this.diceBag.rollFakeDie(itemsToChooseFrom.length);
+
+          selectedItems.push(itemsToChooseFrom[roll]);
         }
+
 
         if(inflectedType === 'magicItems') {
           // check each selected item to see if it has children which should be rolled for
           selectedItems.map((item, index) => {
-            const dieRoll = item.dieType ? this.diceBag.rollDie(item.dieType) : null;
-
-            item.children.map((child) => {
-              if(dieRoll >= child.min && dieRoll <= child.max) {
-                selectedItems[index] = child;
-              }
-            });
+            if(item) {
+              const dieRoll = item.dieType ? this.diceBag.rollDie(item.dieType) : null;
+  
+              item.children.map((child) => {
+                if(dieRoll >= child.min && dieRoll <= child.max) {
+                  selectedItems[index] = child;
+                }
+              });
+            }
           });
         }
 
         selectedItems.map((item) => {
-          selectedItemNames.push(item.name);
+          if(item) {
+            selectedItemNames.push(item.name);
+          }
         });
 
         selectedItemNames.sort();
@@ -87,8 +101,15 @@ export default Component.extend({
   getInflectedType(itemTable, itemType) {
     return itemType && !itemTable ? Inflector.inflector.pluralize(itemType).camelize() : 'magicItems';
   },
-  getItemsToChooseFrom(inflectedType, itemTable, itemValue, rewardSource) {
-    return itemTable ? rewardSource[inflectedType].filterBy('table', itemTable) : rewardSource[inflectedType].filterBy('value', itemValue);
+  getItemsToChooseFrom(inflectedType, itemTable, itemValue) {
+    const treasureChest = this.treasureChest;
+    let result = [];
+
+    if(treasureChest[inflectedType]) {
+      result = itemTable ? treasureChest[inflectedType].filterBy('table', itemTable) : treasureChest[inflectedType].filterBy('value', itemValue);
+    }
+
+    return result;
   },
   getItemsToPickTotal(multiplier, total) {
     return total * (typeof multiplier === 'number' ? multiplier : 1);

@@ -21,18 +21,18 @@
     <div class="card" data-test-individual-result-card>
       <div class="card-body">
         <h4 class="card-title">Roll Results</h4>
-          <ul class="card-text left-lg-padding no-bullets">
-            {{#if this.rewards}}
-              {{#each this.rewards as |reward|}}
-                <li>
-                  {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
-                </li>
-              {{/each}}
-            {{else}}
-              <li>No rolls yet</li>
-            {{/if}}
-          </ul>
-       </div>
+        <ul class="card-text left-lg-padding no-bullets">
+          {{#if this.rewards}}
+            {{#each this.rewards as |reward|}}
+              <li>
+                {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
+              </li>
+            {{/each}}
+          {{else}}
+            <li>No rolls yet</li>
+          {{/if}}
+        </ul>
+      </div>
     </div>
   </div>
 </section>

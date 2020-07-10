@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed }  from '@ember/object';
 import { inject as service } from '@ember/service';
 
+
 export default Component.extend({
   // attributes
   diceBag: service(),
@@ -12,16 +13,22 @@ export default Component.extend({
   // methods
   calculateReward(rules) {
     const { diceCalculations } = this.getRuleForPercentileRoll(rules);
+    let result = [{ rolls : [], total: 0 }];
 
-    return diceCalculations.map((calculation) => {
-      const { coinType, diceCount, dieType, multiplier } = calculation,
-        result = this.diceBag.rollMultipleDice({ dieType, count: diceCount });
+    if(diceCalculations) {
+      result = diceCalculations.map((calculation) => {
+        const { coinType, diceCount, dieType, multiplier } = calculation,
+          result = this.diceBag.rollMultipleDice({ dieType, count: diceCount });
+  
+        result.coinType = coinType;
+        result.total = result.total * (multiplier || 1);
 
-      result.coinType = coinType;
-      result.total = result.total * (multiplier || 1);
+        
+        return result;
+      });
+    }
 
-      return result;
-    });
+    return result;
   },
   getRuleForPercentileRoll(rules) {
     const diceRoll = this.diceBag.rollDie('d100').result;

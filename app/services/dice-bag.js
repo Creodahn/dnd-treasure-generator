@@ -13,10 +13,11 @@ export default Service.extend({
   }),
 
   // methods
-  _createRollEvent(rolls) {
+  createRollEvent(rolls, route) {
     const profile = this.currentUser.profile;
 
-    this.store.createRecord('dice-roll-event', { profile }).save().then((event) => {
+    // we track the route info to be able to link to the correct url when redisplaying the rolls
+    this.store.createRecord('dice-roll-event', { profile, route }).save().then((event) => {
       rolls.map((roll) => {
         roll.diceRollEvent = event;
 
@@ -28,7 +29,7 @@ export default Service.extend({
   // the `dice` input to this function is mutually exclusive from the `dieType` and `count` inputs
   // `dice` is an explicit list of dice to be rolled, whereas `dieType` and `count` need to be used together
   // to compose a list of dice to roll
-  _rollMultipleDice({ dice, dieType, count }, rollEvent) {
+  _rollMultipleDice({ dice, dieType, count }) {
     const diceToRoll = dice ? dice : [],
       rolls = [];
     let total = 0;
@@ -40,7 +41,7 @@ export default Service.extend({
     }
 
     diceToRoll.map((dieType, index) => {
-      const roll = this.rollDie(dieType, index, rollEvent);
+      const roll = this.rollDie(dieType, index);
 
       rolls.push(roll);
       total += roll.result;
@@ -54,7 +55,7 @@ export default Service.extend({
     this.set('rollableDice', dice.filter(die => die.showToUser !== false));
   },
 
-  rollDie(dieType, order = 0, createMultiRollEvent) {
+  rollDie(dieType, order = 0, createEvent) {
     const attrs = { order, result: null },
       die = this.dice.findBy('name', dieType);
 
@@ -64,8 +65,8 @@ export default Service.extend({
     }
 
     // handle creating an event for a singular roll
-    if(!createMultiRollEvent && this.canCreateRollEvent) {
-      this._createRollEvent([attrs]);
+    if(this.canCreateRollEvent && createEvent) {
+      this.createRollEvent([attrs]);
     }
 
     return attrs;
@@ -80,13 +81,13 @@ export default Service.extend({
     return Math.floor(Math.random() * (ceil - floor + 1)) + floor;
   },
 
-  rollMultipleDice(params) {
+  rollMultipleDice(params, createEvent) {
     let results = null;
 
-    if(this.canCreateRollEvent) {
+    if(this.canCreateRollEvent && createEvent) {
       results = this._rollMultipleDice(params, true);
 
-      this._createRollEvent(results.rolls);
+      this.createRollEvent(results.rolls);
     } else {
       results = this._rollMultipleDice(params);
     }

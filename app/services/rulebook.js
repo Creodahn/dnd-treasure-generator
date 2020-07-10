@@ -4,7 +4,8 @@ import Service, { inject as service } from '@ember/service';
 export default Service.extend({
   store: service(),
 
-  getRuleSetForCr(records, cr) {
+  getRuleSetForCr(treasureType, cr) {
+    const records = this.get(treasureType);
     let result = null;
     
     if(records) {
@@ -24,7 +25,7 @@ export default Service.extend({
   // eslint-disable-next-line camelcase
   async lookupRules(treasure_type) {
     const alreadyLoadedRules = this.get(treasure_type),
-      rules = isPresent(alreadyLoadedRules) ? alreadyLoadedRules : await this.store.query('treasure-rule-set', { filter: { treasure_type }, include: 'dice-calculations' });
+      rules = isPresent(alreadyLoadedRules) ? alreadyLoadedRules : await this.store.query('treasure-rule-set', { filter: { treasure_type }, include: 'dice-calculations,treasure-rules' });
 
     this.set(treasure_type, rules);
 

@@ -6,6 +6,6 @@ export default Model.extend({
   minCr: attr('number'),
   treasureType: attr('string'),
   // relationships
-  diceCalculations: hasMany('dice-calculation'),
-  treasureRules: hasMany('treasure-rule')
+  diceCalculations: hasMany('dice-calculation', { async: false }),
+  treasureRules: hasMany('treasure-rule', { async: false })
 });

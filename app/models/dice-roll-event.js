@@ -3,6 +3,7 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 export default Model.extend({
   // attributes
   createdAt: attr('date'),
+  route: attr('string'),
   updatedAt: attr('date'),
   // relationships
   dieRolls: hasMany('die-roll'),

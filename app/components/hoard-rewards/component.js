@@ -1,28 +1,20 @@
 import Component from '@ember/component';
-import Object, { computed }  from '@ember/object';
+import EmberObject from '@ember/object';
 import Inflector from 'ember-inflector';
 import { inject as service } from '@ember/service';
-import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   // services
   diceBag: service(),
+  router: service(),
+  rulebook: service(),
   treasureChest: service(),
 
-  // computed properties
-  coinRewards: computed('calculations.{[],.@each.coinType}', 'rand', function() {
-    return this.calculations ? this.calculateCoinReward() : null;
-  }),
-  showRewardList: computed('coinRewards', 'rewards', function() {
-    return isPresent(this.coinRewards) && isPresent(this.rewards);
-  }),
-
-  didReceiveAttrs() {
+  // lifecycle
+  init() {
     this._super(...arguments);
 
-    if(this.model) {
-      this.set('rewards', this.calculateReward(this.model));
-    }
+    this.set('rollsToTrack', []);
   },
 
   // methods
@@ -34,73 +26,58 @@ export default Component.extend({
       result.coinType = coinType;
       result.total = result.total * (multiplier || 1);
 
-      return result;
+      result.rolls.map((roll) => {
+        this.rollsToTrack.pushObject(roll);
+      });
+
+      this.set('coinRewards', EmberObject.create(result));
     });
   },
-  calculateReward(rules) {
-    const { diceCalculations } = this.getRuleForPercentileRoll(rules);
 
-    return diceCalculations.map(
-      (calculation) => {
-        const { diceCount, dieType, itemTable, itemType, itemValue, multiplier } = calculation,
-          { rolls, total } = this.diceBag.rollMultipleDice({ count: diceCount, dieType }),
-          itemsToPickTotal = this.getItemsToPickTotal(multiplier, total),
-          inflectedType = this.getInflectedType(itemTable, itemType),
-          itemsToChooseFrom = this.getItemsToChooseFrom(inflectedType, itemTable, itemValue),
-          selectedItems = [],
-          selectedItemNames = [];
-        let countedResults = [],
-          uniqueItems = [];
+  async calculateReward() {
+    const diceCalculations = await this.getRuleForPercentileRoll(this.model);
+    let results = null;
 
-        // this loop basically acts as rolling a d100 on whichever table is being used
-        // by selecting a random item from whichever set of items should be selected
-        for(let i = 0; i < itemsToPickTotal; i++) {
-          const roll = this.diceBag.rollFakeDie(itemsToChooseFrom.length);
+    if(this.calculations) {
+      this.calculateCoinReward();
+    }
 
-          selectedItems.push(itemsToChooseFrom[roll]);
-        }
+    results = diceCalculations.map((this.runCalculation).bind(this));
 
+    this.set('rewards', results);
 
-        if(inflectedType === 'magicItems') {
-          // check each selected item to see if it has children which should be rolled for
-          selectedItems.map((item, index) => {
-            if(item) {
-              const dieRoll = item.dieType ? this.diceBag.rollDie(item.dieType) : null;
-  
-              item.children.map((child) => {
-                if(dieRoll >= child.min && dieRoll <= child.max) {
-                  selectedItems[index] = child;
-                }
-              });
-            }
-          });
-        }
-
-        selectedItems.map((item) => {
-          if(item) {
-            selectedItemNames.push(item.name);
-          }
-        });
-
-        selectedItemNames.sort();
-
-        uniqueItems = [...new Set(selectedItemNames)].sort();
-
-        countedResults = uniqueItems.map((name) => {
-          return Object.create({
-            name,
-            count: selectedItemNames.filter((item) => {
-              return item === name;
-            }).length
-          });
-        });
-
-        return { items: countedResults, rolls: rolls.map((roll) => roll.result), total: itemsToPickTotal };
-      });
+    // make the roll history
+    this.trackRolls();
   },
+
+  countUniqueItems(selectedItems) {
+    const selectedItemNames = selectedItems.map((item) => {
+        let result = '';
+
+        if(item) {
+          result = item.name;
+        }
+
+        return result;
+      }).filter((item) => item !== ''),
+      uniqueItems = [...new Set(selectedItemNames)].sort();
+
+    selectedItemNames.sort();
+
+    return uniqueItems.map((name) => {
+      return EmberObject.create({
+        name,
+        count: selectedItemNames.filter((item) => {
+          return item === name;
+        }).length
+      });
+    });
+  },
+
   getInflectedType(itemTable, itemType) {
     return itemType && !itemTable ? Inflector.inflector.pluralize(itemType).camelize() : 'magicItems';
   },
+
   getItemsToChooseFrom(inflectedType, itemTable, itemValue) {
     const treasureChest = this.treasureChest;
     let result = [];
@@ -111,21 +88,90 @@ export default Component.extend({
 
     return result;
   },
+
   getItemsToPickTotal(multiplier, total) {
     return total * (typeof multiplier === 'number' ? multiplier : 1);
   },
+
   getRuleForPercentileRoll(rules) {
     const diceRoll = this.diceBag.rollDie('d100').result;
     let result = null;
 
     // each rule has a min/max range that corresponds to the range on the table in the Dungeon Master's handbook
-    // TODO: nulls shouldn't be possible, but it would be best to add handling for that
     result = rules.map((rule) => {
       return diceRoll >= rule.min && diceRoll <= rule.max ? rule : null;
     }).filter((item) => {
       return item !== null;
     })[0];
 
-    return result;
+    return result.get('diceCalculations');
+  },
+
+  runCalculation(calculation) {
+    const { diceCount, dieType, itemTable, itemType, itemValue, multiplier } = calculation,
+      { rolls, total } = this.diceBag.rollMultipleDice({ count: diceCount, dieType }),
+      itemsToPickTotal = this.getItemsToPickTotal(multiplier, total),
+      inflectedType = this.getInflectedType(itemTable, itemType),
+      itemsToChooseFrom = this.getItemsToChooseFrom(inflectedType, itemTable, itemValue),
+      selectedItems = [];
+    let countedResults = [];
+
+    rolls.map((roll) => this.rollsToTrack.pushObject(roll));
+
+    // this loop basically acts as rolling a d100 on whichever table is being used
+    // by selecting a random item from whichever set of items should be selected
+    for(let i = 0; i < itemsToPickTotal; i++) {
+      const roll = this.diceBag.rollFakeDie(itemsToChooseFrom.length);
+
+      selectedItems.pushObject(itemsToChooseFrom[roll]);
+    }
+
+    if(inflectedType === 'magicItems') {
+      // check each selected item to see if it has children which should be rolled for
+      selectedItems.map((item, index) => {
+        if(item) {
+          const dieRoll = item.dieType ? this.diceBag.rollDie(item.dieType) : null;
+
+          item.children.map((child) => {
+            if(dieRoll >= child.min && dieRoll <= child.max) {
+              this.rollsToTrack.pushObject(dieRoll);
+
+              selectedItems[index] = child;
+            }
+          });
+        }
+      });
+    }
+
+    countedResults = this.countUniqueItems(selectedItems);
+
+    // debugger
+
+    return EmberObject.create({ items: countedResults, rolls: rolls.map((roll) => roll.result), total: itemsToPickTotal });
+  },
+
+  trackRolls() {
+    // this forces the ordering to match the overall order in which the rolls were made and overrides the default ordering logic
+    this.rollsToTrack.map((roll, index) => roll.order = index);
+
+    this.diceBag.createRollEvent(this.rollsToTrack, this.router.currentRouteName);
+
+    this.set('rollsToTrack', []);
+  },
+
+  // actions
+  actions: {
+    // TODO: make this more resilient if the input is bad
+    selectCR() {
+      const cr = parseInt(this.cr.replace(/[A-Za-z]+/g, '')),
+        ruleSet = this.rulebook.getRuleSetForCr('hoard', cr);
+
+      this.set('calculations', ruleSet.diceCalculations);
+      // ensure we're updating to show the actual number instead of the pre-formatted value
+      this.set('cr', cr.toString());
+      this.set('model', ruleSet.treasureRules);
+
+      this.calculateReward();
+    }
   }
 });

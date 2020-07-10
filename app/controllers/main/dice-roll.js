@@ -45,7 +45,7 @@ export default Controller.extend({
       const dice = this.selectedDice.map((item) => {
           return item.die;
         }),
-        results = this.diceBag.rollMultipleDice({ dice });
+        results = this.diceBag.rollMultipleDice({ dice }, false);
 
       // reset results to force displayDice to update when inserting new results
       this.set('results', []);

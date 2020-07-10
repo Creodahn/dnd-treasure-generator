@@ -94,12 +94,14 @@ export default Component.extend({
   },
 
   getRuleForPercentileRoll(rules) {
-    const diceRoll = this.diceBag.rollDie('d100').result;
+    const diceRoll = this.diceBag.rollDie('d100');
     let result = null;
+
+    this.rollsToTrack.pushObject(diceRoll);
 
     // each rule has a min/max range that corresponds to the range on the table in the Dungeon Master's handbook
     result = rules.map((rule) => {
-      return diceRoll >= rule.min && diceRoll <= rule.max ? rule : null;
+      return diceRoll.result >= rule.min && diceRoll.result <= rule.max ? rule : null;
     }).filter((item) => {
       return item !== null;
     })[0];
@@ -145,16 +147,14 @@ export default Component.extend({
 
     countedResults = this.countUniqueItems(selectedItems);
 
-    // debugger
-
-    return EmberObject.create({ items: countedResults, rolls: rolls.map((roll) => roll.result), total: itemsToPickTotal });
+    return EmberObject.create({ items: countedResults, rolls, total: itemsToPickTotal });
   },
 
   trackRolls() {
     // this forces the ordering to match the overall order in which the rolls were made and overrides the default ordering logic
     this.rollsToTrack.map((roll, index) => roll.order = index);
 
-    this.diceBag.createRollEvent(this.rollsToTrack, this.router.currentRouteName);
+    this.diceBag.createRollEvent(this.rollsToTrack, this.router.currentRouteName, this.model);
 
     this.set('rollsToTrack', []);
   },

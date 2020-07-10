@@ -13,19 +13,6 @@ export default Service.extend({
   }),
 
   // methods
-  createRollEvent(rolls, route) {
-    const profile = this.currentUser.profile;
-
-    // we track the route info to be able to link to the correct url when redisplaying the rolls
-    this.store.createRecord('dice-roll-event', { profile, route }).save().then((event) => {
-      rolls.map((roll) => {
-        roll.diceRollEvent = event;
-
-        this.store.createRecord('die-roll', roll).save();
-      });
-    });
-  },
-
   // the `dice` input to this function is mutually exclusive from the `dieType` and `count` inputs
   // `dice` is an explicit list of dice to be rolled, whereas `dieType` and `count` need to be used together
   // to compose a list of dice to roll
@@ -50,23 +37,31 @@ export default Service.extend({
     return { rolls, total };
   },
 
+  createRollEvent(rolls, route, treasureRuleSet) {
+    const profile = this.currentUser.profile;
+
+    // we track the route info to be able to link to the correct url when redisplaying the rolls
+    this.store.createRecord('dice-roll-event', { profile, route, treasureRuleSet }).save().then((event) => {
+      rolls.map((roll) => {
+        roll.diceRollEvent = event;
+
+        this.store.createRecord('die-roll', roll).save();
+      });
+    });
+  },
+
   load(dice) {
     this.set('dice', dice);
     this.set('rollableDice', dice.filter(die => die.showToUser !== false));
   },
 
-  rollDie(dieType, order = 0, createEvent) {
+  rollDie(dieType, order = 0) {
     const attrs = { order, result: null },
       die = this.dice.findBy('name', dieType);
 
     if(die) {
       attrs.die = die;
       attrs.result = Math.floor(Math.random() * (die.ceil - die.floor + 1)) + die.floor;
-    }
-
-    // handle creating an event for a singular roll
-    if(this.canCreateRollEvent && createEvent) {
-      this.createRollEvent([attrs]);
     }
 
     return attrs;
@@ -84,6 +79,7 @@ export default Service.extend({
   rollMultipleDice(params, createEvent) {
     let results = null;
 
+    // this handles the case of a logged in user rolling from the `Roll Dice` screen
     if(this.canCreateRollEvent && createEvent) {
       results = this._rollMultipleDice(params, true);
 

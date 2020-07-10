@@ -1,23 +1,38 @@
-{{#if showRewardList}}
-  {{#each coinRewards as |reward|}}
-    <li>
-      {{roll-format reward.rolls}} = {{currency-format reward.total reward.coinType}}
-    </li>
-  {{/each}}
-  {{#each rewards as |reward|}}
-    <li>
-      {{#if reward.total}}
-        {{roll-format reward.rolls}} = {{reward.total}}
-        {{#each reward.items as |rewardItem|}}
-          <div>
-            {{rewardItem.count}} {{text-reward-format rewardItem.count rewardItem.name}}
-          </div>
-        {{/each}}
-      {{else}}
-        Rolled too low for a reward
-      {{/if}}
-    </li>
-  {{/each}}
-{{else}}
-  No rolls yet
-{{/if}}
+<section class="section">
+  <p>
+    Here you can generate the treasure for an entire hoard.
+  </p>
+</section>
+<section class="row">
+  <CrInput class="col-6" data-test-hoard-cr-input="true" @selectCR={{action "selectCR"}} />
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Roll Results</h4>
+        <ul class="card-text left-lg-padding no-bullets">
+          {{#if this.hasRewards}}
+            {{#if this.coinRewards.rolls}}
+              <li>
+                {{roll-format this.coinRewards.rolls}} = {{currency-format this.coinRewards.total this.coinRewards.coinType}}
+              </li>
+            {{/if}}
+            {{#each this.rewards as |reward|}}
+              <li>
+                {{roll-format reward.rolls}} = {{reward.total}}
+                {{#each reward.items as |item|}}
+                  <div>
+                    {{rewardItem.count}} {{text-reward-format item.count item.name}}
+                  </div>
+                {{/each}}
+              </li>
+            {{/each}}
+          {{else}}
+            <li data-test-hoard-no-rewards-msg>
+              No rolls yet
+            </li>
+          {{/if}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

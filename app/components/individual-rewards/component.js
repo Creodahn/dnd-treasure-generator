@@ -1,37 +1,69 @@
 import Component from '@ember/component';
-import { computed }  from '@ember/object';
 import { inject as service } from '@ember/service';
+
 
 export default Component.extend({
   // attributes
   diceBag: service(),
-  // computed properties
-  rewards: computed('model.{[],@each.id}', 'randomizer', function() {
-    return this.model ? this.calculateReward(this.model) : null;
-  }),
-  // methods
-  calculateReward(rules) {
-    const { diceCalculations } = this.getRuleForPercentileRoll(rules);
+  rulebook: service(),
 
-    return diceCalculations.map((calculation) => {
-      const { coinType, diceCount, dieType, multiplier } = calculation,
-        result = this.diceBag.rollMultipleDice({ dieType, count: diceCount });
+  // lifecycle
+  init() {
+    this._super(...arguments);
 
-      result.coinType = coinType;
-      result.total = result.total * (multiplier || 1);
-
-      return result;
-    });
+    this.set('rollsToTrack', []);
   },
+  
+  // methods
+  async calculateReward() {
+    const diceCalculations = await this.getRuleForPercentileRoll(this.model);
+    let result = [{ rolls : [], total: 0 }];
+
+    if(diceCalculations) {
+      result = diceCalculations.map((calculation) => {
+        const { coinType, diceCount, dieType, multiplier } = calculation,
+          result = this.diceBag.rollMultipleDice({ dieType, count: diceCount });
+  
+        result.coinType = coinType;
+        result.total = result.total * (multiplier || 1);
+
+        return result;
+      });
+    }
+
+    this.set('rewards', result);
+  },
+
   getRuleForPercentileRoll(rules) {
     const diceRoll = this.diceBag.rollDie('d100');
+    let result = null;
+
+    this.rollsToTrack.pushObject(diceRoll);
 
     // each rule has a min/max range that corresponds to the range on the table in the Dungeon Master's handbook
     // TODO: nulls shouldn't be possible, but it would be best to add handling for that
-    return rules.map((rule) => {
-      return diceRoll >= rule.min && diceRoll <= rule.max ? rule : null;
+    result = rules.map((rule) => {
+      return diceRoll.result >= rule.min && diceRoll.result <= rule.max ? rule : null;
     }).filter((item) => {
       return item !== null;
     })[0];
+
+    return result ? result.get('diceCalculations') : [];
+  },
+
+  // actions
+  actions: {
+    // TODO: make this more resilient if the input is bad
+    selectCR(selectedCr) {
+      const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
+        ruleSet = this.rulebook.getRuleSetForCr('individual', cr);
+
+      this.set('calculations', ruleSet.diceCalculations);
+      // ensure we're updating to show the actual number instead of the pre-formatted value
+      this.set('cr', cr.toString());
+      this.set('model', ruleSet.treasureRules);
+
+      this.calculateReward();
+    }
   }
 });

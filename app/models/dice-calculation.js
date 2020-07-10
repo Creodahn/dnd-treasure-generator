@@ -1,17 +1,17 @@
-import DS from 'ember-data';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default DS.Model.extend({
+export default Model.extend({
   // attributes
-  coinType: DS.attr('string', { readOnly: true }),
-  diceCount: DS.attr('number'),
-  dieType: DS.attr('string', { readOnly: true }),
-  itemTable: DS.attr('string'),
-  itemType: DS.attr('string'),
-  itemValue: DS.attr('number'),
-  multiplier: DS.attr('number'),
+  coinType: attr('string', { readOnly: true }),
+  diceCount: attr('number'),
+  dieType: attr('string', { readOnly: true }),
+  itemTable: attr('string'),
+  itemType: attr('string'),
+  itemValue: attr('number'),
+  multiplier: attr('number'),
   // relationships
-  coin: DS.belongsTo('coin'),
-  die: DS.belongsTo('die'),
-  treasureRule: DS.belongsTo('treasure-rule'),
-  treasureRuleSet: DS.belongsTo('treasure-rule-set')
+  coin: belongsTo('coin'),
+  die: belongsTo('die'),
+  treasureRule: belongsTo('treasure-rule'),
+  treasureRuleSet: belongsTo('treasure-rule-set')
 });

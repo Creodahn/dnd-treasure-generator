@@ -1,9 +1,9 @@
-import DS from 'ember-data';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default DS.Model.extend({
+export default Model.extend({
   // attributes
-  password: DS.attr('string'),
-  username: DS.attr('string', { readOnly: true }),
+  password: attr('string'),
+  username: attr('string', { readOnly: true }),
   // relationships
-  profile: DS.belongsTo('profile')
+  profile: belongsTo('profile')
 });

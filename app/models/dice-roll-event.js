@@ -2,9 +2,11 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 
 export default Model.extend({
   // attributes
-  max: attr('number'),
-  min: attr('number'),
+  createdAt: attr('date'),
+  route: attr('string'),
+  updatedAt: attr('date'),
   // relationships
-  diceCalculations: hasMany('dice-calculation', { async: true }),
+  dieRolls: hasMany('die-roll'),
+  profile: belongsTo('profile'),
   treasureRuleSet: belongsTo('treasure-rule-set')
 });

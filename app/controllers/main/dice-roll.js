@@ -12,7 +12,7 @@ export default Controller.extend({
       const rolls = this.results;
 
       if(rolls && rolls[index]) {
-        item.set('result', rolls[index]);
+        item.set('result', rolls[index].result);
       }
 
       return item;
@@ -22,10 +22,14 @@ export default Controller.extend({
   init() {
     this._super(...arguments);
 
+    this.reset();
+  },
+  // methods
+  reset() {
     this.set('results', []);
     this.set('selectedDice', []);
   },
-  // actions 
+  // actions
   actions: {
     addDie(die) {
       this.selectedDice.pushObject(Object.create({ die: die.name }));
@@ -37,15 +41,11 @@ export default Controller.extend({
 
       this.set('selectedDice', result);
     },
-    reset() {
-      this.set('results', []);
-      this.set('selectedDice', []);
-    },
     rollDice() {
       const dice = this.selectedDice.map((item) => {
           return item.die;
         }),
-        results = this.diceBag.rollMultipleDice({ dice });
+        results = this.diceBag.rollMultipleDice({ dice }, true);
 
       // reset results to force displayDice to update when inserting new results
       this.set('results', []);

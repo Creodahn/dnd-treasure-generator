@@ -9,8 +9,7 @@ export default Controller.extend({
   session: service(),
 
   authenticateWithOAuth2() {
-    const session = this.session,
-      { username, password } = this;
+    const { password, session, username } = this;
 
     if(session) {
       session.set('data.login', username);

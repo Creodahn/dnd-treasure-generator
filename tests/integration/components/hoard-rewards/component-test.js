@@ -9,6 +9,6 @@ module('Integration | Component | hoard-rewards', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`<HoardRewards />`);
 
-    assert.equal(this.element.textContent.trim(), 'No rolls yet');
+    assert.dom('[data-test-hoard-no-rewards-msg').hasText('No rolls yet');
   });
 });

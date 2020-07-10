@@ -31,6 +31,8 @@ export default function() {
   this.resource('coins');
   this.resource('dice');
   this.resource('dice-calculations');
+  this.resource('dice-roll-events');
+  this.resource('die-rolls');
   this.resource('gemstones');
   this.resource('magic-items');
   this.resource('treasure-rule-sets');

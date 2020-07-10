@@ -6,6 +6,7 @@ import { setupApplicationTest } from 'ember-qunit';
 module('Acceptance | main/treasure/hoard/cr', function(hooks) {
   setupApplicationTest(hooks);
 
+  // TODO: the cr routes no longer exist, so these tests need to be updated
   test('visiting /treasure/hoard/cr', async function(assert) {
     assert.expect(4);
 
@@ -24,11 +25,11 @@ module('Acceptance | main/treasure/hoard/cr', function(hooks) {
     assert.equal(currentURL(), '/treasure/hoard');
 
     await typeIn('[data-test-labeled-input-field="cr-input"]', '12');
-    await click('[data-test-calculate-reward-trigger]');
+    await click('[data-test-cr-trigger]');
 
     // splitting the URL to get it without the query params for the
     // random number that enforces recalculating rules even if the
     // CR is the same
-    assert.equal(currentURL().split('?')[0], '/treasure/hoard/12');
+    assert.equal(currentURL().split('?')[0], '/treasure/hoard');
   });
 });

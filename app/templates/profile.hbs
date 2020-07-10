@@ -1,19 +1,18 @@
 <h1>Profile</h1>
 
-<Ui::LabeledInput
-  @disabled={{true}}
-  @input-id="email-input"
-  @label="Email"
-  @value={{this.profile.email}}
-
-  @update={{action (mut this.profile.email)}}
-/>
-
-<Ui::LabeledInput
-  @disabled={{true}}
-  @input-id="name-input"
-  @label="Full Name"
-  @value={{this.profile.name}}
-
-  @update={{action (mut this.profile.name)}}
-/>
+<div class="flex-layout-row">
+  <div>
+    {{!-- TODO: build out a side nav component --}}
+    <ul class="side-nav">
+      <li>
+        <LinkTo @route="profile.index">Info</LinkTo>
+      </li>
+      <li>
+        <LinkTo @route="profile.roll-history">Roll History</LinkTo>
+      </li>
+    </ul>
+  </div>
+  <div class="padding-left-large">
+    {{outlet}}
+  </div>
+</div>

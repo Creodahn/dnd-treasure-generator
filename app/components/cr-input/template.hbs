@@ -1,0 +1,11 @@
+<Ui::LabeledInput
+  class="padding-left-small padding-right-large"
+  data-test-cr-input
+  @input-id="cr-input"
+  @label="Challenge Rating"
+
+  @update={{action (mut cr)}}
+/>
+<button class="padding-left-small" data-test-cr-trigger type="button" {{action selectCR this.cr}}>
+  Roll Dice
+</button>

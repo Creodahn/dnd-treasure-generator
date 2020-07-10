@@ -25,7 +25,7 @@ module('Acceptance | main/treasure/hoard/cr', function(hooks) {
     assert.equal(currentURL(), '/treasure/hoard');
 
     await typeIn('[data-test-labeled-input-field="cr-input"]', '12');
-    await click('[data-test-calculate-reward-trigger]');
+    await click('[data-test-cr-trigger]');
 
     // splitting the URL to get it without the query params for the
     // random number that enforces recalculating rules even if the

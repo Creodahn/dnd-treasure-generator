@@ -5,18 +5,7 @@
   </p>
 </header>
 <section class="row">
-  <div class="col-6">
-    <Ui::LabeledInput
-      @data-test-individual-cr-input="true"
-      @input-id="cr-input"
-      @label="Challenge Rating"
-
-      @update={{action (mut cr)}}
-    />
-    <button data-test-calculate-reward-trigger type="button" {{action "selectCR"}}>
-      Roll Dice
-    </button>
-  </div>
+  <CrInput class="col-6" data-test-individual-cr-input="true" @selectCR={{action "selectCR"}} />
   <div class="col-4">
     <div class="card" data-test-individual-result-card>
       <div class="card-body">

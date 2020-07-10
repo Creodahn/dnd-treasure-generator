@@ -167,8 +167,8 @@ export default Component.extend({
   // actions
   actions: {
     // TODO: make this more resilient if the input is bad
-    selectCR() {
-      const cr = parseInt(this.cr.replace(/[A-Za-z]+/g, '')),
+    selectCR(selectedCr) {
+      const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
         ruleSet = this.rulebook.getRuleSetForCr('hoard', cr);
 
       this.set('calculations', ruleSet.diceCalculations);

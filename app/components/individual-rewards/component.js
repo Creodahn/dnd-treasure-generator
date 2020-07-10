@@ -48,7 +48,7 @@ export default Component.extend({
       return item !== null;
     })[0];
 
-    return result.get('diceCalculations');
+    return result ? result.get('diceCalculations') : [];
   },
 
   // actions

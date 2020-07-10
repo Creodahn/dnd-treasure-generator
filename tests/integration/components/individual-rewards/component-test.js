@@ -9,6 +9,6 @@ module('Integration | Component | individual-rewards', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`<IndividualRewards />`);
 
-    assert.equal(this.element.textContent.trim(), 'No rolls yet');
+    assert.dom('[data-test-individual-no-rewards-msg]').hasText('No rolls yet');
   });
 });

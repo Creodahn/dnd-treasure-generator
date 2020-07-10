@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import Inflector from 'ember-inflector';
 import { inject as service } from '@ember/service';
 
@@ -9,6 +9,11 @@ export default Component.extend({
   router: service(),
   rulebook: service(),
   treasureChest: service(),
+
+  // computed properties
+  hasRewards: computed('coinRewards', 'rewards', function() {
+    return !!this.coinRewards || !!this.rewards;
+  }),
 
   // lifecycle
   init() {
@@ -106,7 +111,7 @@ export default Component.extend({
       return item !== null;
     })[0];
 
-    return result.get('diceCalculations');
+    return result ? result.get('diceCalculations') : [];
   },
 
   runCalculation(calculation) {

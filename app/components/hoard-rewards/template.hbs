@@ -23,21 +23,27 @@
       <div class="card-body">
         <h4 class="card-title">Roll Results</h4>
         <ul class="card-text left-lg-padding no-bullets">
-          {{#if this.coinRewards.rolls}}
-            <li>
-              {{roll-format this.coinRewards.rolls}} = {{currency-format this.coinRewards.total this.coinRewards.coinType}}
+          {{#if this.hasRewards}}
+            {{#if this.coinRewards.rolls}}
+              <li>
+                {{roll-format this.coinRewards.rolls}} = {{currency-format this.coinRewards.total this.coinRewards.coinType}}
+              </li>
+            {{/if}}
+            {{#each this.rewards as |reward|}}
+              <li>
+                {{roll-format reward.rolls}} = {{reward.total}}
+                {{#each reward.items as |item|}}
+                  <div>
+                    {{rewardItem.count}} {{text-reward-format item.count item.name}}
+                  </div>
+                {{/each}}
+              </li>
+            {{/each}}
+          {{else}}
+            <li data-test-hoard-no-rewards-msg>
+              No rolls yet
             </li>
           {{/if}}
-          {{#each this.rewards as |reward|}}
-            <li>
-              {{roll-format reward.rolls}} = {{reward.total}}
-              {{#each reward.items as |item|}}
-                <div>
-                  {{rewardItem.count}} {{text-reward-format item.count item.name}}
-                </div>
-              {{/each}}
-            </li>
-          {{/each}}
         </ul>
       </div>
     </div>

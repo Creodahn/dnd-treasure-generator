@@ -1,16 +1,22 @@
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import Service, { inject as service } from '@ember/service';
 
-export default Service.extend({
+@classic
+export default class DiceBagService extends Service {
   // services
-  currentUser: service(),
-  store: service(),
+  @service
+  currentUser;
+
+  @service
+  store;
 
   // computed properties
-  canCreateRollEvent: computed('currentUser.profile', function() {
+  @computed('currentUser.profile')
+  get canCreateRollEvent() {
     return !isEmpty(this.currentUser.profile);
-  }),
+  }
 
   // methods
   // the `dice` input to this function is mutually exclusive from the `dieType` and `count` inputs
@@ -35,7 +41,7 @@ export default Service.extend({
     });
 
     return { rolls, total };
-  },
+  }
 
   createRollEvent(rolls, route, treasureRuleSet) {
     const profile = this.currentUser.profile;
@@ -48,12 +54,12 @@ export default Service.extend({
         this.store.createRecord('die-roll', roll).save();
       });
     });
-  },
+  }
 
   load(dice) {
     this.set('dice', dice);
     this.set('rollableDice', dice.filter(die => die.showToUser !== false));
-  },
+  }
 
   rollDie(dieType, order = 0) {
     const attrs = { order, result: null },
@@ -65,7 +71,7 @@ export default Service.extend({
     }
 
     return attrs;
-  },
+  }
 
   // roll a fake die to get a random number from 1 to the number of sides - 1
   // TODO: these can't currently be recorded as a roll event
@@ -74,7 +80,7 @@ export default Service.extend({
       floor = 1;
 
     return Math.floor(Math.random() * (ceil - floor + 1)) + floor;
-  },
+  }
 
   rollMultipleDice(params, createEvent) {
     let results = null;
@@ -90,4 +96,4 @@ export default Service.extend({
 
     return results;
   }
-});
+}

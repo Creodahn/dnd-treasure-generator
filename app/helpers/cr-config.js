@@ -1,13 +1,15 @@
+import classic from 'ember-classic-decorator';
 import Helper from '@ember/component/helper';
 
-export default Helper.extend({
+@classic
+export default class CrConfig extends Helper {
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
     this._data = {};
-  },
+  }
 
   compute() {
     return this._data;
   }
-});
+}

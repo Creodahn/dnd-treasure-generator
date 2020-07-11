@@ -1,26 +1,36 @@
-import Component from '@ember/component';
-import EmberObject, { computed } from '@ember/object';
-import Inflector from 'ember-inflector';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import EmberObject, { action, computed } from '@ember/object';
+import Inflector from 'ember-inflector';
 
-export default Component.extend({
+@classic
+export default class HoardRewards extends Component {
   // services
-  diceBag: service(),
-  router: service(),
-  rulebook: service(),
-  treasureChest: service(),
+  @service
+  diceBag;
+
+  @service
+  router;
+
+  @service
+  rulebook;
+
+  @service
+  treasureChest;
 
   // computed properties
-  hasRewards: computed('coinRewards', 'rewards', function() {
+  @computed('coinRewards', 'rewards')
+  get hasRewards() {
     return !!this.coinRewards || !!this.rewards;
-  }),
+  }
 
   // lifecycle
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
     this.set('rollsToTrack', []);
-  },
+  }
 
   // methods
   calculateCoinReward() {
@@ -37,7 +47,7 @@ export default Component.extend({
 
       this.set('coinRewards', EmberObject.create(result));
     });
-  },
+  }
 
   async calculateReward() {
     const diceCalculations = await this.getRuleForPercentileRoll(this.model);
@@ -53,7 +63,7 @@ export default Component.extend({
 
     // make the roll history
     this.trackRolls();
-  },
+  }
 
   countUniqueItems(selectedItems) {
     const selectedItemNames = selectedItems.map((item) => {
@@ -77,11 +87,11 @@ export default Component.extend({
         }).length
       });
     });
-  },
+  }
 
   getInflectedType(itemTable, itemType) {
     return itemType && !itemTable ? Inflector.inflector.pluralize(itemType).camelize() : 'magicItems';
-  },
+  }
 
   getItemsToChooseFrom(inflectedType, itemTable, itemValue) {
     const treasureChest = this.treasureChest;
@@ -92,11 +102,11 @@ export default Component.extend({
     }
 
     return result;
-  },
+  }
 
   getItemsToPickTotal(multiplier, total) {
     return total * (typeof multiplier === 'number' ? multiplier : 1);
-  },
+  }
 
   getRuleForPercentileRoll(rules) {
     const diceRoll = this.diceBag.rollDie('d100');
@@ -112,7 +122,7 @@ export default Component.extend({
     })[0];
 
     return result ? result.get('diceCalculations') : [];
-  },
+  }
 
   runCalculation(calculation) {
     const { diceCount, dieType, itemTable, itemType, itemValue, multiplier } = calculation,
@@ -153,7 +163,7 @@ export default Component.extend({
     countedResults = this.countUniqueItems(selectedItems);
 
     return EmberObject.create({ items: countedResults, rolls, total: itemsToPickTotal });
-  },
+  }
 
   trackRolls() {
     // this forces the ordering to match the overall order in which the rolls were made and overrides the default ordering logic
@@ -162,21 +172,19 @@ export default Component.extend({
     this.diceBag.createRollEvent(this.rollsToTrack, this.router.currentRouteName, this.model);
 
     this.set('rollsToTrack', []);
-  },
-
-  // actions
-  actions: {
-    // TODO: make this more resilient if the input is bad
-    selectCR(selectedCr) {
-      const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
-        ruleSet = this.rulebook.getRuleSetForCr('hoard', cr);
-
-      this.set('calculations', ruleSet.diceCalculations);
-      // ensure we're updating to show the actual number instead of the pre-formatted value
-      this.set('cr', cr.toString());
-      this.set('model', ruleSet.treasureRules);
-
-      this.calculateReward();
-    }
   }
-});
+
+  // TODO: make this more resilient if the input is bad
+  @action
+  selectCR(selectedCr) {
+    const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
+      ruleSet = this.rulebook.getRuleSetForCr('hoard', cr);
+
+    this.set('calculations', ruleSet.diceCalculations);
+    // ensure we're updating to show the actual number instead of the pre-formatted value
+    this.set('cr', cr.toString());
+    this.set('model', ruleSet.treasureRules);
+
+    this.calculateReward();
+  }
+}

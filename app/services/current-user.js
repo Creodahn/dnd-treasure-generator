@@ -1,13 +1,19 @@
-import Service, { inject as service } from '@ember/service';
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
+import Service, { inject as service } from '@ember/service';
 
-export default Service.extend({
-  session: service(),
-  store: service(),
+@classic
+export default class CurrentUserService extends Service {
+  @service
+  session;
 
-  profile: computed('_profile', function() {
+  @service
+  store;
+
+  @computed('_profile')
+  get profile() {
     return this._profile;
-  }),
+  }
 
   load() {
     if(this.session.isAuthenticated && !this._profile) {
@@ -24,4 +30,4 @@ export default Service.extend({
       });
     }
   }
-});
+}

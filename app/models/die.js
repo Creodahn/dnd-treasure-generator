@@ -1,11 +1,22 @@
+import classic from 'ember-classic-decorator';
 import Model, { attr, hasMany } from '@ember-data/model';
 
-export default Model.extend({
+@classic
+export default class Die extends Model {
   // attributes
-  ceil: attr('number'),
-  floor: attr('number'),
-  name: attr('string'),
-  showToUser: attr('boolean'),
+  @attr('number')
+  ceil;
+
+  @attr('number')
+  floor;
+
+  @attr('string')
+  name;
+
+  @attr('boolean')
+  showToUser;
+
   // relationships
-  diceCalculations: hasMany('dice-calculation')
-});
+  @hasMany('dice-calculation')
+  diceCalculations;
+}

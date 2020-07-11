@@ -1,18 +1,24 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
-export default Component.extend({
+@classic
+export default class IndividualRewards extends Component {
   // attributes
-  diceBag: service(),
-  rulebook: service(),
+  @service
+  diceBag;
+
+  @service
+  rulebook;
 
   // lifecycle
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
     this.set('rollsToTrack', []);
-  },
-  
+  }
+
   // methods
   async calculateReward() {
     const diceCalculations = await this.getRuleForPercentileRoll(this.model);
@@ -31,7 +37,7 @@ export default Component.extend({
     }
 
     this.set('rewards', result);
-  },
+  }
 
   getRuleForPercentileRoll(rules) {
     const diceRoll = this.diceBag.rollDie('d100');
@@ -48,21 +54,19 @@ export default Component.extend({
     })[0];
 
     return result ? result.get('diceCalculations') : [];
-  },
-
-  // actions
-  actions: {
-    // TODO: make this more resilient if the input is bad
-    selectCR(selectedCr) {
-      const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
-        ruleSet = this.rulebook.getRuleSetForCr('individual', cr);
-
-      this.set('calculations', ruleSet.diceCalculations);
-      // ensure we're updating to show the actual number instead of the pre-formatted value
-      this.set('cr', cr.toString());
-      this.set('model', ruleSet.treasureRules);
-
-      this.calculateReward();
-    }
   }
-});
+
+  // TODO: make this more resilient if the input is bad
+  @action
+  selectCR(selectedCr) {
+    const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
+      ruleSet = this.rulebook.getRuleSetForCr('individual', cr);
+
+    this.set('calculations', ruleSet.diceCalculations);
+    // ensure we're updating to show the actual number instead of the pre-formatted value
+    this.set('cr', cr.toString());
+    this.set('model', ruleSet.treasureRules);
+
+    this.calculateReward();
+  }
+}

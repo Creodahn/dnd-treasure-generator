@@ -1,9 +1,14 @@
-import Route from '@ember/routing/route';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Route.extend({
-  diceBag: service(),
-  treasureChest: service(),
+@classic
+export default class MainRoute extends Route {
+  @service
+  diceBag;
+
+  @service
+  treasureChest;
 
   model() {
     return this.store.findAll('die').then((dice) => {
@@ -11,4 +16,4 @@ export default Route.extend({
       this.treasureChest.load();
     });
   }
-});
+}

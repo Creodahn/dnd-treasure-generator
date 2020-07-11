@@ -1,8 +1,15 @@
+import classic from 'ember-classic-decorator';
 import Model, { attr } from '@ember-data/model';
 
-export default Model.extend({
+@classic
+export default class Gemstone extends Model {
   // attributes
-  description: attr('string'),
-  name: attr('string'),
-  value: attr('number')
-});
+  @attr('string')
+  description;
+
+  @attr('string')
+  name;
+
+  @attr('number')
+  value;
+}

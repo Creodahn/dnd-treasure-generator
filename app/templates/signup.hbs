@@ -1,5 +1,5 @@
 <main class="guttered login">
-  <Ui::Card @headerText="Sign up" @submitAction={{action "signUp"}}>
+  <Ui::Card @headerText="Sign up" @submitAction={{this.signUp}}>
     <p class="card-subtitle">
       Creating an account allows you to track the treasures that you generate
     </p>
@@ -8,7 +8,7 @@
       @input-id="username-input"
       @label="Full Name"
       @required={{true}}
-      @update={{action (mut this.model.name)}}
+      @update={{fn (mut this.model.name)}}
     />
 
     <Ui::LabeledInput
@@ -16,7 +16,7 @@
       @input-id="email-input"
       @label="Email"
       @required={{true}}
-      @update={{action (mut this.model.email)}}
+      @update={{fn (mut this.model.email)}}
     />
 
     <Ui::LabeledInput
@@ -25,7 +25,7 @@
       @label="Password"
       @required={{true}}
       @type="password"
-      @update={{action (mut this.password)}}
+      @update={{fn (mut this.password)}}
     />
 
     <Ui::LabeledInput
@@ -34,7 +34,7 @@
       @label="Confirm Password"
       @required={{true}}
       @type="password"
-      @update={{action (mut this.passwordConfirmation)}}
+      @update={{fn (mut this.passwordConfirmation)}}
     />
 
     <Ui::ErrorContainer @content={{this.errorText}} />

@@ -7,7 +7,7 @@
 
     @update={{action (mut cr-config.cr)}}
   />
-  <button class="padding-left-small" data-test-cr-trigger type="button" {{action this.selectCR cr-config.cr}}>
+  <button class="padding-left-small" data-test-cr-trigger type="button" {{on "click" (fn @selectCR cr-config.cr)}}>
     Roll Dice
   </button>
 {{/let}}

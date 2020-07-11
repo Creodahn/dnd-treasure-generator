@@ -3,7 +3,9 @@
 <ul class="dice-list">
   {{#each this.diceBag.rollableDice as |die|}}
     <li>
-      <button {{action "addDie" die}}>{{die.name}}</button>
+      <button type="button" {{on "click" (fn "addDie" die)}}>
+        {{die.name}}
+      </button>
     </li>
   {{/each}}
 </ul>
@@ -13,14 +15,22 @@
   <ul class="dice-list selected-dice">
     {{#each this.displayDice as |item index|}}
       <li>
-        <button {{action "removeDie" index}}>{{item.die}}</button>
+        <button type="button" {{on "click" (fn "removeDie" index)}}>
+          {{item.die}}
+        </button>
         <div class="result">{{item.result}}</div>
       </li>
     {{/each}}
   </ul>
 
-  <button {{action "rollDice"}}>Roll Dice</button>
-  <button {{action this.reset}}>Reset</button>
+  <button type="button" {{on "click" this.rollDice}}>
+    Roll Dice
+  </button>
+  <button type="button" {{on "click" this.reset}}>
+    Reset
+  </button>
 {{else}}
-  <p>No dice selected yet. Click at least one die from the list to add it to be rolled</p>
+  <p>
+    No dice selected yet. Click at least one die from the list to add it to be rolled
+  </p>
 {{/if}}

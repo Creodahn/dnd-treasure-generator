@@ -5,7 +5,7 @@
     @input-id="cr-input"
     @label="Challenge Rating"
 
-    @update={{action (mut cr-config.cr)}}
+    @update={{fn (mut cr-config.cr)}}
   />
   <button class="padding-left-small" data-test-cr-trigger type="button" {{on "click" (fn @selectCR cr-config.cr)}}>
     Roll Dice

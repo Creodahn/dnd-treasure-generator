@@ -8,7 +8,7 @@
       </h3>
     </div>
     <div class="collapsible" data-test-app-nav-collapsible-section>
-      <Input @checked={{collapsibleOpen}} @id="collapsible1" @name="collapsible1" @type="checkbox" />
+      <Input @checked={{this.collapsibleOpen}} @id="collapsible1" @name="collapsible1" @type="checkbox" />
       <button data-test-app-nav-collapsible-toggle type="button" {{action "toggleCollapsible"}}>
         <div class="bar1"></div>
         <div class="bar2"></div>
@@ -31,7 +31,7 @@
               Reference
             </LinkTo>
           </li>
-          {{#if session.isAuthenticated}}
+          {{#if this.session.isAuthenticated}}
             <li>
               <LinkTo @route="profile" data-test-app-nav-link="profile">
                 Profile

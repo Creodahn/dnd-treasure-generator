@@ -1,6 +1,6 @@
-{{#if label}}
-  <label for={{input-id}}>
-    {{label}}
+{{#if this.label}}
+  <label for={{this.input-id}}>
+    {{this.label}}
   </label>
 {{/if}}
 <Input
@@ -9,6 +9,5 @@
   @id={{this.input-id}}
   @type={{this.type}}
   @value={{this.value}}
-
-  @key-up={{action update this.value}}
+  @key-up={{action this.update this.value}}
 />

@@ -5,8 +5,7 @@
       @input-id="username-input"
       @label="Username"
       @required={{true}}
-
-      @update={{action (mut username)}}
+      @update={{action (mut this.username)}}
     />
 
     <Ui::LabeledInput
@@ -15,8 +14,7 @@
       @label="Password"
       @required={{true}}
       @type="password"
-
-      @update={{action (mut password)}}
+      @update={{action (mut this.password)}}
     />
 
     <Ui::ErrorContainer @content={{this.errorText}} />

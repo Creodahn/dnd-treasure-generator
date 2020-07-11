@@ -21,7 +21,7 @@
                 {{roll-format reward.rolls}} = {{reward.total}}
                 {{#each reward.items as |item|}}
                   <div>
-                    {{rewardItem.count}} {{text-reward-format item.count item.name}}
+                    {{this.rewardItem.count}} {{text-reward-format item.count item.name}}
                   </div>
                 {{/each}}
               </li>

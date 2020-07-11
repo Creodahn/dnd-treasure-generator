@@ -9,7 +9,7 @@
   it will fail the `no-invalid-interactive` template linter rule
 --}}
 {{#if this.submitAction}}
-  <form class="card-body centered" onsubmit={{action submitAction}}>
+  <form class="card-body centered" onsubmit={{action this.submitAction}}>
     {{yield}}
   </form>
 {{else}}

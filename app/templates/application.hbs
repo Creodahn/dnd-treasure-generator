@@ -9,7 +9,7 @@
     </div>
     <div class="collapsible" data-test-app-nav-collapsible-section>
       <Input @checked={{this.collapsibleOpen}} @id="collapsible1" @name="collapsible1" @type="checkbox" />
-      <button data-test-app-nav-collapsible-toggle type="button" {{action "toggleCollapsible"}}>
+      <button data-test-app-nav-collapsible-toggle type="button" {{on "click" this.toggleCollapsible}}>
         <div class="bar1"></div>
         <div class="bar2"></div>
         <div class="bar3"></div>
@@ -38,7 +38,7 @@
               </LinkTo>
             </li>
             <li>
-              <a data-test-app-nav-link="logout" href="#" {{action "logOut"}}>
+              <a data-test-app-nav-link="logout" href="#" {{on "click" this.logOut}}>
                 Log out
               </a>
             </li>

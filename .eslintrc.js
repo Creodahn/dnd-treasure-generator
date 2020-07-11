@@ -41,6 +41,8 @@ module.exports = {
         allowKeywords: true
       }
     ],
+    'ember/classic-decorator-hooks': 'error',
+    'ember/classic-decorator-no-classic-methods': 'error',
     'ember/no-jquery': 'error',
     indent: [
       'off',

@@ -2,10 +2,17 @@ import classic from 'ember-classic-decorator';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
+import { tracked } from '@glimmer/tracking';
 
 @classic
 export default class IndividualRewards extends Component {
   // attributes
+  @tracked calculations;
+  @tracked cr;
+  @tracked model;
+  @tracked rewards;
+
+  // services
   @service
   diceBag;
 
@@ -36,7 +43,7 @@ export default class IndividualRewards extends Component {
       });
     }
 
-    this.set('rewards', result);
+    this.rewards = result;
   }
 
   getRuleForPercentileRoll(rules) {
@@ -62,10 +69,10 @@ export default class IndividualRewards extends Component {
     const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
       ruleSet = this.rulebook.getRuleSetForCr('individual', cr);
 
-    this.set('calculations', ruleSet.diceCalculations);
+    this.calculations = ruleSet.diceCalculations;
     // ensure we're updating to show the actual number instead of the pre-formatted value
-    this.set('cr', cr.toString());
-    this.set('model', ruleSet.treasureRules);
+    this.cr = cr.toString();
+    this.model = ruleSet.treasureRules;
 
     this.calculateReward();
   }

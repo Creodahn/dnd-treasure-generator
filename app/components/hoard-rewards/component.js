@@ -29,7 +29,7 @@ export default class HoardRewards extends Component {
   init() {
     super.init(...arguments);
 
-    this.set('rollsToTrack', []);
+    this.rollsToTrack = [];
   }
 
   // methods
@@ -59,7 +59,7 @@ export default class HoardRewards extends Component {
 
     results = diceCalculations.map((this.runCalculation).bind(this));
 
-    this.set('rewards', results);
+    this.rewards = results;
 
     // make the roll history
     this.trackRolls();
@@ -80,12 +80,12 @@ export default class HoardRewards extends Component {
     selectedItemNames.sort();
 
     return uniqueItems.map((name) => {
-      return EmberObject.create({
+      return {
         name,
         count: selectedItemNames.filter((item) => {
           return item === name;
         }).length
-      });
+      };
     });
   }
 
@@ -162,7 +162,7 @@ export default class HoardRewards extends Component {
 
     countedResults = this.countUniqueItems(selectedItems);
 
-    return EmberObject.create({ items: countedResults, rolls, total: itemsToPickTotal });
+    return { items: countedResults, rolls, total: itemsToPickTotal };
   }
 
   trackRolls() {
@@ -171,7 +171,7 @@ export default class HoardRewards extends Component {
 
     this.diceBag.createRollEvent(this.rollsToTrack, this.router.currentRouteName, this.model);
 
-    this.set('rollsToTrack', []);
+    this.rollsToTrack = [];
   }
 
   // TODO: make this more resilient if the input is bad
@@ -180,10 +180,10 @@ export default class HoardRewards extends Component {
     const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
       ruleSet = this.rulebook.getRuleSetForCr('hoard', cr);
 
-    this.set('calculations', ruleSet.diceCalculations);
     // ensure we're updating to show the actual number instead of the pre-formatted value
-    this.set('cr', cr.toString());
-    this.set('model', ruleSet.treasureRules);
+    this.cr = cr.toString();
+    this.calculations = ruleSet.diceCalculations;
+    this.model = ruleSet.treasureRules;
 
     this.calculateReward();
   }

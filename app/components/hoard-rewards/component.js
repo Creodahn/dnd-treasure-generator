@@ -1,11 +1,19 @@
 import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import EmberObject, { action, computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import Inflector from 'ember-inflector';
+import { tracked } from '@glimmer/tracking';
 
 @classic
 export default class HoardRewards extends Component {
+  // attrbiutes
+  @tracked calculations;
+  @tracked coinRewards;
+  @tracked cr;
+  @tracked model;
+  @tracked rewards;
+
   // services
   @service
   diceBag;
@@ -45,7 +53,7 @@ export default class HoardRewards extends Component {
         this.rollsToTrack.pushObject(roll);
       });
 
-      this.set('coinRewards', EmberObject.create(result));
+      this.coinRewards = result;
     });
   }
 

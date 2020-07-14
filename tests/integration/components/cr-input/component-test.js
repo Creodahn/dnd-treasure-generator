@@ -13,7 +13,7 @@ module('Integration | Component | cr-input', function(hooks) {
 
     await render(hbs`<CrInput @selectCR={{action this.selectCR}} />`);
 
-    assert.dom('[data-test-cr-input]').exists();
+    assert.dom('[data-test-labeled-input-field]').exists();
     assert.dom('[data-test-cr-trigger]').exists();
   });
 });

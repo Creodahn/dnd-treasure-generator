@@ -19,13 +19,13 @@ export default class LoginController extends Controller {
     const { password, session, username } = this;
 
     if(session) {
-      session.set('data.login', username);
+      session.data.login = username;
 
       session.authenticate('authenticator:oauth2', username, password).then(() => {
         this.currentUser.load();
       }).catch((reason) => {
         error(reason);
-        this.set('errorText', 'Could not validate provided username and password');
+        this.errorText = 'Could not validate provided username and password';
       });
     }
   }

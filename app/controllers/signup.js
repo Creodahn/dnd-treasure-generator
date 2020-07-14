@@ -1,11 +1,9 @@
-import classic from 'ember-classic-decorator';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 
-const { log } = console;
+const { error } = console;
 
-@classic
 export default class SignupController extends Controller {
   @service
   session;
@@ -27,7 +25,7 @@ export default class SignupController extends Controller {
 
     if(errors.length === 0) {
       this.store.createRecord('user', { password }).save().then((user) => {
-        this.model.set('user', user);
+        this.model.user = user;
 
         this.model.save().then((profile) => {
           const email = profile.email,
@@ -35,12 +33,12 @@ export default class SignupController extends Controller {
 
           this.session.authenticate('authenticator:oauth2', email, password);
         }).catch((reason) => {
-          log(reason);
-          this.set('errorText', errors);
+          error(reason);
+          this.errorText = errors;
         });
       });
     } else {
-      this.set('errorText', errors);
+      this.errorText = errors;
     }
   }
 }

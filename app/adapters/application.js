@@ -1,13 +1,15 @@
 import { computed } from '@ember/object';
-import DS from 'ember-data';
+import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
 import ENV from 'dnd-treasure-generator/config/environment';
 
-export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
-  host: ENV.APP.apiURL,
-  namespace: 'api',
+// this `extends` throws a warning, but need to use a mixin due to how ember-simple-auth works
+export default class ApplicationAdapter extends JSONAPIAdapter.extend(DataAdapterMixin) {
+  host = ENV.APP.apiURL;
+  namespace = 'api';
 
-  headers: computed('session.data.authenticated.access_token', function() {
+  @computed('session.{data.authenticated.access_token,isAuthenticated}')
+  get headers() {
     const headers = {};
 
     if(this.session.isAuthenticated) {
@@ -16,5 +18,5 @@ export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
     }
 
     return headers;
-  }),
-});
+  }
+}

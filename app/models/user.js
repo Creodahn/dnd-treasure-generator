@@ -1,9 +1,16 @@
+import classic from 'ember-classic-decorator';
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default Model.extend({
+@classic
+export default class User extends Model {
   // attributes
-  password: attr('string'),
-  username: attr('string', { readOnly: true }),
+  @attr('string')
+  password;
+
+  @attr('string', { readOnly: true })
+  username;
+
   // relationships
-  profile: belongsTo('profile')
-});
+  @belongsTo('profile')
+  profile;
+}

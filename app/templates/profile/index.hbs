@@ -4,7 +4,7 @@
   @label="Email"
   @value={{this.profile.email}}
 
-  @update={{action (mut this.profile.email)}}
+  @update={{fn (mut this.profile.email)}}
 />
 
 <Ui::LabeledInput
@@ -13,5 +13,5 @@
   @label="Full Name"
   @value={{this.profile.name}}
 
-  @update={{action (mut this.profile.name)}}
+  @update={{fn (mut this.profile.name)}}
 />

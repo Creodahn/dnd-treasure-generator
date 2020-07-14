@@ -1,10 +1,19 @@
+import classic from 'ember-classic-decorator';
 import Model, { attr, hasMany } from '@ember-data/model';
 
-export default Model.extend({
+@classic
+export default class Coin extends Model {
   // attributes
-  name: attr('string'),
-  value: attr('number'),
-  weight: attr('number', { default: 0.02, readOnly: true }),
+  @attr('string')
+  name;
+
+  @attr('number')
+  value;
+
+  @attr('number', { default: 0.02, readOnly: true })
+  weight;
+
   // relationships
-  diceCalculations: hasMany('dice-calculation')
-});
+  @hasMany('dice-calculation')
+  diceCalculations;
+}

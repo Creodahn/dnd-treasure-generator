@@ -1,19 +1,29 @@
-import Component from '@ember/component';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 
-
-export default Component.extend({
+export default class IndividualRewards extends Component {
   // attributes
-  diceBag: service(),
-  rulebook: service(),
+  @tracked calculations;
+  @tracked cr;
+  @tracked model;
+  @tracked rewards;
+
+  // services
+  @service
+  diceBag;
+
+  @service
+  rulebook;
 
   // lifecycle
-  init() {
-    this._super(...arguments);
+  constructor() {
+    super(...arguments);
 
-    this.set('rollsToTrack', []);
-  },
-  
+    this.rollsToTrack = [];
+  }
+
   // methods
   async calculateReward() {
     const diceCalculations = await this.getRuleForPercentileRoll(this.model);
@@ -31,8 +41,8 @@ export default Component.extend({
       });
     }
 
-    this.set('rewards', result);
-  },
+    this.rewards = result;
+  }
 
   getRuleForPercentileRoll(rules) {
     const diceRoll = this.diceBag.rollDie('d100');
@@ -49,21 +59,19 @@ export default Component.extend({
     })[0];
 
     return result ? result.get('diceCalculations') : [];
-  },
-
-  // actions
-  actions: {
-    // TODO: make this more resilient if the input is bad
-    selectCR(selectedCr) {
-      const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
-        ruleSet = this.rulebook.getRuleSetForCr('individual', cr);
-
-      this.set('calculations', ruleSet.diceCalculations);
-      // ensure we're updating to show the actual number instead of the pre-formatted value
-      this.set('cr', cr.toString());
-      this.set('model', ruleSet.treasureRules);
-
-      this.calculateReward();
-    }
   }
-});
+
+  // TODO: make this more resilient if the input is bad
+  @action
+  selectCR(selectedCr) {
+    const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
+      ruleSet = this.rulebook.getRuleSetForCr('individual', cr);
+
+    this.calculations = ruleSet.diceCalculations;
+    // ensure we're updating to show the actual number instead of the pre-formatted value
+    this.cr = cr.toString();
+    this.model = ruleSet.treasureRules;
+
+    this.calculateReward();
+  }
+}

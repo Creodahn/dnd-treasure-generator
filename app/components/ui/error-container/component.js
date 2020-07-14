@@ -1,10 +1,9 @@
-import Component from '@ember/component';
 import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  classNames: ['error-container'],
-
-  hasText: computed('content', function() {
+export default class ErrorContainer extends Component {
+  @computed('content')
+  get hasText() {
     return (this.content || '').length > 0;
-  })
-});
+  }
+}

@@ -1,7 +1,5 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  classNameBindings: ['required'],
-  classNames: ['form-group'],
-  type: 'text'
-});
+export default class LabeledInput extends Component {
+  type = 'text';
+}

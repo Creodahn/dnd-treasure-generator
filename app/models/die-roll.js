@@ -1,12 +1,25 @@
+import classic from 'ember-classic-decorator';
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default Model.extend({
+@classic
+export default class DieRoll extends Model {
   // attributes
-  createdAt: attr('date'),
-  order: attr('number'),
-  result: attr('number'),
-  updatedAt: attr('date'),
+  @attr('date')
+  createdAt;
+
+  @attr('number')
+  order;
+
+  @attr('number')
+  result;
+
+  @attr('date')
+  updatedAt;
+
   // relationships
-  diceRollEvent: belongsTo('dice-roll-event'),
-  die: belongsTo('die')
-});
+  @belongsTo('dice-roll-event')
+  diceRollEvent;
+
+  @belongsTo('die')
+  die;
+}

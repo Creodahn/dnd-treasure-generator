@@ -1,11 +1,18 @@
+import classic from 'ember-classic-decorator';
+import { inject as service } from '@ember/service';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import Route from '@ember/routing/route';
-import { inject as service } from '@ember/service';
 
-export default Route.extend(ApplicationRouteMixin, {
-  currentUser: service(),
-  routeAfterAuthentication: 'main',
-  session: service(),
+// this `extends` throws a warning, but need to use a mixin due to how ember-simple-auth works
+@classic
+export default class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {
+  @service
+  currentUser;
+
+  routeAfterAuthentication = 'main';
+
+  @service
+  session;
 
   afterModel(resolvedModel, transition) {
     const retransitionTargets = ['application', 'index'];
@@ -18,4 +25,4 @@ export default Route.extend(ApplicationRouteMixin, {
       this.currentUser.load();
     }
   }
-});
+}

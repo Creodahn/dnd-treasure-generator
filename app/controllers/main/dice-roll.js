@@ -1,57 +1,74 @@
-import Controller from '@ember/controller';
-import Object, { computed }  from '@ember/object';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
+import { action, computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
+class DisplayDie {
+  @tracked result;
+  @tracked rolls;
+
+  constructor({ die, result }) {
+    this.die = die;
+    this.result = result;
+  }
+}
+
+@classic
+export default class DiceRollController extends Controller {
   // attributes
-  diceBag: service(),
-  selectedDice: null,
+  @tracked results;
+  @tracked selectedDice;
+  @tracked total;
+
+  // services
+  @service
+  diceBag;
+
   // computed properties
-  displayDice: computed('selectedDice.[]', 'results.[]', function() {
+  @computed('selectedDice.{[],@each.id}', 'results.{[],@each.result}', 'total')
+  get displayDice() {
     return this.selectedDice.map((item, index) => {
-      const rolls = this.results;
-
-      if(rolls && rolls[index]) {
-        item.set('result', rolls[index].result);
-      }
-
-      return item;
+      return new DisplayDie({ die: item.die, result: this.results?.[index]?.result });
     });
-  }),
+  }
+
   // lifecycle
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
     this.reset();
-  },
+  }
+
   // methods
   reset() {
-    this.set('results', []);
-    this.set('selectedDice', []);
-  },
-  // actions
-  actions: {
-    addDie(die) {
-      this.selectedDice.pushObject(Object.create({ die: die.name }));
-    },
-    removeDie(index) {
-      // remove die from selected dice at index
-      const dice = this.selectedDice,
-        result = dice.slice(0, index).concat(dice.slice(index + 1, dice.length));
-
-      this.set('selectedDice', result);
-    },
-    rollDice() {
-      const dice = this.selectedDice.map((item) => {
-          return item.die;
-        }),
-        results = this.diceBag.rollMultipleDice({ dice }, true);
-
-      // reset results to force displayDice to update when inserting new results
-      this.set('results', []);
-      this.set('results', results.rolls);
-      // this is the second thing returned in the results object, but we don't display it currently
-      this.set('total', results.total);
-    }
+    this.results = [];
+    this.selectedDice = [];
   }
-});
+
+  @action
+  addDie(die) {
+    this.selectedDice.pushObject({ die: die.name });
+  }
+
+  @action
+  removeDie(index) {
+    // remove die from selected dice at index
+    const dice = this.selectedDice,
+      result = dice.slice(0, index).concat(dice.slice(index + 1, dice.length));
+
+    this.selectedDice = result;
+  }
+
+  @action
+  rollDice() {
+    const dice = this.selectedDice.map((item) => {
+        return item.die;
+      }),
+      results = this.diceBag.rollMultipleDice({ dice }, true);
+
+    this.results = results.rolls;
+    // this is the second thing returned in the results object, but we don't display it currently
+    this.total = results.total;
+  }
+}

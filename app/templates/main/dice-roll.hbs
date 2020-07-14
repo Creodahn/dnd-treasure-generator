@@ -1,26 +1,36 @@
 <h1>Roll Dice</h1>
 <p>Click one or more dice from the list below to roll them</p>
 <ul class="dice-list">
-  {{#each diceBag.rollableDice as |die|}}
+  {{#each this.diceBag.rollableDice as |die|}}
     <li>
-      <button {{action "addDie" die}}>{{die.name}}</button>
+      <button type="button" {{on "click" (fn this.addDie die)}}>
+        {{die.name}}
+      </button>
     </li>
   {{/each}}
 </ul>
 
 <h3>Selected Dice</h3>
-{{#if selectedDice}}
+{{#if this.selectedDice}}
   <ul class="dice-list selected-dice">
-    {{#each displayDice as |item index|}}
+    {{#each this.displayDice as |item index|}}
       <li>
-        <button {{action "removeDie" index}}>{{item.die}}</button>
+        <button type="button" {{on "click" (fn this.removeDie index)}}>
+          {{item.die}}
+        </button>
         <div class="result">{{item.result}}</div>
       </li>
     {{/each}}
   </ul>
 
-  <button {{action "rollDice"}}>Roll Dice</button>
-  <button {{action reset}}>Reset</button>
+  <button type="button" {{on "click" this.rollDice}}>
+    Roll Dice
+  </button>
+  <button type="button" {{on "click" this.reset}}>
+    Reset
+  </button>
 {{else}}
-  <p>No dice selected yet. Click at least one die from the list to add it to be rolled</p>
+  <p>
+    No dice selected yet. Click at least one die from the list to add it to be rolled
+  </p>
 {{/if}}

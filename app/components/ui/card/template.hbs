@@ -1,19 +1,21 @@
-{{#if this.headerText}}
-  <header class="card-header">
-    {{this.headerText}}
-  </header>
-{{/if}}
+<div class="card">
+  {{#if @headerText}}
+    <header class="card-header">
+      {{@headerText}}
+    </header>
+  {{/if}}
 
-{{!--
-  NOTE: if the onsubmit is written with any other case (onSubmit, for example)
-  it will fail the `no-invalid-interactive` template linter rule
---}}
-{{#if this.submitAction}}
-  <form class="card-body centered" onsubmit={{action submitAction}}>
-    {{yield}}
-  </form>
-{{else}}
-  <div class="card-body centered">
-    {{yield}}
-  </div>
+  {{!--
+    NOTE: if the onsubmit is written with any other case (onSubmit, for example)
+    it will fail the `no-invalid-interactive` template linter rule
+  --}}
+  {{#if @submitAction}}
+    <form class="card-body centered" {{on "submit" (fn @submitAction)}}>
+      {{yield}}
+    </form>
+  {{else}}
+    <div class="card-body centered">
+      {{yield}}
+    </div>
 {{/if}}
+</div>

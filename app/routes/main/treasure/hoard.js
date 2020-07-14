@@ -1,10 +1,13 @@
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  rulebook: service(),
+@classic
+export default class HoardRoute extends Route {
+  @service
+  rulebook;
 
   model() {
     return this.rulebook.lookupRules('hoard');
   }
-});
+}

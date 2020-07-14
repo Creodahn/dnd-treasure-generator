@@ -1,10 +1,8 @@
-import classic from 'ember-classic-decorator';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-@classic
 export default class IndividualRewards extends Component {
   // attributes
   @tracked calculations;
@@ -20,10 +18,10 @@ export default class IndividualRewards extends Component {
   rulebook;
 
   // lifecycle
-  init() {
-    super.init(...arguments);
+  constructor() {
+    super(...arguments);
 
-    this.set('rollsToTrack', []);
+    this.rollsToTrack = [];
   }
 
   // methods

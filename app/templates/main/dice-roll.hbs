@@ -3,7 +3,7 @@
 <ul class="dice-list">
   {{#each this.diceBag.rollableDice as |die|}}
     <li>
-      <button type="button" {{on "click" (fn "addDie" die)}}>
+      <button type="button" {{on "click" (fn this.addDie die)}}>
         {{die.name}}
       </button>
     </li>
@@ -15,7 +15,7 @@
   <ul class="dice-list selected-dice">
     {{#each this.displayDice as |item index|}}
       <li>
-        <button type="button" {{on "click" (fn "removeDie" index)}}>
+        <button type="button" {{on "click" (fn this.removeDie index)}}>
           {{item.die}}
         </button>
         <div class="result">{{item.result}}</div>

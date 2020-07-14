@@ -67,7 +67,6 @@ export default class DiceRollController extends Controller {
       }),
       results = this.diceBag.rollMultipleDice({ dice }, true);
 
-    console.log(results);
     this.results = results.rolls;
     // this is the second thing returned in the results object, but we don't display it currently
     this.total = results.total;

@@ -1,16 +1,27 @@
+import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 
-export default Model.extend({
+@classic
+export default class Profile extends Model {
   // attributes
-  email: attr('string'),
-  name: attr('string'),
+  @attr('string')
+  email;
+
+  @attr('string')
+  name;
+
   // computed properties
-  isValid: computed('email', 'name', function() {
+  @computed('email', 'name')
+  get isValid() {
     return isPresent(this.email) && isPresent(this.name);
-  }),
+  }
+
   // relationships
-  diceRollEvents: hasMany('dice-roll-event'),
-  user: belongsTo('user')
-});
+  @hasMany('dice-roll-event')
+  diceRollEvents;
+
+  @belongsTo('user')
+  user;
+}

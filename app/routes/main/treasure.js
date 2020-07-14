@@ -1,6 +1,8 @@
+import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
+@classic
+export default class TreasureRoute extends Route {
   beforeModel(transition) {
     const retransitionTargets = ['main.treasure', 'main.treasure.index'];
 
@@ -8,4 +10,4 @@ export default Route.extend({
       this.transitionTo('main.treasure.individual');
     }
   }
-});
+}

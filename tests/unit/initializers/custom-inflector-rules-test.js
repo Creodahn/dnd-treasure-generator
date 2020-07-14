@@ -11,7 +11,7 @@ module('Unit | Initializer | custom-inflector-rules', function(hooks) {
   hooks.beforeEach(function() {
     this.TestApplication = Application.extend();
     this.TestApplication.initializer({
-      name: 'initializer under test',
+      name: 'custom-inflector-rules',
       initialize
     });
 

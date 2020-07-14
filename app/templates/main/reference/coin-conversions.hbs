@@ -1,5 +1,5 @@
 <ul>
-  {{#each coinTableValues as |row|}}
+  {{#each this.coinTableValues as |row|}}
     {{#each row as |col|}}
       <li>One {{col.secondCoin}} is {{number-to-word col.rate}} {{col.firstCoin}}</li>
     {{/each}}

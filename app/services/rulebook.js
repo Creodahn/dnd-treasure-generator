@@ -1,8 +1,11 @@
+import classic from 'ember-classic-decorator';
 import { isPresent } from '@ember/utils';
 import Service, { inject as service } from '@ember/service';
 
-export default Service.extend({
-  store: service(),
+@classic
+export default class RulebookService extends Service {
+  @service
+  store;
 
   getRuleSetForCr(treasureType, cr) {
     const records = this.get(treasureType);
@@ -21,7 +24,8 @@ export default Service.extend({
     }
   
     return result;
-  },
+  }
+
   // eslint-disable-next-line camelcase
   async lookupRules(treasure_type) {
     const alreadyLoadedRules = this.get(treasure_type),
@@ -31,4 +35,4 @@ export default Service.extend({
 
     return rules;
   }
-});
+}

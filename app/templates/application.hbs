@@ -1,60 +1,62 @@
-<nav class="border split-nav" data-test-app-nav>
-  <div class="nav-brand" data-test-app-nav-branding>
-    <h3>
-      <LinkTo @route="main.home">
-        D&amp;D Randomizer
-      </LinkTo>
-    </h3>
-  </div>
-  <div class="collapsible" data-test-app-nav-collapsible-section>
-    <Input @checked={{collapsibleOpen}} @id="collapsible1" @name="collapsible1" @type="checkbox" />
-    <button data-test-app-nav-collapsible-toggle type="button" {{action "toggleCollapsible"}}>
-      <div class="bar1"></div>
-      <div class="bar2"></div>
-      <div class="bar3"></div>
-    </button>
-    <div class="collapsible-body">
-      <ul class="inline" data-test-app-nav-link-list>
-        <li>
-          <LinkTo @route="main.treasure.individual" data-test-app-nav-link="treasure">
-            Generate Treasure
-          </LinkTo>
-        </li>
-        <li>
-          <LinkTo @route="main.dice-roll" data-test-app-nav-link="dice-roll">
-            Roll Dice
-          </LinkTo>
-        </li>
-        <li>
-          <LinkTo @route="main.reference" data-test-app-nav-link="reference">
-            Reference
-          </LinkTo>
-        </li>
-        {{#if session.isAuthenticated}}
-          <li>
-            <LinkTo @route="profile" data-test-app-nav-link="profile">
-              Profile
-            </LinkTo>
-          </li>
-          <li>
-            <a data-test-app-nav-link="logout" href="#" {{action "logOut"}}>
-              Log out
-            </a>
-          </li>
-        {{else}}
-          <li>
-            <LinkTo @route="login" data-test-app-nav-link="login">
-              Log in
-            </LinkTo>
-          </li>
-          <li>
-            <LinkTo @route="signup" data-test-app-nav-link="signup">
-              Sign up
-            </LinkTo>
-          </li>
-        {{/if}}
-      </ul>
+<div class="ember-view">
+  <nav class="border split-nav" data-test-app-nav>
+    <div class="nav-brand" data-test-app-nav-branding>
+      <h3>
+        <LinkTo @route="main.home">
+          D&amp;D Randomizer
+        </LinkTo>
+      </h3>
     </div>
-  </div>
-</nav>
-{{outlet}}
+    <div class="collapsible" data-test-app-nav-collapsible-section>
+      <Input @checked={{this.collapsibleOpen}} @id="collapsible1" @name="collapsible1" @type="checkbox" />
+      <button data-test-app-nav-collapsible-toggle type="button" {{on "click" this.toggleCollapsible}}>
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </button>
+      <div class="collapsible-body">
+        <ul class="inline" data-test-app-nav-link-list>
+          <li>
+            <LinkTo @route="main.treasure.individual" data-test-app-nav-link="treasure">
+              Generate Treasure
+            </LinkTo>
+          </li>
+          <li>
+            <LinkTo @route="main.dice-roll" data-test-app-nav-link="dice-roll">
+              Roll Dice
+            </LinkTo>
+          </li>
+          <li>
+            <LinkTo @route="main.reference" data-test-app-nav-link="reference">
+              Reference
+            </LinkTo>
+          </li>
+          {{#if this.session.isAuthenticated}}
+            <li>
+              <LinkTo @route="profile" data-test-app-nav-link="profile">
+                Profile
+              </LinkTo>
+            </li>
+            <li>
+              <a data-test-app-nav-link="logout" href="#" {{on "click" this.logOut}}>
+                Log out
+              </a>
+            </li>
+          {{else}}
+            <li>
+              <LinkTo @route="login" data-test-app-nav-link="login">
+                Log in
+              </LinkTo>
+            </li>
+            <li>
+              <LinkTo @route="signup" data-test-app-nav-link="signup">
+                Sign up
+              </LinkTo>
+            </li>
+          {{/if}}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  {{outlet}}
+</div>

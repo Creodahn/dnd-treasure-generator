@@ -16,6 +16,6 @@ module('Acceptance | main/treasure/individual', function(hooks) {
 
     assert.equal(currentURL(), '/treasure/individual');
     assert.dom('h1').hasText('Calculate Individual Treasure');
-    assert.dom('[data-test-individual-cr-input]').exists();
+    assert.dom('[data-test-cr-trigger]').exists();
   });
 });

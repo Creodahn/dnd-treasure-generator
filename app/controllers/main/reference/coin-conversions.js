@@ -1,8 +1,11 @@
+import classic from 'ember-classic-decorator';
 import Controller from '@ember/controller';
 import Object, { computed }  from '@ember/object';
 
-export default Controller.extend({
-  coinTableValues: computed('model.[]', function() {
+@classic
+export default class CoinConversionsController extends Controller {
+  @computed('model.[]')
+  get coinTableValues() {
     const coins = this.model,
       values = coins.map((coin, index) => {
         return coins.map((coin2, index2) => {
@@ -16,5 +19,5 @@ export default Controller.extend({
       });
 
     return values;
-  })
-});
+  }
+}

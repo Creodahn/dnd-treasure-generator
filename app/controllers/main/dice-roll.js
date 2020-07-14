@@ -1,27 +1,35 @@
 import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
-import Object, { action, computed } from '@ember/object';
+import { action, computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+
+class DisplayDie {
+  @tracked result;
+  @tracked rolls;
+
+  constructor({ die, result }) {
+    this.die = die;
+    this.result = result;
+  }
+}
 
 @classic
 export default class DiceRollController extends Controller {
   // attributes
+  @tracked results;
+  @tracked selectedDice;
+  @tracked total;
+
+  // services
   @service
   diceBag;
 
-  selectedDice = null;
-
   // computed properties
-  @computed('selectedDice.[]', 'results.[]')
+  @computed('selectedDice.{[],@each.id}', 'results.{[],@each.result}', 'total')
   get displayDice() {
     return this.selectedDice.map((item, index) => {
-      const rolls = this.results;
-
-      if(rolls && rolls[index]) {
-        item.set('result', rolls[index].result);
-      }
-
-      return item;
+      return new DisplayDie({ die: item.die, result: this.results?.[index]?.result });
     });
   }
 
@@ -34,13 +42,13 @@ export default class DiceRollController extends Controller {
 
   // methods
   reset() {
-    this.set('results', []);
-    this.set('selectedDice', []);
+    this.results = [];
+    this.selectedDice = [];
   }
 
   @action
   addDie(die) {
-    this.selectedDice.pushObject(Object.create({ die: die.name }));
+    this.selectedDice.pushObject({ die: die.name });
   }
 
   @action
@@ -49,7 +57,7 @@ export default class DiceRollController extends Controller {
     const dice = this.selectedDice,
       result = dice.slice(0, index).concat(dice.slice(index + 1, dice.length));
 
-    this.set('selectedDice', result);
+    this.selectedDice = result;
   }
 
   @action
@@ -59,10 +67,8 @@ export default class DiceRollController extends Controller {
       }),
       results = this.diceBag.rollMultipleDice({ dice }, true);
 
-    // reset results to force displayDice to update when inserting new results
-    this.set('results', []);
-    this.set('results', results.rolls);
+    this.results = results.rolls;
     // this is the second thing returned in the results object, but we don't display it currently
-    this.set('total', results.total);
+    this.total = results.total;
   }
 }

@@ -1,13 +1,15 @@
-{{#if this.label}}
-  <label for={{this.input-id}}>
-    {{this.label}}
-  </label>
-{{/if}}
-<Input
-  @data-test-labeled-input-field={{this.input-id}}
-  @disabled={{this.disabled}}
-  @id={{this.input-id}}
-  @type={{this.type}}
-  @value={{this.value}}
-  @key-up={{fn this.update this.value}}
-/>
+<div class="form-group {{if @required "required"}}" data-test-labeled-input-container>
+  {{#if @label}}
+    <label data-test-labeled-input-label for={{@input-id}}>
+      {{@label}}
+    </label>
+  {{/if}}
+  <Input
+    data-test-labeled-input-field
+    @disabled={{@disabled}}
+    @id={{@input-id}}
+    @type={{this.type}}
+    @value={{this.value}}
+    @key-up={{fn @update this.value}}
+  />
+</div>

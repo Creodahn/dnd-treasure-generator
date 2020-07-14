@@ -1,11 +1,9 @@
-import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action, computed } from '@ember/object';
 import Inflector from 'ember-inflector';
 import { tracked } from '@glimmer/tracking';
 
-@classic
 export default class HoardRewards extends Component {
   // attrbiutes
   @tracked calculations;
@@ -34,8 +32,8 @@ export default class HoardRewards extends Component {
   }
 
   // lifecycle
-  init() {
-    super.init(...arguments);
+  constructor() {
+    super(...arguments);
 
     this.rollsToTrack = [];
   }

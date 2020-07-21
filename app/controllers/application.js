@@ -1,12 +1,25 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-    collapsibleOpen: false,
-    actions: {
-      toggleCollapsible() {
-        const isOpen = this.collapsibleOpen;
+@classic
+export default class ApplicationController extends Controller {
+  @tracked collapsibleOpen = false;
 
-        this.set('collapsibleOpen', !isOpen);
-      }
-    }
-});
+  @service
+  session;
+
+  @action
+  logOut() {
+    this.session.invalidate();
+  }
+
+  @action
+  toggleCollapsible() {
+    const isOpen = this.collapsibleOpen;
+
+    this.collapsibleOpen = !isOpen;
+  }
+}

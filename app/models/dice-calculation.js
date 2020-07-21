@@ -1,15 +1,40 @@
-import DS from 'ember-data';
+import classic from 'ember-classic-decorator';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default DS.Model.extend({
+@classic
+export default class DiceCalculation extends Model {
   // attributes
-  coinType: DS.attr('string', { readOnly: true }),
-  diceCount: DS.attr('number'),
-  dieType: DS.attr('string', { readOnly: true }),
-  itemTable: DS.attr('string'),
-  itemType: DS.attr('string'),
-  itemValue: DS.attr('number'),
-  multiplier: DS.attr('number'),
+  @attr('string', { readOnly: true })
+  coinType;
+
+  @attr('number')
+  diceCount;
+
+  @attr('string', { readOnly: true })
+  dieType;
+
+  @attr('string')
+  itemTable;
+
+  @attr('string')
+  itemType;
+
+  @attr('number')
+  itemValue;
+
+  @attr('number')
+  multiplier;
+
   // relationships
-  die: DS.belongsTo('die'),
-  treasureRule: DS.belongsTo('treasure-rule')
-});
+  @belongsTo('coin')
+  coin;
+
+  @belongsTo('die')
+  die;
+
+  @belongsTo('treasure-rule')
+  treasureRule;
+
+  @belongsTo('treasure-rule-set')
+  treasureRuleSet;
+}

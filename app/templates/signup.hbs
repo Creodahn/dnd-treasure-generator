@@ -1,0 +1,46 @@
+<main class="guttered login">
+  <Ui::Card @headerText="Sign up" @submitAction={{this.signUp}}>
+    <p class="card-subtitle">
+      Creating an account allows you to track the treasures that you generate
+    </p>
+    <Ui::LabeledInput
+      @data-test-login-username-input="true"
+      @input-id="username-input"
+      @label="Full Name"
+      @required={{true}}
+      @update={{fn (mut this.model.name)}}
+    />
+
+    <Ui::LabeledInput
+      @data-test-login-email-input="true"
+      @input-id="email-input"
+      @label="Email"
+      @required={{true}}
+      @update={{fn (mut this.model.email)}}
+    />
+
+    <Ui::LabeledInput
+      @data-test-login-password-input="true"
+      @input-id="password-input"
+      @label="Password"
+      @required={{true}}
+      @type="password"
+      @update={{fn (mut this.password)}}
+    />
+
+    <Ui::LabeledInput
+      @data-test-login-password-confirm-input="true"
+      @input-id="password-confirm-input"
+      @label="Confirm Password"
+      @required={{true}}
+      @type="password"
+      @update={{fn (mut this.passwordConfirmation)}}
+    />
+
+    <Ui::ErrorContainer @content={{this.errorText}} />
+
+    <button data-test-login-submit type="submit">
+      Sign up
+    </button>
+  </Ui::Card>
+</main>

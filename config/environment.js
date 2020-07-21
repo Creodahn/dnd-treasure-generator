@@ -1,18 +1,19 @@
 'use strict';
 
 module.exports = function(environment) {
-  let ENV = {
+  const ENV = {
     modulePrefix: 'dnd-treasure-generator',
-    environment,
     'ember-cli-mirage': {
+      autostart: true,
       enabled: true
     },
+    environment,
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
-        // e.g. 'with-controller': true
+        // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
@@ -27,17 +28,16 @@ module.exports = function(environment) {
     }
   };
 
-  if (environment === 'development') {
+  if(environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-
     ENV['ember-cli-mirage'].enabled = false;
   }
 
-  if (environment === 'test') {
+  if(environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
 
@@ -49,8 +49,9 @@ module.exports = function(environment) {
     ENV.APP.autoboot = false;
   }
 
-  if (environment === 'production') {
+  if(environment === 'production') {
     // here you can enable a production-specific feature
+    ENV['ember-cli-mirage'].enabled = false;
   }
 
   return ENV;

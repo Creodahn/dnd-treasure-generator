@@ -1,9 +1,22 @@
-import DS from 'ember-data';
+import classic from 'ember-classic-decorator';
+import Model, { attr, hasMany } from '@ember-data/model';
 
-export default DS.Model.extend({
+@classic
+export default class Die extends Model {
   // attributes
-  ceil: DS.attr('number'),
-  floor: DS.attr('number'),
-  name: DS.attr('string'),
-  showToUser: DS.attr('boolean')
-});
+  @attr('number')
+  ceil;
+
+  @attr('number')
+  floor;
+
+  @attr('string')
+  name;
+
+  @attr('boolean')
+  showToUser;
+
+  // relationships
+  @hasMany('dice-calculation')
+  diceCalculations;
+}

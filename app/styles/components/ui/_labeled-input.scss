@@ -1,0 +1,17 @@
+.form-group {
+  &.required {
+    & > label {
+      position: relative;
+
+      &::after {
+        color: red;
+        content: '*';
+        position: absolute;
+        right: -10px;
+      }
+    }
+  }
+  & > .ember-text-field {
+    width: 100%;
+  }
+}

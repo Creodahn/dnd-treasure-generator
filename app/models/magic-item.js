@@ -1,14 +1,31 @@
-import DS from 'ember-data';
+import classic from 'ember-classic-decorator';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 
-export default DS.Model.extend({
+@classic
+export default class MagicItem extends Model {
   // attributes
-  dieType: DS.attr('string'),
-  max: DS.attr('number'),
-  min: DS.attr('number'),
-  name: DS.attr('string'),
-  table: DS.attr('string'),
+  @attr('string')
+  dieType;
+
+  @attr('number')
+  max;
+
+  @attr('number')
+  min;
+
+  @attr('string')
+  name;
+
+  @attr('string')
+  table;
+
   // relationships
-  children: DS.hasMany('magic-item', { async: false, inverse: 'parent' }),
-  die: DS.belongsTo('die'),
-  parent: DS.belongsTo('magic-item', { inverse: 'children' })
-});
+  @hasMany('magic-item', { async: false, inverse: 'parent' })
+  children;
+
+  @belongsTo('die')
+  die;
+
+  @belongsTo('magic-item', { inverse: 'children' })
+  parent;
+}

@@ -1,13 +1,13 @@
 <ul class="flex-spaces row tabs">
   <li>
-    {{#link-to "main.treasure.individual"}}
+    <LinkTo @route="main.treasure.individual" data-test-app-subnav-link="individual-treasure">
       Individual
-    {{/link-to}}
+    </LinkTo>
   </li>
   <li>
-    {{#link-to "main.treasure.hoard"}}
+    <LinkTo @route="main.treasure.hoard" data-test-app-subnav-link="hoard-treasure">
       Hoard
-    {{/link-to}}
+    </LinkTo>
   </li>
 </ul>
 {{outlet}}

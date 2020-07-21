@@ -8,7 +8,7 @@ module('Integration | Helper | roll-format', function(hooks) {
 
   // Replace this with your real tests.
   test('it renders', async function(assert) {
-    this.set('inputValue', [1, 2, 3, 4]);
+    this.set('inputValue', [{ result: 1 }, { result: 2 }, { result: 3 }, { result: 4 }]);
 
     await render(hbs`{{roll-format inputValue}}`);
 

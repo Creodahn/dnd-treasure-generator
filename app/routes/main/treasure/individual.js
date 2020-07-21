@@ -1,7 +1,13 @@
+import classic from 'ember-classic-decorator';
+import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 
-export default Route.extend({
+@classic
+export default class IndividualRoute extends Route {
+  @service
+  rulebook;
+
   model() {
-    return this.store.query('treasure-rule-set', { filter: { treasureType: 'individual' } });
+    return this.rulebook.lookupRules('individual');
   }
-});
+}

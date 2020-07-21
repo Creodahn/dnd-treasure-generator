@@ -1,0 +1,14 @@
+<div class="flex-layout-row">
+  <ul>
+    {{#each this.model.diceRollEvents as |diceRollEvent|}}
+      <li>
+        <LinkTo @route="profile.roll-history.event" @model={{diceRollEvent.id}}>
+          {{moment-format diceRollEvent.createdAt "MMMM DD, YYYY hh:mm a"}}
+        </LinkTo>
+      </li>
+    {{/each}}
+  </ul>
+  <div>
+    {{outlet}}
+  </div>
+</div>

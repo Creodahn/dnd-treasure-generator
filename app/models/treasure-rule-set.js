@@ -1,11 +1,22 @@
-import DS from 'ember-data';
+import classic from 'ember-classic-decorator';
+import Model, { attr, hasMany } from '@ember-data/model';
 
-export default DS.Model.extend({
+@classic
+export default class TreasureRuleSet extends Model {
   // attributes
-  maxCr: DS.attr('number'),
-  minCr: DS.attr('number'),
-  treasureType: DS.attr('string'),
+  @attr('number')
+  maxCr;
+
+  @attr('number')
+  minCr;
+
+  @attr('string')
+  treasureType;
+
   // relationships
-  diceCalculations: DS.hasMany('dice-calculation'),
-  treasureRules: DS.hasMany('treasure-rule')
-});
+  @hasMany('dice-calculation', { async: false })
+  diceCalculations;
+
+  @hasMany('treasure-rule', { async: false })
+  treasureRules;
+}

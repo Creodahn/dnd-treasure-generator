@@ -1,6 +1,6 @@
-import DS from 'ember-data';
+import JSONAPISerializer from '@ember-data/serializer/json-api';
 
-export default DS.JSONAPISerializer.extend({
+export default JSONAPISerializer.extend({
   serializeAttribute: function(snapshot, json, key, attribute) {
     if(!attribute.options.readOnly) {
       this._super(snapshot, json, key, attribute);

@@ -5,7 +5,8 @@ module('Unit | Route | main/treasure/hoard', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let route = this.owner.lookup('route:main/treasure/hoard');
+    const route = this.owner.lookup('route:main/treasure/hoard');
+
     assert.ok(route);
   });
 });

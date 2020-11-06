@@ -9,6 +9,7 @@
 /node_modules/
 
 # misc
+/**/.DS_STORE
 /.env*
 /.pnp*
 /.sass-cache

@@ -23,6 +23,9 @@ export default class HoardRewards extends Component {
   rulebook;
 
   @service
+  session;
+
+  @service
   treasureChest;
 
   // computed properties
@@ -68,7 +71,9 @@ export default class HoardRewards extends Component {
     this.rewards = results;
 
     // make the roll history
-    this.trackRolls();
+    if(this.session.isAuthenticated) {
+      this.trackRolls();
+    }
   }
 
   countUniqueItems(selectedItems) {
@@ -172,7 +177,8 @@ export default class HoardRewards extends Component {
   }
 
   trackRolls() {
-    // this forces the ordering to match the overall order in which the rolls were made and overrides the default ordering logic
+    // this forces the ordering to match the overall order in which the rolls
+    // were made and overrides the default ordering logic
     this.rollsToTrack.map((roll, index) => roll.order = index);
 
     this.diceBag.createRollEvent(this.rollsToTrack, this.router.currentRouteName, this.model);
@@ -180,17 +186,18 @@ export default class HoardRewards extends Component {
     this.rollsToTrack = [];
   }
 
-  // TODO: make this more resilient if the input is bad
   @action
   selectCR(selectedCr) {
-    const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
-      ruleSet = this.rulebook.getRuleSetForCr('hoard', cr);
+    if(typeof selectedCr === 'string') {
+      const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
+        ruleSet = this.rulebook.getRuleSetForCr('hoard', cr);
 
-    // ensure we're updating to show the actual number instead of the pre-formatted value
-    this.cr = cr.toString();
-    this.calculations = ruleSet.diceCalculations;
-    this.model = ruleSet.treasureRules;
+      // ensure we're updating to show the actual number instead of the pre-formatted value
+      this.cr = cr.toString();
+      this.calculations = ruleSet.diceCalculations;
+      this.model = ruleSet.treasureRules;
 
-    this.calculateReward();
+      this.calculateReward();
+    }
   }
 }

@@ -1,5 +1,6 @@
 import { computed } from '@ember/object';
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
+// eslint-disable-next-line ember/no-mixins
 import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
 import ENV from 'dnd-treasure-generator/config/environment';
 

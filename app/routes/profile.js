@@ -1,3 +1,4 @@
+// eslint-disable-next-line ember/no-mixins
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';

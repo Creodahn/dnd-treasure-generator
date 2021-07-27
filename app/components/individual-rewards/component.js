@@ -61,17 +61,18 @@ export default class IndividualRewards extends Component {
     return result ? result.get('diceCalculations') : [];
   }
 
-  // TODO: make this more resilient if the input is bad
   @action
   selectCR(selectedCr) {
-    const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
-      ruleSet = this.rulebook.getRuleSetForCr('individual', cr);
-
-    this.calculations = ruleSet.diceCalculations;
-    // ensure we're updating to show the actual number instead of the pre-formatted value
-    this.cr = cr.toString();
-    this.model = ruleSet.treasureRules;
-
-    this.calculateReward();
+    if(typeof selectedCr === 'string') {
+      const cr = parseInt(selectedCr.replace(/[A-Za-z]+/g, '')),
+        ruleSet = this.rulebook.getRuleSetForCr('individual', cr);
+  
+      this.calculations = ruleSet.diceCalculations;
+      // ensure we're updating to show the actual number instead of the pre-formatted value
+      this.cr = cr.toString();
+      this.model = ruleSet.treasureRules;
+  
+      this.calculateReward();
+    }
   }
 }

@@ -17,6 +17,9 @@ export default class IndividualRewards extends Component {
   @service
   rulebook;
 
+  @service
+  session;
+
   // lifecycle
   constructor() {
     super(...arguments);
@@ -42,6 +45,11 @@ export default class IndividualRewards extends Component {
     }
 
     this.rewards = result;
+
+    // make the roll history
+    if(this.session.isAuthenticated) {
+      this.trackRolls();
+    }
   }
 
   getRuleForPercentileRoll(rules) {
@@ -51,7 +59,6 @@ export default class IndividualRewards extends Component {
     this.rollsToTrack.pushObject(diceRoll);
 
     // each rule has a min/max range that corresponds to the range on the table in the Dungeon Master's handbook
-    // TODO: nulls shouldn't be possible, but it would be best to add handling for that
     result = rules.map((rule) => {
       return diceRoll.result >= rule.min && diceRoll.result <= rule.max ? rule : null;
     }).filter((item) => {
@@ -59,6 +66,16 @@ export default class IndividualRewards extends Component {
     })[0];
 
     return result ? result.get('diceCalculations') : [];
+  }
+
+  trackRolls() {
+    // this forces the ordering to match the overall order in which the rolls
+    // were made and overrides the default ordering logic
+    this.rollsToTrack.map((roll, index) => roll.order = index);
+
+    this.diceBag.createRollEvent(this.rollsToTrack, this.router.currentRouteName, this.model);
+
+    this.rollsToTrack = [];
   }
 
   @action

@@ -1,9 +1,9 @@
 import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+// eslint-disable-next-line ember/no-mixins
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import Route from '@ember/routing/route';
 
-// this `extends` throws a warning, but need to use a mixin due to how ember-simple-auth works
 @classic
 export default class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {
   @service

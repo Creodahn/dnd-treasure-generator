@@ -1,18 +1,20 @@
-{{#let (cr-config) as |cr-config|}}
-  <Ui::LabeledInput
-    class="padding-left-small padding-right-large"
-    @input-id="cr-input"
-    @label="Challenge Rating"
+<div class="row">
+  {{#let (cr-config) as |cr-config|}}
+    <Ui::LabeledInput
+      class="padding-left-small padding-right-large"
+      @input-id="cr-input"
+      @label="Challenge Rating"
 
-    @update={{fn (mut cr-config.cr)}}
-  />
-  <button
-    class="padding-left-small"
-    data-test-cr-trigger
-    type="button"
-    
-    {{on "click" (fn @selectCR cr-config.cr)}}
-  >
-    Roll Dice
-  </button>
-{{/let}}
+      @update={{fn (mut cr-config.cr)}}
+    />
+    <button
+      class="padding-left-small"
+      data-test-cr-trigger
+      type="button"
+      
+      {{on "click" (fn @selectCR cr-config.cr)}}
+    >
+      Roll Dice
+    </button>
+  {{/let}}
+</div>
